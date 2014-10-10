@@ -1,0 +1,4 @@
+-wpowadzanie komend - Maciej K
+-kontroler autobusu - Mateusz S
+-generowanie œwiata - Mateusz P, Piotr P
+-Zwracanie komunikatów g³osowych - Artur P 
