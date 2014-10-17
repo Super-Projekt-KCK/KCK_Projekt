@@ -5,11 +5,84 @@
     <title>Intelligent taxi</title>
 
     <script src = "World.js"></script>
+    <style>
+        #results {
+            font-size: 20px;
+            font-weight: bold;
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: left;
+            vertical-align: text-top;
+            min-height: 150px;
+            width: 80%;
+            display: inline-block;
+        }
+    </style>
+
+
 </head>
 <body>
+<div id="status">
+</div>
+<p>
+<div id="results">
+    <span id="final_span" style="color:black"></span>
+    <span id="interim_span" style="color:gray"></span>
+</div>
+<button onclick="microphoneButton()" style="border: 0; background-color:transparent">
+    <img id="status_img" src="mic.gif" alt="Start"></button>
+<div id="div_language">
+    <select id="select_language" onchange="updateCountry()"></select>
+    <select id="select_dialect"></select>
+</div>
 <h1 id="demo" onmouseover ="printArray('array')">Check (onmouseover)</h1>
 <p id="array"></p>
 
 
 </body>
+<script src="webspeech.js"></script>
+<script>
+    var reco = new WebSpeechRecognition();
+    reco.statusText('status');
+    reco.statusImage('status_img');
+    reco.finalResults('final_span');
+    reco.interimResults('interim_span');
+    reco.continuous = true;
+
+    // Handler when user clicks microphone button.
+    function microphoneButton() {
+        reco.lang = select_dialect.value;
+        reco.toggleStartStop();
+    }
+
+
+    var langs =
+            [['English',         ['en-AU', 'Australia'],
+                    ['en-CA', 'Canada'],
+                    ['en-IN', 'India'],
+                    ['en-NZ', 'New Zealand'],
+                    ['en-ZA', 'South Africa'],
+                    ['en-GB', 'United Kingdom'],
+                    ['en-US', 'United States']]
+];
+
+    function updateCountry() {
+        for (var i = select_dialect.options.length - 1; i >= 0; i--) {
+            select_dialect.remove(i);
+        }
+        var list = langs[select_language.selectedIndex];
+        for (var i = 1; i < list.length; i++) {
+            select_dialect.options.add(new Option(list[i][1], list[i][0]));
+        }
+        select_dialect.style.visibility = list[1].length == 1 ? 'hidden' : 'visible';
+    }
+
+    for (var i = 0; i < langs.length; i++) {
+        select_language.options[i] = new Option(langs[i][0], i);
+    }
+    select_language.selectedIndex = 0;
+    updateCountry();
+    select_dialect.selectedIndex = 6;
+</script>
+
 </html>
