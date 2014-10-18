@@ -21,7 +21,7 @@
 
 
 </head>
-<body>
+<body onkeydown="microphoneButton()">
 <div id="status">
 </div>
 <p>
@@ -29,6 +29,8 @@
     <span id="final_span" style="color:black"></span>
     <span id="interim_span" style="color:gray"></span>
 </div>
+<br>Jeśli komenda zaczyna się od 'Agent' polecenie zostaje wykonane<br>
+<input type="text" id="inp" name="inp"><br>
 <button onclick="microphoneButton()" style="border: 0; background-color:transparent">
     <img id="status_img" src="mic.gif" alt="Start"></button>
 <div id="div_language">
@@ -40,15 +42,30 @@
 
 
 </body>
+
 <script src="webspeech.js"></script>
 <script>
     var reco = new WebSpeechRecognition();
     reco.statusText('status');
     reco.statusImage('status_img');
     reco.finalResults('final_span');
-    reco.interimResults('interim_span');
-    reco.continuous = true;
 
+    reco.continuous = false;
+
+    reco.onEnd = function() {
+        if (reco.final_transcript != '') {
+            var res = reco.final_transcript.split(" ");
+            if(res[0] == 'Agent' || res[0] == 'agent'){
+                delete res[0];
+                document.getElementById('inp').value=res;
+                document.getElementById('inp').value=document.getElementById('inp').value.replace(/,/g,' ');
+            }else{
+                document.getElementById('inp').value='nie wykona polecenia';
+            }
+
+            microphoneButton();
+        }
+    };
     // Handler when user clicks microphone button.
     function microphoneButton() {
         reco.lang = select_dialect.value;
