@@ -47,8 +47,8 @@ function fillArray() {
 }
 
 var coords = createArray(2, map.length);        //współrzędne wierzchołków grafu na canvas
-var width = 300;            //szerokość i wysokość canvas
-var height = 150;
+var width = 500;            //szerokość i wysokość canvas
+var height = 300;
 
 function makeGraph() {
     for (var i = 0; i < map.length; i++) {            //losowanie współrzędnych grafu
