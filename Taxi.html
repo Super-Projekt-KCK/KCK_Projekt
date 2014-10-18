@@ -9,9 +9,10 @@
 
 </head>
 <body>
+
 <div id="status">
 </div>
-<p>
+
 <div id="results">
     <span id="final_span" style="color:black"></span>
     <span id="interim_span" style="color:gray"></span>
@@ -22,11 +23,14 @@
     <select id="select_language" onchange="updateCountry()"></select>
     <select id="select_dialect"></select>
 </div>
-<h1 id="demo" onclick ="printArray('array')">Check (onclick)</h1>
-<p id="array"></p>
 
+<div id="world">
+    <button type="button" onclick ="printArray('array')">Generate array</button>
+    <p id="array"></p>
+</div>
 
 </body>
+
 <script src="webspeech.js"></script>
 <script>
     var reco = new WebSpeechRecognition();
