@@ -8,7 +8,10 @@ function createArray(x, y) {
     return map;
 }
 
-var map = createArray(10,10);
+
+var points = 10;                        //liczba wierzchołków grafu
+var maxEdges = 15;          //max liczba krawędzi
+var map = createArray(points,points);
 
 
 
@@ -27,23 +30,44 @@ function printArray(name) {
 }
 
 //macierz sąsiedztwa dla grafu z x wierzchołkami
+
 function fillArray() {
-    var maxEdges = 12;          //max liczba krawędzi
     var edges = 0;
+    var sum = 0;
     for (var i = 0; i < map.length; i++) {
         for (var j = i+1; j < map[i].length; j++) {
-            if ((Math.random() < 0.5) || (edges >= maxEdges))
+            if ((Math.random() < 0.6) || (edges >= maxEdges)) {
                 map[i][j] = 0;
+                map[j][i] = 0;
+            }
             else {
                 map[i][j] = 1;
+                map[j][i] = 1;
                 edges++;
             }
         }
-        for (var j = 0; j <= i; j++) {
-            map[i][j] = 0;
-        }
+        map[i][i] = 0;
+        checkDegree(i);             //sprawdzanie czy są sąsiedzi
     }
 
+}
+
+function checkDegree(i) {                           //sprawdza stopień wierzchołka (jeśli 0 to losowo dodaje sąsiada)
+    var deg = 0;
+    document.getElementById("coords").innerHTML += "Wywołano checkDegree()";
+    for (var j = 0; j < map[i].length; j++) {
+        if (map[i][j] == 1) {
+            deg++;
+        }
+    }
+    if (deg == 0) {
+        document.getElementById("coords").innerHTML += "Stopień 0 w wiezchołku" + i;
+        do {
+            var rand = Math.floor(Math.random() * 10);
+        } while (rand == i);
+        map[i][rand] = 1;
+        map[rand][i] = 1;
+    }
 }
 
 var coords = createArray(2, map.length);        //współrzędne wierzchołków grafu na canvas
@@ -51,10 +75,13 @@ var width = 500;            //szerokość i wysokość canvas
 var height = 300;
 
 function makeGraph() {
+    document.getElementById("coords").innerHTML = "";
     for (var i = 0; i < map.length; i++) {            //losowanie współrzędnych grafu
-        coords[0][i] = Math.floor(Math.random() * width);
-        coords[1][i] = Math.floor(Math.random() * height);
-        document.getElementById("coords").innerHTML += coords[0][i] +"," + coords[1][i] + " ";
+        do {
+            coords[0][i] = Math.floor(Math.random() * width / 20) * 20;
+            coords[1][i] = Math.floor(Math.random() * height / 20) * 20;
+            document.getElementById("coords").innerHTML += coords[0][i] + "," + coords[1][i] + " ";
+        } while (!((coords[0][i] > 0) && (coords[1][i] > 0)));
     }
 
 }
@@ -63,11 +90,19 @@ function drawGraph (canvas, array) {
     var c = document.getElementById(canvas);
     var context = c.getContext("2d");
 
+    context.clearRect(0,0,width,height);
     printArray(array);
     makeGraph();
-
-    //rysowanie punktów na canvas
     context.fillStyle = "#000000";
+    drawPoints(context);
+    drawEdges(context);
+
+
+
+}
+
+function drawPoints(context) {
+    //rysowanie punktów na canvas
     for (var i = 0; i < map.length; i++) {
         context.beginPath();
         context.arc(coords[0][i], coords[1][i], 2, 0, 2*Math.PI);
@@ -77,21 +112,21 @@ function drawGraph (canvas, array) {
         context.fill();
         context.stroke();
     }
+}
 
+function drawEdges(context) {
     //rysowanie linii między punktami
     for (var i = 0; i < map.length; i++) {
         for (var j = i+1; j < map[i].length; j++) {
             if (map[i][j] == 1) {
                 context.moveTo(coords[0][i],coords[1][i]);
-                context.lineTo(coords[0][j],coords[1][j]);
+                context.lineTo(coords[0][i],coords[1][j]);
+                context.lineTo(coords[0][j], coords[1][j]);
                 context.stroke();
             }
         }
     }
-
 }
-
-
 
 
 
