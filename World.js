@@ -54,14 +54,12 @@ function fillArray() {
 
 function checkDegree(i) {                           //sprawdza stopień wierzchołka (jeśli 0 to losowo dodaje sąsiada)
     var deg = 0;
-    document.getElementById("coords").innerHTML += "Wywołano checkDegree()";
     for (var j = 0; j < map[i].length; j++) {
         if (map[i][j] == 1) {
             deg++;
         }
     }
     if (deg == 0) {
-        document.getElementById("coords").innerHTML += "Stopień 0 w wiezchołku" + i;
         do {
             var rand = Math.floor(Math.random() * 10);
         } while (rand == i);
