@@ -28,7 +28,6 @@ Przetworzony rozkaz zostaje wykonywany lub zostaje zwrócony (głosowo) komunika
 - Identyfikacja ulic
 - Znajdowanie ścieżki (algorytm a*)
 - Interpretacja mówionego tekstu
-- 
 
 ## Taksówka
 - Poruszanie się po planszy
