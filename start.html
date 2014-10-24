@@ -1,10 +1,30 @@
 <html>
-<head>
+<head lang="pl">
+    <meta charset="UTF-8">
+    <title>Intelligent taxi</title>
+    <link rel="Stylesheet" type="text/css" href="style.css" />
+	
 <script src="graf.js">
 </script>
 </head>
 
 <body>
+<div id="status">
+</div>
+
+<div id="results">
+    <span id="final_span" style="color:black"></span>
+    <span id="interim_span" style="color:gray"></span>
+</div>
+<br>Jeśli komenda zaczyna się od 'Agent' polecenie zostaje wykonane<br>
+<input type="text" id="inp" name="inp"><br>
+<button onclick="microphoneButton()" style="border: 0; background-color:transparent">
+    <img id="status_img" src="mic.gif" alt="Start"></button>
+<div id="div_language">
+    <select id="select_language" onchange="updateCountry()"></select>
+    <select id="select_dialect"></select>
+</div>
+
 <div id="world">
     <canvas id="town" width="200px" height="200px"></canvas>
     <button type="button" onclick ="drawGraph('town','array')">Generate graph</button>
@@ -13,5 +33,64 @@
     <p id="map"></p>  
 </div>
 </body>
+
+<script src="webspeech.js"></script>
+<script>
+    var reco = new WebSpeechRecognition();
+    reco.statusText('status');
+    reco.statusImage('status_img');
+    reco.finalResults('final_span');
+
+    reco.continuous = false;
+
+    reco.onEnd = function() {
+        if (reco.final_transcript != '') {
+            var res = reco.final_transcript.split(" ");
+            if(res[0] == 'Agent' || res[0] == 'agent'){
+                delete res[0];
+                document.getElementById('inp').value=res;
+                document.getElementById('inp').value=document.getElementById('inp').value.replace(/,/g,' ');
+            }else{
+                document.getElementById('inp').value='nie wykona polecenia';
+            }
+
+            microphoneButton();
+        }
+    };
+    // Handler when user clicks microphone button.
+    function microphoneButton() {
+        reco.lang = select_dialect.value;
+        reco.toggleStartStop();
+    }
+
+
+    var langs =
+            [['English',         ['en-AU', 'Australia'],
+                    ['en-CA', 'Canada'],
+                    ['en-IN', 'India'],
+                    ['en-NZ', 'New Zealand'],
+                    ['en-ZA', 'South Africa'],
+                    ['en-GB', 'United Kingdom'],
+                    ['en-US', 'United States']]
+];
+
+    function updateCountry() {
+        for (var i = select_dialect.options.length - 1; i >= 0; i--) {
+            select_dialect.remove(i);
+        }
+        var list = langs[select_language.selectedIndex];
+        for (var i = 1; i < list.length; i++) {
+            select_dialect.options.add(new Option(list[i][1], list[i][0]));
+        }
+        select_dialect.style.visibility = list[1].length == 1 ? 'hidden' : 'visible';
+    }
+
+    for (var i = 0; i < langs.length; i++) {
+        select_language.options[i] = new Option(langs[i][0], i);
+    }
+    select_language.selectedIndex = 0;
+    updateCountry();
+    select_dialect.selectedIndex = 6;
+</script>
 
 </html>
