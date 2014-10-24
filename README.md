@@ -7,7 +7,7 @@ Inteligentna taksówka
 
 # Pakiety:
 - Web Speech Api
-- ~~Node.js~~
+- Node.js
 - ~~AIML~~
 
 # Działanie:
