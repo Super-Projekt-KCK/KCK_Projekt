@@ -2,8 +2,8 @@ Inteligentna taksówka
 ===========
 
 # Język projektu:
--HTML5
--JavaScript
+- HTML5
+- JavaScript
 
 # Pakiety:
 - Web Speech Api
