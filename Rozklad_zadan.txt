@@ -1,4 +1,11 @@
 -wpowadzanie komend - Maciej K
 -kontroler autobusu - Mateusz S
--generowanie �wiata - Mateusz P, Piotr P
--Zwracanie komunikat�w g�osowych - Artur P 
+-generowanie świata - Mateusz P, Piotr P
+-Zwracanie komunikatów głosowych - Artur P 
+
+
+Świat:
+-Zamiana krańcowych i krzyżujących się jedynek na dwójki (M)
+-Spisanie listy ulic (M)
+-Postarać się ogarnąć grafikę (z czasem)
+-Zliczenie długości ulic i nadanie im nazw(P)
