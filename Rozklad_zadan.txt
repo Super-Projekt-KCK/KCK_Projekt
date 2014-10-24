@@ -7,5 +7,6 @@
 Świat:
 -Zamiana krańcowych i krzyżujących się jedynek na dwójki (M)
 -Spisanie listy ulic (M)
+-Ulepszenie przesrysowania grafu do tablicy
 -Postarać się ogarnąć grafikę (z czasem)
 -Zliczenie długości ulic i nadanie im nazw(P)
