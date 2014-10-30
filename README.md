@@ -1,5 +1,7 @@
 Inteligentna taksówka
 ===========
+#Lider (wstępnie)
+Maciej K.
 
 # Język projektu:
 - HTML5
@@ -12,7 +14,7 @@ Inteligentna taksówka
 
 # Działanie:
 Po podaniu (głosowo) ciągu działań w języku angielskim (ciąg ulic, zakrętów lub ulicy docelowej) zdanie jest parsowane
-(rozbijane na częsci zdania)i interpretowane przy pomocy słownika synonimów.
+(rozbijane na częsci zdania) i interpretowane przy pomocy słownika synonimów.
 Przetworzony rozkaz zostaje wykonywany lub zostaje zwrócony (głosowo) komunikat błędu.  
 
 
@@ -23,7 +25,7 @@ Przetworzony rozkaz zostaje wykonywany lub zostaje zwrócony (głosowo) komunika
 - Losowe generowanie grafu (zrobione)
 - Przetwarzanie grafu na tablicę - ciąg jedynek (zrobione)
 - Graficzne przedstawienie grafu (zrobione)
-- Rozpoznawanie mowy (zroione)
+- Rozpoznawanie mowy (zrobione)
 - Dodanie podstawowej grafiki
 - Identyfikacja ulic
 - Znajdowanie ścieżki (algorytm a*)
@@ -31,6 +33,7 @@ Przetworzony rozkaz zostaje wykonywany lub zostaje zwrócony (głosowo) komunika
 
 ## Taksówka
 - Poruszanie się po planszy
+- Kolejka rozkazów
 - Zwracanie komend głosowych
 
 
