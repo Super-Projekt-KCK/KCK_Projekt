@@ -204,27 +204,9 @@ function printWorld(name) {
 
 // dlugosc i nazwy drog
 function roadsNameing() {
-	
-	for (var i=0; i<size; i++) {
-		for (var j=0; j<size; j++) {
-			if (world[i][j]==1 && world[i][j+1]==1) {
-				world[i][j]=2;
-			} else if (world[i][j]==1 && world[i][j-1]==2) {
-				world[i][j]=2;
-			}
-		}
-	}
-	
-	for (var i=0; i<size; i++) {
-		for (var j=0; j<size; j++) {
-			if (world[i][j]==1) {
-				world[i][j]=3;
-			}
-		}
-	}		
-	
+		
 	document.getElementById("roads").innerHTML = "";
-	
+	// liczenie dlugosci drog w poziomie
 	var road=1;
 	
 	for (var i=0; i<size; i++) {
@@ -254,7 +236,7 @@ function roadsNameing() {
 			road++;
 		}
 	}
-
+	//liczenie dlugosc drog w pionie
 	for (var i=0; i<size; i++) {
 		
 		var count = 0;
@@ -282,14 +264,6 @@ function roadsNameing() {
 			road++;
 		}
 	}	
-	
-	for (var i=0; i<size; i++) {
-		for (var j=0; j<size; j++) {
-			if (world[i][j]!=0) {
-				world[i][j]=1;
-			}
-		}
-	}	
-	
+		
 }
 
