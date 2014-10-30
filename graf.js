@@ -13,6 +13,8 @@ var maxEdges = 30;          //max liczba krawędzi
 var map = createArray(points,points);
 
 var edges = createArray(maxEdges,3);
+var size = 20;	
+var world = createArray(size,size);
 
 function printArray(name) {
     fillArray();
@@ -127,22 +129,25 @@ function drawEdges(context) {
 }
 
 
-
-function printWorld(name) {
-	var size = 20;	
-	var world = createArray(size,size);
+// rysowanie swiata
+function printWorld(name) {	
+	// zerowanie tablicy
 	
 	for (var i=0; i<size; i++) {
 		for (var j=0; j<size; j++) {
 			world[i][j]=0;
 		}
 	}
-		
+	
+	//nanoszenie wierzcholkow grafu (jako jedynek)
+	
 	for (i=0; i<points; i++) {
 		world[coords[1][i]/10][coords[0][i]/10]=1;
 	}	
 	
 	var count = 1;
+	
+	//tworzenie prostopadlych polaczen miedzy wierzcholkami
 	
     for (var i = 0; i < map.length; i++) {
         for (var j = i+1; j < map[i].length; j++) {
@@ -180,8 +185,9 @@ function printWorld(name) {
         }
     }
     
+    roadsNameing();
 				
- 
+	//wyswietlenie grafu i pogrubienie jedynek
  
     document.getElementById(name).innerHTML = "";
     for (var i = 0; i < world.length; i++) {		
@@ -194,5 +200,96 @@ function printWorld(name) {
         document.getElementById(name).innerHTML += "<br>";
     }
     
+}
+
+// dlugosc i nazwy drog
+function roadsNameing() {
+	
+	for (var i=0; i<size; i++) {
+		for (var j=0; j<size; j++) {
+			if (world[i][j]==1 && world[i][j+1]==1) {
+				world[i][j]=2;
+			} else if (world[i][j]==1 && world[i][j-1]==2) {
+				world[i][j]=2;
+			}
+		}
+	}
+	
+	for (var i=0; i<size; i++) {
+		for (var j=0; j<size; j++) {
+			if (world[i][j]==1) {
+				world[i][j]=3;
+			}
+		}
+	}		
+	
+	document.getElementById("roads").innerHTML = "";
+	
+	var road=1;
+	
+	for (var i=0; i<size; i++) {
+		
+		var count = 0;
+		var begin = new Array(2);
+		var end = new Array(2);
+		for (var j=0; j<size; j++) {
+			if (world[i][j]!=0 && world[i][j+1]!=0 && count==0) {
+				count++;
+				begin[0]=i;
+				begin[1]=j;
+			} else if (world[i][j]!=0 && world[i][j+1]!=0) {
+				count++;
+			} else if (world[i][j]==0 && world[i][j-1]!=0) {
+				end[0]=i;
+				end[1]=j-1;
+
+			}
+			
+		}
+		
+		if (count!=0) {
+			count++;
+			document.getElementById("roads").innerHTML += "ulica nr: " + road + " poczatek: [" + begin[0] + "," + begin[1] + "] koniec: [" + end[0] + "," + end[1] +"] o dlugosci: " + count + "<br />";
+			
+			road++;
+		}
+	}
+
+	for (var i=0; i<size; i++) {
+		
+		var count = 0;
+		var begin = new Array(2);
+		var end = new Array(2);
+		for (var j=0; j<size; j++) {
+			if (world[j][i]!=0 && world[j+1][i]!=0 && count==0) {
+				count++;
+				begin[0]=j;
+				begin[1]=i;
+			} else if (world[j][i]!=0 && world[j+1][i]!=0) {
+				count++;
+			} else if (world[j][i]!=0 && world[j+1][i]==0) {
+				end[0]=j;
+				end[1]=i;
+
+			}
+			
+		}
+		
+		if (count!=0) {
+			count++;
+			document.getElementById("roads").innerHTML += "ulica nr: " + road + " poczatek: [" + begin[0] + "," + begin[1] + "] koniec: [" + end[0] + "," + end[1] +"] o dlugosci: " + count + "<br />";
+			
+			road++;
+		}
+	}	
+	
+	for (var i=0; i<size; i++) {
+		for (var j=0; j<size; j++) {
+			if (world[i][j]!=0) {
+				world[i][j]=1;
+			}
+		}
+	}	
+	
 }
 
