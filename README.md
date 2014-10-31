@@ -10,6 +10,7 @@ Maciej K.
 # Pakiety:
 - Web Speech Api
 - Node.js
+- Thesaurus API
 - ~~AIML~~
 
 # Działanie:
