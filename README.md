@@ -10,6 +10,7 @@ Maciej K.
 # Pakiety:
 - Web Speech Api
 - Node.js
+- Thesaurus API
 - ~~AIML~~
 
 # Działanie:
@@ -34,6 +35,6 @@ Przetworzony rozkaz zostaje wykonywany lub zostaje zwrócony (głosowo) komunika
 ## Taksówka
 - Poruszanie się po planszy
 - Kolejka rozkazów
-- Zwracanie komend głosowych
+- Zwracanie komunikatów głosowych
 
 
