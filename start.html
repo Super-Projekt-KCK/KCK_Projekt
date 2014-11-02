@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head lang="pl">
     <meta charset="UTF-8">
@@ -5,6 +6,8 @@
     <link rel="Stylesheet" type="text/css" href="style.css" />
 	
 <script src="graf.js">
+</script>
+<script src="analyser.js">
 </script>
 </head>
 
@@ -17,14 +20,15 @@
     <span id="interim_span" style="color:gray"></span>
 </div>
 <br>Jeśli komenda zaczyna się od 'Agent' polecenie zostaje wykonane<br>
-<input type="text" id="inp" name="inp"><br>
+Narazie działa tylko dla kierunków np. Agent go left then right then go back<br>
+<textarea id="kolejka"></textarea>
 <button onclick="microphoneButton()" style="border: 0; background-color:transparent">
     <img id="status_img" src="mic.gif" alt="Start"></button>
 <div id="div_language">
     <select id="select_language" onchange="updateCountry()"></select>
     <select id="select_dialect"></select>
 </div>
-
+<script src="https://rawgit.com/spencermountain/nlp_compromise/master/client_side/nlp.min.js"> </script>
 <div id="world">
     <canvas id="town" width="200px" height="200px"></canvas>
     <button type="button" onclick ="makeGraph('array'); drawGraph('town','array')">Generate graph</button>
@@ -49,10 +53,21 @@
             var res = reco.final_transcript.split(" ");
             if(res[0] == 'Agent' || res[0] == 'agent'){
                 delete res[0];
-                document.getElementById('inp').value=res;
-                document.getElementById('inp').value=document.getElementById('inp').value.replace(/,/g,' ');
+                res=String(res).replace(/,/g,' ');
+                var queue=textParsing(res);
+                document.getElementById('kolejka').value='';
+                queue.forEach(function (entry) {
+                    if(entry['action']){
+                        document.getElementById('kolejka').value+=entry['action']+' ';
+                        document.getElementById('kolejka').value+=entry['direction']+' ';
+                        document.getElementById('kolejka').value+=entry['destination']+' ';
+                        document.getElementById('kolejka').value+=entry['through']+' ';
+                        document.getElementById('kolejka').value+=entry['through']+'\n';
+                    }
+                });
+
             }else{
-                document.getElementById('inp').value='nie wykona polecenia';
+                document.getElementById('kolejka').value='nie wykona polecenia';
             }
 
             microphoneButton();
