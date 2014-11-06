@@ -35,7 +35,6 @@ function printArray(name) {
 
 function fillArray() {
     var edges = 0;
-    var sum = 0;
     for (var i = 0; i < map.length; i++) {
         for (var j = i+1; j < map[i].length; j++) {
             if ((Math.random() < 0.6) || (edges >= maxEdges)) {
@@ -74,7 +73,8 @@ var coords = createArray(2, map.length);        //współrzędne wierzchołków 
 var width = 200;            //szerokość i wysokość canvas
 var height = 200;
 
-function makeGraph() {
+function makeGraph(array) {
+    printArray(array);
     document.getElementById("coords").innerHTML = "";
     for (var i = 0; i < map.length; i++) {            //losowanie współrzędnych grafu
 
@@ -91,8 +91,7 @@ function drawGraph (canvas, array) {
     var context = c.getContext("2d");
 
     context.clearRect(0,0,width,height);
-    printArray(array);
-    makeGraph();
+    //makeGraph(array);
     context.fillStyle = "#000000";
     drawPoints(context);
     drawEdges(context);
@@ -192,7 +191,7 @@ function printWorld(name) {
     document.getElementById(name).innerHTML = "";
     for (var i = 0; i < world.length; i++) {		
         for (var j = 0; j < world[i].length; j++) {
-            if (world[i][j] == 1)
+            if (world[i][j] != 0)
                 document.getElementById(name).innerHTML += "<b>" + world[i][j]+ "</b> ";
             else
                 document.getElementById(name).innerHTML += " " + world[i][j]+ " ";
@@ -202,7 +201,7 @@ function printWorld(name) {
     
 }
 
-// dlugosc i nazwy drog
+// dlugosc i nazwy drog plus zamiana jedynek na dwojki
 function roadsNameing() {
 		
 	document.getElementById("roads").innerHTML = "";
@@ -221,6 +220,7 @@ function roadsNameing() {
 				count++;
 				begin[0]=i;
 				begin[1]=j;
+
 			} else if (world[i][j]!=0 && world[i][j+1]!=0) {
 				count++;
 			} else if (world[i][j]!=0 && world[i][j+1]==0 && check==false && count!=0) {
@@ -228,8 +228,13 @@ function roadsNameing() {
 				end[1]=j;
 				check=true;
 			}
+            if ((begin[0] - end[0]) != 0) {
+    //            world[i][j] = 2;
+     //           world[i][j-1] = 2;
+            }
 			
 		}
+
 		
 		if (count!=0) {
 			count++;
@@ -267,7 +272,7 @@ function roadsNameing() {
 			
 			road++;
 		}
-	}	
+	}
 		
 }
 
