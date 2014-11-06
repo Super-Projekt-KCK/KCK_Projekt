@@ -18,7 +18,7 @@ var world = createArray(size,size);
 
 function printArray(name) {
     fillArray();
-    document.getElementById(name).innerHTML = "&nbsp;&nbsp;v&nbsp;&nbsp;0 1 2 3 4 5 6 7 8 9<br>";
+    /*document.getElementById(name).innerHTML = "&nbsp;&nbsp;v&nbsp;&nbsp;0 1 2 3 4 5 6 7 8 9<br>";
     for (var i = 0; i < map.length; i++) {
         document.getElementById(name).innerHTML += "v" + i + ": ";		
         for (var j = 0; j < map[i].length; j++) {
@@ -28,7 +28,7 @@ function printArray(name) {
                 document.getElementById(name).innerHTML += map[i][j]+ " ";
         }
         document.getElementById(name).innerHTML += "<br>";
-    }
+    }*/
 }
 
 //macierz sąsiedztwa dla grafu z x wierzchołkami
@@ -80,18 +80,17 @@ function makeGraph(array) {
 
             coords[0][i] = Math.floor(Math.random() * width / 20) * 20;
             coords[1][i] = Math.floor(Math.random() * height / 20) * 20;
-            document.getElementById("coords").innerHTML += "v" + i + ": " + coords[0][i] + "," + coords[1][i] + "<br>";
+            //document.getElementById("coords").innerHTML += "v" + i + ": " + coords[0][i] + "," + coords[1][i] + "<br>";
 
     }
 
 }
 
-function drawGraph (canvas, array) {
+function drawGraph (canvas) {
     var c = document.getElementById(canvas);
     var context = c.getContext("2d");
 
     context.clearRect(0,0,width,height);
-    //makeGraph(array);
     context.fillStyle = "#000000";
     drawPoints(context);
     drawEdges(context);
@@ -200,67 +199,59 @@ function printWorld(name) {
     }
     
 }
+//tablica trzymajaca wspolrzedne i dlugosci ulic
+var streetCoords = createArray(4, points);              //indeksy 0,1 - begin, 2,3 - end
 
 // dlugosc i nazwy drog plus zamiana jedynek na dwojki
 function roadsNameing() {
 		
 	document.getElementById("roads").innerHTML = "";
 	// liczenie dlugosci drog w poziomie
-	var road=1;
+    var street = 1;
 	
 	for (var i=0; i<size; i++) {
 		
 		var count = 0;
-		var begin = new Array(2);
-		var end = new Array(2);
 		var check = false;
-		
+
 		for (var j=0; j<size; j++) {
 			if (world[i][j]!=0 && world[i][j+1]!=0 && count==0) {
 				count++;
-				begin[0]=i;
-				begin[1]=j;
-
+                streetCoords[0][street] = i;
+                streetCoords[1][street] = j;
 			} else if (world[i][j]!=0 && world[i][j+1]!=0) {
 				count++;
 			} else if (world[i][j]!=0 && world[i][j+1]==0 && check==false && count!=0) {
-				end[0]=i;
-				end[1]=j;
+                streetCoords[2][street] = i;
+                streetCoords[3][street] = j;
 				check=true;
 			}
-            if ((begin[0] - end[0]) != 0) {
-    //            world[i][j] = 2;
-     //           world[i][j-1] = 2;
-            }
 			
 		}
 
 		
 		if (count!=0) {
 			count++;
-			document.getElementById("roads").innerHTML += "ulica nr: " + road + " poczatek: [" + begin[0] + "," + begin[1] + "] koniec: [" + end[0] + "," + end[1] +"] o dlugosci: " + count + "<br />";
-			
-			road++;
+            document.getElementById("roads").innerHTML += "Ulica nr " + street + ": początek: " + streetCoords[0][street] + "," + streetCoords[1][street] + " koniec: " + streetCoords[2][street] +"," + streetCoords[3][street] + ", dlugosc: " + count + "<br>";
+            street++;
 		}
 	}
 	//liczenie dlugosc drog w pionie
 	for (var i=0; i<size; i++) {
 		
 		var count = 0;
-		var begin = new Array(2);
-		var end = new Array(2);
 		var check = false;
 		
 		for (var j=0; j<size; j++) {
 			if (world[j][i]!=0 && world[j+1][i]!=0 && count==0) {
 				count++;
-				begin[0]=j;
-				begin[1]=i;
+                streetCoords[0][street] = j;
+                streetCoords[1][street] = i;
 			} else if (world[j][i]!=0 && world[j+1][i]!=0) {
 				count++;
 			} else if (world[j][i]!=0 && world[j+1][i]==0 && check==false && count!=0) {
-				end[0]=j;
-				end[1]=i;
+                streetCoords[2][street] = j;
+                streetCoords[3][street] = i;
 				check = true;
 			}
 			
@@ -268,11 +259,13 @@ function roadsNameing() {
 		
 		if (count!=0) {
 			count++;
-			document.getElementById("roads").innerHTML += "ulica nr: " + road + " poczatek: [" + begin[0] + "," + begin[1] + "] koniec: [" + end[0] + "," + end[1] +"] o dlugosci: " + count + "<br />";
-			
-			road++;
-		}
+            document.getElementById("roads").innerHTML += "Ulica nr " + street + ": początek: " + streetCoords[0][street] + "," + streetCoords[1][street] + " koniec: " + streetCoords[2][street] +"," + streetCoords[3][street] + ", dlugosc: " + count + "<br>";
+            street++;
+    }
 	}
 		
 }
-
+//zwraca mape swiata
+function getWorldMap() {
+    return world;
+}

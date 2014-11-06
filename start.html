@@ -31,12 +31,12 @@ Narazie działa tylko dla kierunków np. Agent go left then right then go back<b
 <script src="https://rawgit.com/spencermountain/nlp_compromise/master/client_side/nlp.min.js"> </script>
 <div id="world">
     <canvas id="town" width="200px" height="200px"></canvas>
-    <button type="button" onclick ="makeGraph('array'); drawGraph('town','array')">Generate graph</button>
+    <button type="button" onclick ="makeGraph('array'); drawGraph('town')">Generate graph</button>
 </div>
     <p id="array"></p>
     <p id="coords"></p>
-    <p id="map"></p>  
-    <p id="roads"></p>
+    <div id="map"></div>
+    <div id="roads"></div>
 </body>
 
 <script src="webspeech.js"></script>
