@@ -214,6 +214,8 @@ function roadsNameing() {
 		var count = 0;
 		var begin = new Array(2);
 		var end = new Array(2);
+		var check = false;
+		
 		for (var j=0; j<size; j++) {
 			if (world[i][j]!=0 && world[i][j+1]!=0 && count==0) {
 				count++;
@@ -221,10 +223,10 @@ function roadsNameing() {
 				begin[1]=j;
 			} else if (world[i][j]!=0 && world[i][j+1]!=0) {
 				count++;
-			} else if (world[i][j]==0 && world[i][j-1]!=0) {
+			} else if (world[i][j]!=0 && world[i][j+1]==0 && check==false && count!=0) {
 				end[0]=i;
-				end[1]=j-1;
-
+				end[1]=j;
+				check=true;
 			}
 			
 		}
@@ -242,6 +244,8 @@ function roadsNameing() {
 		var count = 0;
 		var begin = new Array(2);
 		var end = new Array(2);
+		var check = false;
+		
 		for (var j=0; j<size; j++) {
 			if (world[j][i]!=0 && world[j+1][i]!=0 && count==0) {
 				count++;
@@ -249,10 +253,10 @@ function roadsNameing() {
 				begin[1]=i;
 			} else if (world[j][i]!=0 && world[j+1][i]!=0) {
 				count++;
-			} else if (world[j][i]!=0 && world[j+1][i]==0) {
+			} else if (world[j][i]!=0 && world[j+1][i]==0 && check==false && count!=0) {
 				end[0]=j;
 				end[1]=i;
-
+				check = true;
 			}
 			
 		}
