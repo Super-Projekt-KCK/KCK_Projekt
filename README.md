@@ -30,11 +30,18 @@ Przetworzony rozkaz zostaje wykonywany lub zostaje zwrócony (głosowo) komunika
 - Dodanie podstawowej grafiki
 - Identyfikacja ulic
 - Znajdowanie ścieżki (algorytm a*)
-- Interpretacja mówionego tekstu
+
 
 ## Taksówka
 - Poruszanie się po planszy
 - Kolejka rozkazów
 - Zwracanie komunikatów głosowych
+
+
+## Komunikacja
+- Wprowadzanie głosowe komend (zrobione)
+- Prasowanie wprowadzonego tekstu (zrobione)
+- Sprecyzowanie komend przy pomocy słownika synonimów
+- Wyprowadzanie głosowe komunikatów
 
 
