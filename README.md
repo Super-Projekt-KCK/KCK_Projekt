@@ -35,13 +35,12 @@ Przetworzony rozkaz zostaje wykonywany lub zostaje zwrócony (głosowo) komunika
 ## Taksówka
 - Poruszanie się po planszy
 - Kolejka rozkazów
-- Zwracanie komunikatów głosowych
 
 
 ## Komunikacja
 - ~~Wprowadzanie głosowe komend (zrobione)~~
 - ~~Parsowanie wprowadzonego tekstu (zrobione)~~
 - Sprecyzowanie komend przy pomocy słownika synonimów
-- Wyprowadzanie głosowe komunikatów
+- Zwracanie głosowe komunikatów
 
 
