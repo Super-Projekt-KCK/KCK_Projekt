@@ -23,12 +23,12 @@ Przetworzony rozkaz zostaje wykonywany lub zostaje zwrócony (głosowo) komunika
 # Implementacja
 
 ## Świat
-- Losowe generowanie grafu (zrobione)
-- Przetwarzanie grafu na tablicę - ciąg jedynek (zrobione)
-- Graficzne przedstawienie grafu (zrobione)
-- Rozpoznawanie mowy (zrobione)
+- ~~Losowe generowanie grafu (zrobione)~~
+- ~~Przetwarzanie grafu na tablicę - ciąg jedynek (zrobione)~~
+- ~~Graficzne przedstawienie grafu (zrobione)~~
+- ~~Rozpoznawanie mowy (zrobione)~~
 - Dodanie podstawowej grafiki
-- Identyfikacja ulic
+- ~~dentyfikacja ulic~~
 - Znajdowanie ścieżki (algorytm a*)
 
 
