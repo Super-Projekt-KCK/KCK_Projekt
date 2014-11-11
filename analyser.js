@@ -1,3 +1,20 @@
+var output='';
+
+function getSynonyms(word){
+    var s = document.createElement("script");
+    s.src = "http://thesaurus.altervista.org/service.php?word="+word+"&language=en_US&output=json&key=PttJAgOCuOB9yMhErbQf&callback=process"; // NOTE: replace test_only with your own KEY
+    document.getElementsByTagName("head")[0].appendChild(s);
+
+}
+
+
+function process(result) {
+    for (key in result.response) {
+        list = result.response[key].list;
+        output += list.synonyms+"|";
+    }
+}
+
 function textParsing(text) {
     var poss = nlp.pos(text);
     var transText = text.split(' ');
@@ -40,6 +57,14 @@ function textParsing(text) {
                         action = 'go';
                     }
                 }else{
+                    getSynonyms(sentences[i][j]);
+                        if(output.indexOf('go') >= 0){
+                            action = 'go';
+                        }else if(output.indexOf('stop') >= 0){
+                            action = 'stop';
+                        }else{
+                            action = 'error';
+                        }
                     //sprawdzanie w slowniku czy czasownik jest synonimem 'go' lub 'stop'
                 }
                 varb=1;
@@ -51,7 +76,9 @@ function textParsing(text) {
                         through = 'through';
                     }
                 }else{
-                    //sprawdzenie w slowniku czy czasownik jest synonimem 'to' lub 'through'
+                    getSynonyms(sentences[i][j]);
+
+                    //sprawdzenie w slowniku czy jest synonimem 'to' lub 'through'
                 }
             }
             else if(part == 'JJ' ){
@@ -66,6 +93,19 @@ function textParsing(text) {
                         direction = 'back';
                     }
                 }else{
+                    getSynonyms(sentences[i][j]);
+                        if(synon.indexOf('left') >= 0){
+                            direction = 'left';
+                        }else if(synon.indexOf('right') >= 0){
+                            direction = 'right';
+                        }else if(synon.indexOf('forward') >= 0){
+                            direction = 'forward';
+                        }else if(synon.indexOf('back') >= 0){
+                            direction = 'back';
+                        }else{
+                            direction='error';
+                        }
+
                     //sprawdzenie w slowniku czy przymiotnik jest synonimem 'left', 'right', 'forward', 'back'
                 }
             }
@@ -85,3 +125,4 @@ function textParsing(text) {
 
 return queue;
 }
+
