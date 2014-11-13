@@ -4,14 +4,22 @@
     <meta charset="UTF-8">
     <title>Intelligent taxi</title>
     <link rel="Stylesheet" type="text/css" href="style.css" />
-<script src="graf.js">
-</script>
-<script src="analyser.js">
-</script>
+    <script src="graf.js">
+    </script>
+    <script src="analyser.js">
+    </script>
+    <script src="graphics.js">
+    </script>
 
 </head>
 
 <body>
+<div id="world">
+    <canvas id="town"width="1000px" height="1000px;"></canvas>
+    <canvas id="graph" width="200px" height="200px"></canvas>
+    <button type="button" onclick ="makeGraph('array'); drawGraph('graph'); drawWorld('town')">Generate graph</button>
+</div>
+
 <div id="status">
 </div>
 
@@ -29,10 +37,8 @@ Narazie działa tylko dla kierunków wraz z synonimami np. Agent move left then 
     <select id="select_dialect"></select>
 </div>
 <script src="https://rawgit.com/spencermountain/nlp_compromise/master/client_side/nlp.min.js"> </script>
-<div id="world">
-    <canvas id="town" width="200px" height="200px"></canvas>
-    <button type="button" onclick ="makeGraph('array'); drawGraph('town')">Generate graph</button>
-</div>
+
+
     <p id="array"></p>
     <p id="coords"></p>
     <div id="map"></div>
