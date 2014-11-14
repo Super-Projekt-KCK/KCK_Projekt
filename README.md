@@ -39,8 +39,8 @@ Przetworzony rozkaz zostaje wykonywany lub zostaje zwrócony (głosowo) komunika
 
 ## Komunikacja
 - ~~Wprowadzanie głosowe komend (zrobione)~~
-- ~~Parsowanie wprowadzonego tekstu (zrobione)~~
-- Sprecyzowanie komend przy pomocy słownika synonimów
+- Parsowanie wprowadzonego tekstu
+- ~~Sprecyzowanie komend przy pomocy słownika synonimów (zrobione)~~
 - Zwracanie głosowe komunikatów
 
 
