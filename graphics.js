@@ -19,8 +19,10 @@ function drawWorld(canvas) {
     for (var i = 0; i < world.length; i++) {
         for (var j = 0; j < world[i].length; j++) {
             if (world[j][i] == 1) {
-                context.drawImage(road, i * 50, j * 50);
-                road.src = roadPath;
+                if (!isVertical(j,i)) {
+                    context.drawImage(road, i * 50, j * 50);
+                    road.src = roadPath;
+                }
             }
             if (world[j][i] == 2) {
                 context.drawImage(cross2, i*50, j*50);
@@ -28,4 +30,43 @@ function drawWorld(canvas) {
             }
         }
     }
+    drawVertical(canvas, context);
 }
+
+function drawVertical(canvas, context) {
+    for (var i = 0; i < world.length; i++) {
+        for (var j = 0; j < world[i].length; j++) {
+            if ( (world[j][i] == 1) && (isVertical(j,i)) ) {
+                drawRotated(road, context, 90, i, j);
+                road.src = roadPath;
+            }
+        }
+    }
+}
+
+function drawRotated(image, context, deg, i,j) {
+    context.save();
+    context.translate(i*50,j*50);
+    context.rotate(deg * Math.PI/180);
+    context.translate(-i*50,-j*50);
+    context.drawImage(image, i*50, j*50 - 50);            //nie wiem czemu -50
+    context.restore();
+}
+
+function isVertical(i,j) {
+    if (j == 0) {
+        if (world[i][j+1] == 0)
+            return true;
+        else
+            return false;
+    }
+    else {
+        if ((world[i][j-1] == 0) && (world[i][j+1] == 0) )  {
+            console.log("pion");
+            return true;
+        }
+        else
+            return false;
+    }
+}
+
