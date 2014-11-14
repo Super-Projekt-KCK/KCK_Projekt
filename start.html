@@ -10,7 +10,10 @@
     </script>
     <script src="graphics.js">
     </script>
-
+    <script src="astar.js">
+    </script>
+    <script type="text/javascript" src="pathfinding-browser.min.js">
+    </script>
 </head>
 
 <body>
@@ -43,10 +46,21 @@ Narazie działa tylko dla kierunków wraz z synonimami np. Agent move left then 
     <p id="coords"></p>
     <div id="map"></div>
     <div id="roads"></div>
+Start:    
+<input type="text" size="12" id="coor1x" />  
+<input type="text" size="12" id="coor1y" /><br />
+Koniec:
+<input type="text" size="12" id="coor2x" />  
+<input type="text" size="12" id="coor2y" /><br />
+
+<button type="button" onclick="showPath()">show path</button>
+    
 </body>
 
 <script src="webspeech.js"></script>
 <script>
+	
+	
     var reco = new WebSpeechRecognition();
     reco.statusText('status');
     reco.statusImage('status_img');
@@ -114,5 +128,7 @@ Narazie działa tylko dla kierunków wraz z synonimami np. Agent move left then 
     updateCountry();
     select_dialect.selectedIndex = 6;
 </script>
+
+
 
 </html>
