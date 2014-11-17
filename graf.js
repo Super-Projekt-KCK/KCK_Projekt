@@ -280,13 +280,10 @@ function roadsNameing() {
 //sprawdza czy krzyżówka
 function crossroad(i,j) {
     if (i > 0 && j > 0) {
-        console.log("lurwa wszedłem");
         if ((world[i][j] != 0) && (world[i - 1][j] != 0) && (world[i + 1][j] != 0) && (world[i][j + 1] != 0) && (world[i][j - 1] != 0)) {
             world[i][j] = 2;
-            console.log("wpisałem kurwa dwa");
         }
     }
-    console.log("lalalj");
 }
 
 //zwraca mape swiata
