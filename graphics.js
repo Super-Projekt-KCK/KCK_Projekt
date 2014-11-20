@@ -37,11 +37,9 @@ function drawRoads(context, j, i) {             //rysuje proste (poziom i pion)
             if (world[j][i] == 1) {
                 if (!isVertical(j,i)) {
                     context.drawImage(road, i * 50, j * 50);
-                    road.src = roadPath;
                 }
                 else {
                     drawRotated(road, context, 90, i, j);
-                    road.src = roadPath;
                 }
             }
 }
@@ -57,8 +55,8 @@ function drawRotated(image, context, deg, i,j) {            //rysuje obrócony o
     context.translate(i*50,j*50);
     context.translate(image.width/2, image.height/2)
     context.rotate(deg * Math.PI/180);
-    //context.translate(-i*50,-j*50);
-    context.drawImage(image, -image.width/2, -image.height/2);            //nie wiem czemu -50
+    context.drawImage(image, -image.width/2, -image.height/2);
+
     context.restore();
 }
 
@@ -124,7 +122,6 @@ function checkNeighbors(context, j, i) {
             break;
         case 4:
             context.drawImage(cross2, i*50, j*50);
-            cross2.src = crossPath2;
             break;
     }
 
@@ -145,8 +142,6 @@ function rotateEnd(context, i, j, up, down, left, right) {
     if (down) {
         drawRotated(end, context, 270, i, j);
     }
-
-    end.src = endPath;
 }
 
 function rotateTurn(context, i, j, up, down, left, right) {
@@ -162,8 +157,6 @@ function rotateTurn(context, i, j, up, down, left, right) {
     if (up && right) {
         drawRotated(turn, context, 270, i, j);
     }
-
-    turn.src = turnPath;
 }
 
 function rotateCross(context, i, j, up, down, left, right) {
@@ -179,6 +172,30 @@ function rotateCross(context, i, j, up, down, left, right) {
     if (down && left && up) {
         drawRotated(cross1, context, 270, i, j);
     }
-
-    cross1.src = crossPath1;
 }
+
+//--------------------------preload obrazkow-----------------------//
+
+function preloader() {
+    if (document.images) {
+        road.src = roadPath;
+        turn.src = turnPath;
+        cross1.src = crossPath1;
+        cross2.src = crossPath2;
+        end.src = endPath;
+    }
+}
+function addLoadEvent(func) {
+    var oldonload = window.onload;
+    if (typeof window.onload != 'function') {
+        window.onload = func;
+    } else {
+        window.onload = function() {
+            if (oldonload) {
+                oldonload();
+            }
+            func();
+        }
+    }
+}
+addLoadEvent(preloader);
