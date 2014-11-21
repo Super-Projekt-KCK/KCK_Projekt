@@ -1,3 +1,5 @@
+var globalPath;
+
 function showPath() {
 	// zamiana 0 na 1 i odwrotnie (w algorymie a* przeszkody traktowane jako 1 a droga jako 0 (odwrotnie niz w naszej tablicy)
     var matrix = getWorldMap();
@@ -32,15 +34,17 @@ function showPath() {
 
 	var finder = new PF.AStarFinder();
 	var path = finder.findPath(oCoor1x.value, oCoor1y.value, oCoor2x.value, oCoor2y.value, grid);
-   
+
+    globalPath = path;
+    
     // kolorowanie drogi na czerwone "2" (w przyszlosci niepotrzebny kod) - tylko do wizualizacji tymczasowej	
-	var elem;
+/*	var elem;
 	
     while (elem = path.pop()) {
 	    var last = elem.join();
 	    var dot = last.indexOf(",");
 	    world[last.substring(dot+1)][last.substring(0, dot)]=2		
-	}
+    }
 
 
     document.getElementById("map").innerHTML = "";
@@ -55,6 +59,6 @@ function showPath() {
         }
         document.getElementById("map").innerHTML += "<br>";
     }
-    
+  */  
 }
 
