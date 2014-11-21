@@ -27,10 +27,11 @@ function drawWorld(canvas) {
 
      for (var i = 0; i < world.length; i++) {
          for (var j = 0; j < world[i].length; j++) {
-            drawRoads(context, j, i);
-            drawCrossroads(context, j, i);
-        }
+             drawRoads(context, j, i);
+             drawCrossroads(context, j, i);
+         }
     }
+    writeStreetNames(context);
 }
 
 function drawRoads(context, j, i) {             //rysuje proste (poziom i pion)
@@ -60,7 +61,18 @@ function drawRotated(image, context, deg, i,j) {            //rysuje obrócony o
     context.restore();
 }
 
+function writeStreetNames(context) {
+    context.fillStyle = "#000000";
+    context.font = "18px Arial";
 
+                   //odwrotne indeksy w tabeli. probowalem to naprawic ale sie poddaje
+    for (var i = 0; i < streetCoords[0].length; i++) {
+        var text = "Street " + i;
+        var x = ((streetCoords[1][i] + streetCoords[3][i]) / 2)*50;
+        var y = ((streetCoords[0][i] + streetCoords[2][i]) / 2)*50 + 18 ;
+        context.fillText(text, x, y);
+    }
+}
 
 //---------------funkcje sprawdzające-------------------------//
 
@@ -73,7 +85,6 @@ function isVertical(i,j) {              //sprawdza czy droga jest pionowa
     }
     else {
         if ((world[i][j-1] == 0) && (world[i][j+1] == 0) )  {
-            console.log("pion");
             return true;
         }
         else
