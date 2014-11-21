@@ -14,6 +14,8 @@
     </script>
     <script type="text/javascript" src="pathfinding-browser.min.js">
     </script>
+    <script type="text/javascript" src="animation.js">
+    </script>
 </head>
 
 <body>
@@ -45,16 +47,21 @@ Narazie działa tylko dla kierunków wraz z synonimami np. Agent move left then 
     <p id="array"></p>
     <p id="coords"></p>
     <div id="map"></div>
-    <div id="roads"></div>
+    <div id="roads"></div><br />
 Start:    
 <input type="text" size="12" id="coor1x" />  
 <input type="text" size="12" id="coor1y" /><br />
 Koniec:
-<input type="text" size="12" id="coor2x" />  
+<input type="text" size="12" id="coor2x" />
 <input type="text" size="12" id="coor2y" /><br />
 
-<button type="button" onclick="showPath()">show path</button>
-    
+<button type="button" onclick="showPath()">find path (a*)</button>
+<div>
+<canvas id="myCanvas" width="950" height="950">
+</canvas><br />    
+<button type="button" onclick="canvasAnimation()">show animation</button>
+</div>
+
 </body>
 
 <script src="webspeech.js"></script>
