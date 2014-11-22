@@ -4,14 +4,27 @@
     <meta charset="UTF-8">
     <title>Intelligent taxi</title>
     <link rel="Stylesheet" type="text/css" href="style.css" />
-<script src="graf.js">
-</script>
-<script src="analyser.js">
-</script>
-
+    <script src="graf.js">
+    </script>
+    <script src="analyser.js">
+    </script>
+    <script src="graphics.js">
+    </script>
+    <script src="astar.js">
+    </script>
+    <script type="text/javascript" src="pathfinding-browser.min.js">
+    </script>
+    <script type="text/javascript" src="animation.js">
+    </script>
 </head>
 
 <body>
+<div id="world">
+    <canvas id="town"width="1000px" height="1000px;"></canvas>
+    <canvas id="graph" width="200px" height="200px"></canvas>
+    <button type="button" onclick ="makeGraph('array'); drawGraph('graph'); drawWorld('town')">Generate graph</button>
+</div>
+
 <div id="status">
 </div>
 
@@ -20,7 +33,7 @@
     <span id="interim_span" style="color:gray"></span>
 </div>
 <br>Jeśli komenda zaczyna się od 'Agent' polecenie zostaje wykonane<br>
-Narazie działa tylko dla kierunków wraz z synonimami np. Agent go left then right then go back<br>
+Narazie działa tylko dla kierunków wraz z synonimami np. Agent move left then right then go back<br>
 <textarea id="kolejka"></textarea>
 <button onclick="microphoneButton()" style="border: 0; background-color:transparent">
     <img id="status_img" src="mic.gif" alt="Start"></button>
@@ -36,11 +49,27 @@ Narazie działa tylko dla kierunków wraz z synonimami np. Agent go left then ri
     <p id="array"></p>
     <p id="coords"></p>
     <div id="map"></div>
-    <div id="roads"></div>
+    <div id="roads"></div><br />
+Start:    
+<input type="text" size="12" id="coor1x" />  
+<input type="text" size="12" id="coor1y" /><br />
+Koniec:
+<input type="text" size="12" id="coor2x" />
+<input type="text" size="12" id="coor2y" /><br />
+
+<button type="button" onclick="showPath()">find path (a*)</button>
+<div>
+<canvas id="myCanvas" width="950" height="950">
+</canvas><br />    
+<button type="button" onclick="canvasAnimation()">show animation</button>
+</div>
+
 </body>
 
 <script src="webspeech.js"></script>
 <script>
+	
+	
     var reco = new WebSpeechRecognition();
     reco.statusText('status');
     reco.statusImage('status_img');
@@ -108,5 +137,7 @@ Narazie działa tylko dla kierunków wraz z synonimami np. Agent go left then ri
     updateCountry();
     select_dialect.selectedIndex = 6;
 </script>
+
+
 
 </html>

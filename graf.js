@@ -177,13 +177,16 @@ function printWorld(name) {
 						world[(coords1t2-10)/10][(coords0t2)/10]=1;
 						coords1t2-=10;					
 					}		
-				} 
-
+				}
             }
+
         }
     }
-    
+
+
     roadsNameing();
+
+
 				
 	//wyswietlenie grafu i pogrubienie jedynek
  
@@ -199,8 +202,11 @@ function printWorld(name) {
     }
     
 }
+
 //tablica trzymajaca wspolrzedne i dlugosci ulic
 var streetCoords = createArray(4, points);              //indeksy 0,1 - begin, 2,3 - end
+
+
 
 // dlugosc i nazwy drog plus zamiana jedynek na dwojki
 function roadsNameing() {
@@ -215,6 +221,7 @@ function roadsNameing() {
 		var check = false;
 
 		for (var j=0; j<size; j++) {
+            crossroad(i,j);
 			if (world[i][j]!=0 && world[i][j+1]!=0 && count==0) {
 				count++;
                 streetCoords[0][street] = i;
@@ -233,6 +240,8 @@ function roadsNameing() {
 		if (count!=0) {
 			count++;
             document.getElementById("roads").innerHTML += "Ulica nr " + street + ": początek: " + streetCoords[0][street] + "," + streetCoords[1][street] + " koniec: " + streetCoords[2][street] +"," + streetCoords[3][street] + ", dlugosc: " + count + "<br>";
+            world[streetCoords[0][street]][streetCoords[1][street]] = 2;
+            world[streetCoords[2][street]][streetCoords[3][street]] = 2;
             street++;
 		}
 	}
@@ -252,19 +261,31 @@ function roadsNameing() {
 			} else if (world[j][i]!=0 && world[j+1][i]==0 && check==false && count!=0) {
                 streetCoords[2][street] = j;
                 streetCoords[3][street] = i;
-				check = true;
-			}
-			
+                check = true;
+            }
+
 		}
 		
 		if (count!=0) {
 			count++;
             document.getElementById("roads").innerHTML += "Ulica nr " + street + ": początek: " + streetCoords[0][street] + "," + streetCoords[1][street] + " koniec: " + streetCoords[2][street] +"," + streetCoords[3][street] + ", dlugosc: " + count + "<br>";
+            world[streetCoords[0][street]][streetCoords[1][street]] = 2;
+            world[streetCoords[2][street]][streetCoords[3][street]] = 2;
             street++;
-    }
+        }
 	}
-		
 }
+
+
+//sprawdza czy krzyżówka
+function crossroad(i,j) {
+    if (i > 0 && j > 0) {
+        if ((world[i][j] != 0) && (world[i - 1][j] != 0) && (world[i + 1][j] != 0) && (world[i][j + 1] != 0) && (world[i][j - 1] != 0)) {
+            world[i][j] = 2;
+        }
+    }
+}
+
 //zwraca mape swiata
 function getWorldMap() {
     return world;

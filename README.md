@@ -27,7 +27,7 @@ Przetworzony rozkaz zostaje wykonywany lub zostaje zwrócony (głosowo) komunika
 - ~~Przetwarzanie grafu na tablicę - ciąg jedynek (zrobione)~~
 - ~~Graficzne przedstawienie grafu (zrobione)~~
 - ~~Rozpoznawanie mowy (zrobione)~~
-- Dodanie podstawowej grafiki
+- Dodanie ~~podstawowej~~ grafiki
 - ~~dentyfikacja ulic~~
 - Znajdowanie ścieżki (algorytm a*)
 
@@ -39,8 +39,8 @@ Przetworzony rozkaz zostaje wykonywany lub zostaje zwrócony (głosowo) komunika
 
 ## Komunikacja
 - ~~Wprowadzanie głosowe komend (zrobione)~~
-- ~~Parsowanie wprowadzonego tekstu (zrobione)~~
-- Sprecyzowanie komend przy pomocy słownika synonimów
+- Parsowanie wprowadzonego tekstu
+- ~~Sprecyzowanie komend przy pomocy słownika synonimów (zrobione)~~
 - Zwracanie głosowe komunikatów
 
 
