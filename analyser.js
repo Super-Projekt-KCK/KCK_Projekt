@@ -25,8 +25,8 @@ function textParsing(text) {
     sentences[sentence] = [];
     var word = 0;
     var senWord =0;
-
-    //alert(poss[0]['tokens'][7]['pos']['tag']);
+    //alert(text);
+    //console.log(poss);
     //console.log(poss[0]['tokens'][5]['pos']['tag']);
     poss[0]['tokens'].forEach(function (entry) {
         if(entry['pos']['tag'] == 'RB'){
@@ -57,9 +57,12 @@ function textParsing(text) {
                         action = 'go';
                     }
                 }else{
+                    alert(sentences[i][j]);
                     getSynonyms(sentences[i][j]);
+                    alert(sentences[i][j]);
                         if(output.indexOf('go') >= 0){
                             action = 'go';
+                            alert('weszlo');
                         }else if(output.indexOf('stop') >= 0){
                             action = 'stop';
                         }else{

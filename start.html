@@ -20,7 +20,7 @@
     <span id="interim_span" style="color:gray"></span>
 </div>
 <br>Jeśli komenda zaczyna się od 'Agent' polecenie zostaje wykonane<br>
-Narazie działa tylko dla kierunków wraz z synonimami np. Agent move left then right then go back<br>
+Narazie działa tylko dla kierunków wraz z synonimami np. Agent go left then right then go back<br>
 <textarea id="kolejka"></textarea>
 <button onclick="microphoneButton()" style="border: 0; background-color:transparent">
     <img id="status_img" src="mic.gif" alt="Start"></button>
@@ -28,7 +28,7 @@ Narazie działa tylko dla kierunków wraz z synonimami np. Agent move left then 
     <select id="select_language" onchange="updateCountry()"></select>
     <select id="select_dialect"></select>
 </div>
-<script src="https://rawgit.com/spencermountain/nlp_compromise/master/client_side/nlp.min.js"> </script>
+<script src="nlp.min.js"> </script>
 <div id="world">
     <canvas id="town" width="200px" height="200px"></canvas>
     <button type="button" onclick ="makeGraph('array'); drawGraph('town')">Generate graph</button>
