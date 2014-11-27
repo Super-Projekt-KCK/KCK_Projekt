@@ -15,6 +15,9 @@ var crossPath2 = 'images/cross2.png';
 var end  = new Image();
 var endPath = 'images/end.png';
 
+var taxi = new Image();
+var taxiPath = 'images/taxi.png';
+
 
 //--------------funkcje rysujace---------------------//
 
@@ -73,6 +76,7 @@ function writeStreetNames(context) {
         context.fillText(text, x, y);
     }
 }
+
 
 //---------------funkcje sprawdzające-------------------------//
 
@@ -193,6 +197,7 @@ function preloader() {
         turn.src = turnPath;
         cross1.src = crossPath1;
         cross2.src = crossPath2;
+        taxi.src = taxiPath;
         end.src = endPath;
     }
 }
