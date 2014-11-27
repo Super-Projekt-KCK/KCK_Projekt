@@ -77,6 +77,27 @@ function writeStreetNames(context) {
     }
 }
 
+function drawTaxi(context, cPosX, cPosY, mapX, mapY) {              //cPos - canvas position; map - map position
+    //context.drawImage(taxi, cPosX, cPosY);
+    console.log("sprawdz: " + world[mapY][mapX]);
+
+        if (world[mapY][mapX] == 1) {
+            if (isVertical(mapY, mapX)) {
+                console.log("vertical "+ mapX + " , " + mapY);
+                //drawRotated(taxi, context, 90, cPosX, cPosY);
+                context.drawImage(taxi, cPosX, cPosY);
+            }
+            else {
+                console.log("horizontal");
+                context.drawImage(taxi, cPosX, cPosY);
+                //drawRotated(taxi, context, 90, cPosX, cPosY);
+            }
+        }
+        else if (world[mapY][mapX] == 2) {
+            context.drawImage(taxi, cPosX, cPosY);
+         }
+}
+
 
 //---------------funkcje sprawdzające-------------------------//
 
@@ -98,7 +119,7 @@ function isVertical(i,j) {              //sprawdza czy droga jest pionowa
 
 function checkNeighbors(context, j, i) {
     var neighbors = 0;
-    var up = false               //okresla czy istnieje sasiad
+    var up = false;               //okresla czy istnieje sasiad
     var down = false;
     var left = false;
     var right = false;
@@ -141,6 +162,18 @@ function checkNeighbors(context, j, i) {
     }
 
 }
+
+
+
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds){
+            break;
+        }
+    }
+}
+
 
 //-------------------------------obracanie krzyzowek-------------------------//
 
@@ -189,6 +222,7 @@ function rotateCross(context, i, j, up, down, left, right) {
     }
 }
 
+
 //--------------------------preload obrazkow-----------------------//
 
 function preloader() {
@@ -215,3 +249,5 @@ function addLoadEvent(func) {
     }
 }
 addLoadEvent(preloader);
+
+
