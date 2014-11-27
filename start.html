@@ -31,6 +31,10 @@
     <input type="text" size="12" id="coor2y" /><br />
 
     <button type="button" onclick="showPath(); canvasAnimation();">find path (a*)</button>
+    <p id="array"></p>
+    <p id="coords"></p>
+    <div id="map"></div>
+    <div id="roads"></div><br />
 </div>
 
 <div id="status">
@@ -50,14 +54,7 @@ Narazie działa tylko dla kierunków wraz z synonimami np. Agent move left then 
     <select id="select_dialect"></select>
 </div>
 <script src="nlp.min.js"> </script>
-<div id="world">
-    <canvas id="town" width="200px" height="200px"></canvas>
-    <button type="button" onclick ="makeGraph('array'); drawGraph('town')">Generate graph</button>
-</div>
-    <p id="array"></p>
-    <p id="coords"></p>
-    <div id="map"></div>
-    <div id="roads"></div><br />
+
 
 </body>
 
