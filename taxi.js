@@ -37,9 +37,6 @@ function doGameLoop() {
         shipY = last.substring(dot+1) * 50;
         back = ctx.getImageData(shipX, shipY, 50, 50);
     }
-    else {
-        exit;
-    }
     ctx.putImageData(oldBack, oldShipX, oldShipY);
     // Put ship in new position.
     ctx.drawImage(taxi, shipX, shipY);
