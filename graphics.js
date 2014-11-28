@@ -79,8 +79,6 @@ function writeStreetNames(context) {
 
 function drawTaxi(context, cPosX, cPosY, mapX, mapY) {              //cPos - canvas position; map - map position
     //context.drawImage(taxi, cPosX, cPosY);
-    console.log("sprawdz: " + world[mapY][mapX]);
-
         if (world[mapY][mapX] == 1) {
             if (isVertical(mapY, mapX)) {
                 console.log("vertical "+ mapX + " , " + mapY);
@@ -89,12 +87,12 @@ function drawTaxi(context, cPosX, cPosY, mapX, mapY) {              //cPos - can
             }
             else {
                 console.log("horizontal");
-                context.drawImage(taxi, cPosX, cPosY);
-                //drawRotated(taxi, context, 90, cPosX, cPosY);
+                //context.drawImage(taxi, cPosX, cPosY);
+                drawRotated(taxi, context, 90, mapX, mapY);
             }
         }
         else if (world[mapY][mapX] == 2) {
-            context.drawImage(taxi, cPosX, cPosY);
+            drawRotated(taxi, context, 45, mapX, mapY);
          }
 }
 
@@ -103,17 +101,24 @@ function drawTaxi(context, cPosX, cPosY, mapX, mapY) {              //cPos - can
 
 function isVertical(i,j) {              //sprawdza czy droga jest pionowa
     if (j == 0) {
-        if (world[i][j+1] == 0)
+        if (world[i][j+1] == 0) {
+			console.log(i, j, "true");
             return true;
-        else
+			}
+        else {
+		console.log(i, j, "false");
             return false;
+		}
     }
     else {
         if ((world[i][j-1] == 0) && (world[i][j+1] == 0) )  {
-            return true;
+            console.log(i,j, "true");
+			return true;
         }
-        else
+        else {
+			console.log(i, j, "false");
             return false;
+			}
     }
 }
 

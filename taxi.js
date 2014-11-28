@@ -1,6 +1,6 @@
 var canvas; // canvas
 var ctx; // context
-var back = new Image(); // storage for new background piece
+var back; // storage for new background piece
 var oldBack; // storage for old background piece
 var ship = new Image(); // ship
 var shipX = 0; // current ship position X
@@ -26,7 +26,6 @@ function doGameLoop() {
     var elem;
     var mapX, mapY;
     elem = globalPath.pop();
-    console.log(elem);
     if (elem != undefined) {
         var last = elem.join();
         var dot = last.indexOf(",");
@@ -37,8 +36,10 @@ function doGameLoop() {
         oldBack = back;
         shipX = last.substring(0, dot)* 50;
         shipY = last.substring(dot+1) * 50;
-        back = ctx.getImageData(shipX, shipY, 50, 50);
-        ctx.putImageData(oldBack, oldShipX, oldShipY);
+		mapX = shipX/50;
+		mapY = shipY/50;
+        //back = ctx.getImageData(shipX, shipY, 50, 50);
+        //ctx.putImageData(oldBack, oldShipX, oldShipY);
         drawTaxi(ctx, shipX, shipY, mapX, mapY);
     }
     else {
