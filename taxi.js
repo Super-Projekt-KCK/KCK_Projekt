@@ -13,7 +13,6 @@ var oldShipY = 0; // old ship position Y
 
 
 function canvasAnimation() {
-    globalPath.reverse();
     ship.src = taxiPath;
     canvas = document.getElementById("town");
     if (canvas.getContext) {
@@ -44,5 +43,6 @@ function doGameLoop() {
     }
     else {
         clearInterval(gameLoop);
+
     }
 }
