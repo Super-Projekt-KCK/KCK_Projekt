@@ -16,25 +16,32 @@
     </script>
     <script type="text/javascript" src="taxi.js">
     </script>
+    <script type="text/javascript" src="move_by_direction.js">
+    </script>
 </head>
 
 <body>
-<div id="world">
+  
+  <div id="world">
     <canvas id="town"width="1000px" height="1000px;"></canvas>
     <canvas id="graph" width="200px" height="200px"></canvas>
     <button type="button" onclick ="makeGraph('array'); drawGraph('graph'); drawWorld('town')">Generate graph</button>
-    Start:
-    <input type="text" size="12" id="coor1x" />
-    <input type="text" size="12" id="coor1y" /><br />
+
     Koniec:
     <input type="text" size="12" id="coor2x" />
     <input type="text" size="12" id="coor2y" /><br />
 
     <button type="button" onclick="showPath(); canvasAnimation();">find path (a*)</button>
+        
     <p id="array"></p>
     <p id="coords"></p>
     <div id="map"></div>
     <div id="roads"></div><br />
+
+    <textarea name="text" cols="55" rows="10" id="commands"></textarea><br />
+
+    <button type="button" onclick="moveDirection();">move by directions</button>
+
 </div>
 
 <div id="status">
