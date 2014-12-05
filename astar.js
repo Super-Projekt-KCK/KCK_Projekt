@@ -1,5 +1,6 @@
 var globalPath;
 
+
 function showPath() {
 	// zamiana 0 na 1 i odwrotnie (w algorymie a* przeszkody traktowane jako 1 a droga jako 0 (odwrotnie niz w naszej tablicy)
     var matrix = getWorldMap();
@@ -14,8 +15,7 @@ function showPath() {
 	}
 
 	// pobranie koordynatow poczatku i konca sciezki
-	var oCoor1x = document.getElementById("coor1x");
-    var oCoor1y = document.getElementById("coor1y");
+
 	var oCoor2x = document.getElementById("coor2x");
     var oCoor2y = document.getElementById("coor2y"); 
     
@@ -32,10 +32,38 @@ function showPath() {
 		}
 	}
 
-	var finder = new PF.AStarFinder();
-	var path = finder.findPath(oCoor1x.value, oCoor1y.value, oCoor2x.value, oCoor2y.value, grid);
+    var finder = new PF.AStarFinder();
+   
+	var path = finder.findPath(positionTaxiInArrayX, positionTaxiInArrayY, oCoor2x.value, oCoor2y.value, grid);
 
     globalPath = path;
+    //ustawienie biezacej pozycji taksowki w tablicy i poprzedniej pozycji
+    var elem = globalPath[globalPath.length-1];
+    var mapX, mapY;
+    if (elem != undefined) {
+        var last = elem.join();
+        var dot = last.indexOf(",");
+        mapX = last.substring(0,dot);
+        mapY = last.substring(dot+1);
+	positionTaxiInArrayX = mapX;
+	positionTaxiInArrayY = mapY;
+    }
+
+    elem = globalPath[globalPath.length-2];
+    if (elem != undefined) {
+        var last = elem.join();
+        var dot = last.indexOf(",");
+        mapX = last.substring(0,dot);
+        mapY = last.substring(dot+1);
+	pastPositionTaxiInArrayX = mapX;
+	pastPositionTaxiInArrayY = mapY;
+    }
+
+    console.log(pastPositionTaxiInArrayX, pastPositionTaxiInArrayY);
+    console.log(positionTaxiInArrayX, positionTaxiInArrayY);
+    
+    
+    globalPath.reverse();
     
     // kolorowanie drogi na czerwone "2" (w przyszlosci niepotrzebny kod) - tylko do wizualizacji tymczasowej	
 /*	var elem;
