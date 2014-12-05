@@ -16,6 +16,11 @@ var edges = createArray(maxEdges,3);
 var size = 20;	
 var world = createArray(size,size);
 
+var positionTaxiInArrayX;
+var positionTaxiInArrayY;
+var pastPositionTaxiInArrayX;
+var pastPositionTaxiInArrayY;
+
 function printArray(name) {
     fillArray();
     /*document.getElementById(name).innerHTML = "&nbsp;&nbsp;v&nbsp;&nbsp;0 1 2 3 4 5 6 7 8 9<br>";
@@ -85,6 +90,7 @@ function makeGraph(array) {
     }
 
 }
+
 
 function drawGraph (canvas) {
     var c = document.getElementById(canvas);
@@ -235,7 +241,9 @@ function roadsNameing() {
 			}
 			
 		}
-
+	    
+	    positionTaxiInArrayX = streetCoords[1][1];
+	    positionTaxiInArrayY = streetCoords[0][1];
 		
 		if (count!=0) {
 			count++;
