@@ -134,6 +134,8 @@ function drawEdges(context) {
 
 
 // rysowanie swiata
+
+
 function printWorld(name) {	
 	// zerowanie tablicy
 	
@@ -212,7 +214,10 @@ function printWorld(name) {
 //tablica trzymajaca wspolrzedne i dlugosci ulic
 var streetCoords = createArray(4, points);              //indeksy 0,1 - begin, 2,3 - end
 
-
+//czyszczenie wspolrzednych ulic
+function clearStreets() {
+	streetCoords[0].length = 0;
+}
 
 // dlugosc i nazwy drog plus zamiana jedynek na dwojki
 function roadsNameing() {

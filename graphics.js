@@ -21,6 +21,14 @@ var taxiPath = 'images/taxi.png';
 
 //--------------funkcje rysujace---------------------//
 
+function initWorld() {
+	clearStreets(); 
+	makeGraph('array'); 
+	drawGraph('graph'); 
+	drawWorld('town');
+	drawTaxiOnStart('town');
+}
+
 function drawWorld(canvas) {
     var c = document.getElementById(canvas);
     var context = c.getContext("2d");
@@ -78,26 +86,56 @@ function writeStreetNames(context) {
 }
 
 function drawTaxi(context, cPosX, cPosY, mapX, mapY) {              //cPos - canvas position; map - map position
-    //context.drawImage(taxi, cPosX, cPosY);
-        if (world[mapY][mapX] == 1) {
-            if (isVertical(mapY, mapX)) {
-                console.log("vertical "+ mapX + " , " + mapY);
-                //drawRotated(taxi, context, 90, cPosX, cPosY);
-                context.drawImage(taxi, cPosX, cPosY);
-            }
-            else {
-                console.log("horizontal");
-                //context.drawImage(taxi, cPosX, cPosY);
-                drawRotated(taxi, context, 90, mapX, mapY);
-            }
-        }
-        else if (world[mapY][mapX] == 2) {
-            drawRotated(taxi, context, 45, mapX, mapY);
-         }
+/*context.drawImage(taxi, cPosX, cPosY);
+	if (world[mapY][mapX] == 1) {
+		if (isVertical(mapY, mapX)) {
+			console.log("vertical "+ mapX + " , " + mapY);
+			context.drawImage(taxi, cPosX, cPosY);
+		}
+		else {
+			drawRotated(taxi, context, 90, mapX, mapY);
+		}
+	}
+	else if (world[mapY][mapX] == 2) {
+		//if (!isVertical(pastPositionTaxiInArrayY, pastPositionTaxiInArrayX) {
+			drawRotated(taxi, context, checkDirection(), mapX, mapY);
+		//}
+		/*else {
+			context.drawImage(taxi, cPosX, cPosY);
+		}
+	}//*/
+	drawRotated(taxi, context, checkDirection(), mapX, mapY);
+}
+
+function drawTaxiOnStart(canvas) {
+	var c = document.getElementById(canvas);
+    var context = c.getContext("2d");
+	drawRotated(taxi, context, 90, streetCoords[1][1], streetCoords[0][1]);
 }
 
 
 //---------------funkcje sprawdzające-------------------------//
+
+//*
+function checkDirection() {				//sprawdza kierunek w ktorym jedzie taksa
+	var checkY = positionTaxiInArrayY - pastPositionTaxiInArrayY;
+	var checkX = positionTaxiInArrayX - pastPositionTaxiInArrayX;
+	
+	console.log("checkX: "+checkX);
+	console.log("checkY: "+checkY);
+	if (checkY > 0) {
+		return 180;
+	}
+	else
+		return 0;
+		
+	if (checkX > 0) {
+		return 90;
+	}
+	else {
+		return 270;
+	}
+}//*/
 
 function isVertical(i,j) {              //sprawdza czy droga jest pionowa
     if (j == 0) {
