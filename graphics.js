@@ -26,7 +26,9 @@ function initWorld() {
 	makeGraph('array'); 
 	drawGraph('graph'); 
 	drawWorld('town');
-	drawTaxiOnStart('town');
+    imgData = undefined;
+    oldImgData = undefined;
+	//drawTaxiOnStart('town');
 }
 
 function drawWorld(canvas) {
@@ -75,35 +77,18 @@ function drawRotated(image, context, deg, i,j) {            //rysuje obrócony o
 function writeStreetNames(context) {
     context.fillStyle = "#000000";
     context.font = "18px Arial";
+    console.log(streetCoords.names);
 
                    //odwrotne indeksy w tabeli. probowalem to naprawic ale sie poddaje
     for (var i = 0; i < streetCoords[0].length; i++) {
-        var text = "Street " + i;
+        var text = streetCoords.names[i] + " St.";
         var x = ((streetCoords[1][i] + streetCoords[3][i]) / 2)*50;
         var y = ((streetCoords[0][i] + streetCoords[2][i]) / 2)*50 + 18 ;
         context.fillText(text, x, y);
     }
 }
 
-function drawTaxi(context, mapX, mapY) {              //cPos - canvas position; map - map position
-/*context.drawImage(taxi, cPosX, cPosY);
-	if (world[mapY][mapX] == 1) {
-		if (isVertical(mapY, mapX)) {
-			console.log("vertical "+ mapX + " , " + mapY);
-			context.drawImage(taxi, cPosX, cPosY);
-		}
-		else {
-			drawRotated(taxi, context, 90, mapX, mapY);
-		}
-	}
-	else if (world[mapY][mapX] == 2) {
-		//if (!isVertical(pastPositionTaxiInArrayY, pastPositionTaxiInArrayX) {
-			drawRotated(taxi, context, checkDirection(), mapX, mapY);
-		//}
-		/*else {
-			context.drawImage(taxi, cPosX, cPosY);
-		}
-	}//*/
+function drawTaxi(context, mapX, mapY) {
 	drawRotated(taxi, context, checkDirection(), mapX, mapY);
 }
 
@@ -286,6 +271,7 @@ function preloader() {
         cross2.src = crossPath2;
         taxi.src = taxiPath;
         end.src = endPath;
+        readTextFile();
     }
 }
 function addLoadEvent(func) {

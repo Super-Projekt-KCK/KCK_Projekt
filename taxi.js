@@ -20,7 +20,9 @@ function canvasAnimation() {
     }
     if (imgData != undefined)
         ctx.putImageData(imgData, shipX, shipY);
-    gameLoop = setInterval(doGameLoop, 500);
+    //imgData = ctx.createImageData(50,50);
+
+    gameLoop = setInterval(doGameLoop, 125);
 }
 
 function doGameLoop() {
