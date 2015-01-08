@@ -1,7 +1,7 @@
 var globalPath;
 
 
-function showPath() {
+function showPath(targetY, targetX) {
 	// zamiana 0 na 1 i odwrotnie (w algorymie a* przeszkody traktowane jako 1 a droga jako 0 (odwrotnie niz w naszej tablicy)
     var matrix = getWorldMap();
     for (var i=0; i<matrix.length; i++) {
@@ -14,10 +14,6 @@ function showPath() {
 		}
 	}
 
-	// pobranie koordynatow poczatku i konca sciezki
-
-	var oCoor2x = document.getElementById("coor2x");
-    var oCoor2y = document.getElementById("coor2y"); 
     
     // tworzenie tablicy zero jedynkowej i wyszukanie sciezki algorytmem a*
     var grid = new PF.Grid(20, 20, matrix);
@@ -34,7 +30,7 @@ function showPath() {
 
     var finder = new PF.AStarFinder();
    
-	var path = finder.findPath(positionTaxiInArrayX, positionTaxiInArrayY, oCoor2x.value, oCoor2y.value, grid);
+    var path = finder.findPath(positionTaxiInArrayX, positionTaxiInArrayY, targetX, targetY, grid);
 
     globalPath = path;
     //ustawienie biezacej pozycji taksowki w tablicy i poprzedniej pozycji
