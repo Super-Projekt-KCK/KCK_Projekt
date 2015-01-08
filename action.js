@@ -40,3 +40,115 @@ function action() {
     
 
 }
+
+
+function checkDirection(direction) {
+	if (pastPositionTaxiInArrayX==positionTaxiInArrayX) { 
+	    if (pastPositionTaxiInArrayY > positionTaxiInArrayY) {
+		if (direction=="left") {
+		    
+		    var tempX=Number(positionTaxiInArrayX);
+		    var tempY=Number(positionTaxiInArrayY);
+		    while (world[tempY][tempX-1]!=1) {
+			tempY=tempY-1;
+		    }
+		    showPath(Number(tempY), Number(tempX-1));
+		    canvasAnimation();		    
+
+		} else if (direction=="right") {
+
+		    var tempX=Number(positionTaxiInArrayX);
+		    var tempY=Number(positionTaxiInArrayY);
+		    while (world[tempY][tempX+1]!=1) {
+			tempY=tempY-1;
+		    }
+		    showPath(Number(tempY), Number(tempX+1));
+		    canvasAnimation();
+
+		}
+	    } else {
+		if (direction=="left") {
+
+		    var tempX=Number(positionTaxiInArrayX);
+		    var tempY=Number(positionTaxiInArrayY);
+		    while (world[tempY][tempX+1]!=1) {
+			tempY=tempY+1;
+		    }
+		    showPath(Number(tempY), Number(tempX+1));
+		    canvasAnimation();
+		    		    
+		} else if (direction=="right") {
+		  
+		    var tempX=Number(positionTaxiInArrayX);
+		    var tempY=Number(positionTaxiInArrayY);
+		    while (world[tempY][tempX-1]!=1) {
+			tempY=tempY+1;
+		    }
+		    showPath(Number(tempY), Number(tempX-1));
+		    canvasAnimation();
+
+		}
+	    }
+	} else {
+	    if (pastPositionTaxiInArrayX > positionTaxiInArrayX) {
+		if (direction=="left") {
+
+		    var tempX=Number(positionTaxiInArrayX);
+		    var tempY=Number(positionTaxiInArrayY);
+		    while (world[tempY+1][tempX]!=1) {
+			tempX=tempX-1;
+		    }
+		    showPath(Number(tempY+1), Number(tempX));
+		    canvasAnimation();		    
+		    
+		} else if (direction=="right") {
+
+		    var tempX=Number(positionTaxiInArrayX);
+		    var tempY=Number(positionTaxiInArrayY);
+		    while (world[tempY-1][tempX]!=1) {
+			tempX=tempX-1;
+		    }
+		    showPath(Number(tempY-1), Number(tempX));
+		    canvasAnimation();
+
+		}
+	    } else {
+		if (direction=="left") {
+		    
+		    var tempX=Number(positionTaxiInArrayX);
+		    var tempY=Number(positionTaxiInArrayY);
+		    
+		    while (world[tempY-1][tempX]!=1) {
+			tempX=tempX+1;
+		    }
+		    showPath(Number(tempY-1), Number(tempX));
+		    canvasAnimation();
+		    
+		} else if (direction=="right") {
+		    var tempX=Number(positionTaxiInArrayX);
+		    var tempY=Number(positionTaxiInArrayY);
+		    while (world[tempY+1][tempX]!=1) {
+			tempX=tempX+1;
+		    }
+		    showPath(Number(tempY+1), Number(tempX));
+		    canvasAnimation();
+		    		  document.getElementById("check").innerHTML = "";
+    for (var i = 0; i < world.length; i++) {		
+        for (var j = 0; j < world[i].length; j++) {
+            if (world[i][j] != 0)
+		if (i == tempY+1 && j == tempX) {
+		    document.getElementById("check").innerHTML += "<b><font color=red>" + world[i][j]+ "</font></b> ";
+		} else {
+                    document.getElementById("check").innerHTML += "<b>" + world[i][j]+ "</b> ";
+		}
+	    else
+		document.getElementById("check").innerHTML += " " + world[i][j]+ " ";
+		
+	}
+        document.getElementById("check").innerHTML += "<br>";
+    }
+		}
+	    }
+	}
+}
+    
