@@ -18,6 +18,8 @@
     </script>
     <script type="text/javascript" src="move_by_direction.js">
     </script>
+    <script type="text/javascript" src="action.js">
+    </script>
 </head>
 
 <body>
@@ -27,12 +29,6 @@
     <canvas id="graph" width="200px" height="200px"></canvas>
     <button type="button" onclick ="initWorld();">Generate graph</button>
 
-    Koniec:
-    <input type="text" size="12" id="coor2x" />
-    <input type="text" size="12" id="coor2y" /><br />
-
-    <button type="button" onclick="showPath(); canvasAnimation();">find path (a*)</button>
-        
     <p id="array"></p>
     <p id="coords"></p>
     <div id="map"></div>
@@ -41,6 +37,7 @@
     <textarea name="text" cols="55" rows="10" id="commands"></textarea><br />
 
     <button type="button" onclick="moveDirection();">move by directions</button>
+    <div id="check"></div><br />
 
 </div>
 
@@ -54,6 +51,7 @@
 <br>Jeśli komenda zaczyna się od 'Agent' polecenie zostaje wykonane<br>
 Narazie działa tylko dla kierunków wraz z synonimami np. Agent move left then right then go back<br>
 <textarea id="kolejka"></textarea>
+<button type="button" onclick="action();">action</button>
 <button onclick="microphoneButton()" style="border: 0; background-color:transparent">
     <img id="status_img" src="mic.gif" alt="Start"></button>
 <div id="div_language">
