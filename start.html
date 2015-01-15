@@ -62,13 +62,38 @@ Narazie działa tylko dla kierunków wraz z synonimami np. Agent move left then 
     <select id="select_language" onchange="updateCountry()"></select>
     <select id="select_dialect"></select>
 </div>
+  <input type="text" id="tescik">
+  <button onClick="test()">Maciej</button>
 <script src="nlp.min.js"> </script>
-
-
 </body>
 
 <script src="webspeech.js"></script>
 <script>
+function test(){
+    var rozkaz =document.getElementById('tescik').value;
+
+    if (rozkaz != '') {
+        var res = rozkaz.split(" ");
+        if(res[0] == 'Agent' || res[0] == 'agent'){
+            delete res[0];
+            res=String(res).replace(/,/g,' ');
+            console.log(res);
+            textParsing(res);
+            splits();
+            document.getElementById('kolejka').value='';
+            queue.forEach(function (entry) {
+                if(entry['action']){
+                    document.getElementById('kolejka').value+=entry['action']+' ';
+                    document.getElementById('kolejka').value+=entry['directions']+' ';
+                    document.getElementById('kolejka').value+=entry['throughdestinations']+'\n';
+                }
+            });
+
+        }else{
+            document.getElementById('kolejka').value='nie wykona polecenia';
+        }
+}
+}
 	
 	
     var reco = new WebSpeechRecognition();
@@ -84,7 +109,9 @@ Narazie działa tylko dla kierunków wraz z synonimami np. Agent move left then 
             if(res[0] == 'Agent' || res[0] == 'agent'){
                 delete res[0];
                 res=String(res).replace(/,/g,' ');
-                var queue=textParsing(res);
+                console.log(res);
+                textParsing(res);
+                splits();
                 document.getElementById('kolejka').value='';
                 queue.forEach(function (entry) {
                     if(entry['action']){
