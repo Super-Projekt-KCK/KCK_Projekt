@@ -29,7 +29,15 @@ function showPath(targetY, targetX) {
 	}
 
     var finder = new PF.AStarFinder();
-   
+
+    console.log(world[targetY][targetX]);
+
+    if (targetX<0 || targetX>19 || targetY<0 || targetY>19) throw "coords";
+    if (world[targetY][targetX]==0) throw "coords";
+
+    
+    
+    document.getElementById("taxiMan").value = "I'am going to " + targetY + " " + targetX;		
     var path = finder.findPath(positionTaxiInArrayX, positionTaxiInArrayY, targetX, targetY, grid);
 
     globalPath = path;
