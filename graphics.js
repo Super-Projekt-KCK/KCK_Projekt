@@ -22,11 +22,18 @@ var taxiPath = 'images/taxi.png';
 //--------------funkcje rysujace---------------------//
 
 function initWorld() {
-	clearStreets(); 
-	makeGraph('array'); 
-	drawGraph('graph'); 
+    readTextFile();
+	clearStreets();
+    readTextFile();
+	makeGraph();
+	drawGraph('graph');
+    //console.log("init");
+    //readTextFile();
 	drawWorld('town');
-	drawTaxiOnStart('town');
+    //readTextFile();
+    imgData = undefined;
+    oldImgData = undefined;
+	//drawTaxiOnStart('town');
 }
 
 function drawWorld(canvas) {
@@ -42,6 +49,7 @@ function drawWorld(canvas) {
              drawCrossroads(context, j, i);
          }
     }
+
     writeStreetNames(context);
 }
 
@@ -75,35 +83,19 @@ function drawRotated(image, context, deg, i,j) {            //rysuje obrócony o
 function writeStreetNames(context) {
     context.fillStyle = "#000000";
     context.font = "18px Arial";
+    console.log("graqphics.js: " + streetCoords.names);
 
                    //odwrotne indeksy w tabeli. probowalem to naprawic ale sie poddaje
     for (var i = 0; i < streetCoords[0].length; i++) {
-        var text = "Street " + i;
+        var text = streetCoords.names[i] + " St.";
+        console.log("zapisuje: " + streetCoords.names[i]);
         var x = ((streetCoords[1][i] + streetCoords[3][i]) / 2)*50;
         var y = ((streetCoords[0][i] + streetCoords[2][i]) / 2)*50 + 18 ;
         context.fillText(text, x, y);
     }
 }
 
-function drawTaxi(context, cPosX, cPosY, mapX, mapY) {              //cPos - canvas position; map - map position
-/*context.drawImage(taxi, cPosX, cPosY);
-	if (world[mapY][mapX] == 1) {
-		if (isVertical(mapY, mapX)) {
-			console.log("vertical "+ mapX + " , " + mapY);
-			context.drawImage(taxi, cPosX, cPosY);
-		}
-		else {
-			drawRotated(taxi, context, 90, mapX, mapY);
-		}
-	}
-	else if (world[mapY][mapX] == 2) {
-		//if (!isVertical(pastPositionTaxiInArrayY, pastPositionTaxiInArrayX) {
-			drawRotated(taxi, context, checkDirection(), mapX, mapY);
-		//}
-		/*else {
-			context.drawImage(taxi, cPosX, cPosY);
-		}
-	}//*/
+function drawTaxi(context, mapX, mapY) {
 	drawRotated(taxi, context, checkDirection(), mapX, mapY);
 }
 
@@ -116,45 +108,55 @@ function drawTaxiOnStart(canvas) {
 
 //---------------funkcje sprawdzające-------------------------//
 
-//*
+
 function checkDirection() {				//sprawdza kierunek w ktorym jedzie taksa
 	var checkY = positionTaxiInArrayY - pastPositionTaxiInArrayY;
 	var checkX = positionTaxiInArrayX - pastPositionTaxiInArrayX;
-	
+
+
+    console.log("Pozycja X: " + positionTaxiInArrayX);
+    console.log("Stara Pozycja X: " +pastPositionTaxiInArrayX);
+    console.log("Pozycja Y: " + positionTaxiInArrayY);
+    console.log("Stara Pozycja Y: " +pastPositionTaxiInArrayY);
 	console.log("checkX: "+checkX);
 	console.log("checkY: "+checkY);
-	if (checkY > 0) {
-		return 180;
-	}
-	else
-		return 0;
-		
-	if (checkX > 0) {
-		return 90;
-	}
-	else {
-		return 270;
-	}
-}//*/
+
+    switch (checkY) {
+        case 1:
+            return 180;
+        case -1:
+            return 0;
+        default:
+            break;
+    }
+
+    switch (checkX) {
+        case 1:
+            return 90;
+        case -1:
+            return 270;
+
+    }
+}
 
 function isVertical(i,j) {              //sprawdza czy droga jest pionowa
     if (j == 0) {
         if (world[i][j+1] == 0) {
-			console.log(i, j, "true");
+			//console.log(i, j, "true");
             return true;
 			}
         else {
-		console.log(i, j, "false");
+		//console.log(i, j, "false");
             return false;
 		}
     }
     else {
         if ((world[i][j-1] == 0) && (world[i][j+1] == 0) )  {
-            console.log(i,j, "true");
+            //console.log(i,j, "true");
 			return true;
         }
         else {
-			console.log(i, j, "false");
+			//console.log(i, j, "false");
             return false;
 			}
     }
@@ -276,6 +278,7 @@ function preloader() {
         cross2.src = crossPath2;
         taxi.src = taxiPath;
         end.src = endPath;
+        //readTextFile();
     }
 }
 function addLoadEvent(func) {

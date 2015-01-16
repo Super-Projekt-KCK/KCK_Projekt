@@ -21,20 +21,6 @@ var positionTaxiInArrayY;
 var pastPositionTaxiInArrayX;
 var pastPositionTaxiInArrayY;
 
-function printArray(name) {
-    fillArray();
-    /*document.getElementById(name).innerHTML = "&nbsp;&nbsp;v&nbsp;&nbsp;0 1 2 3 4 5 6 7 8 9<br>";
-    for (var i = 0; i < map.length; i++) {
-        document.getElementById(name).innerHTML += "v" + i + ": ";		
-        for (var j = 0; j < map[i].length; j++) {
-            if (map[i][j] == 1)
-                document.getElementById(name).innerHTML += "<b>" + map[i][j]+ "</b> ";
-            else
-                document.getElementById(name).innerHTML += map[i][j]+ " ";
-        }
-        document.getElementById(name).innerHTML += "<br>";
-    }*/
-}
 
 //macierz sąsiedztwa dla grafu z x wierzchołkami
 
@@ -78,8 +64,8 @@ var coords = createArray(2, map.length);        //współrzędne wierzchołków 
 var width = 200;            //szerokość i wysokość canvas
 var height = 200;
 
-function makeGraph(array) {
-    printArray(array);
+function makeGraph() {
+    fillArray();
     document.getElementById("coords").innerHTML = "";
     for (var i = 0; i < map.length; i++) {            //losowanie współrzędnych grafu
 
@@ -138,7 +124,6 @@ function drawEdges(context) {
 
 function printWorld(name) {	
 	// zerowanie tablicy
-	
 	for (var i=0; i<size; i++) {
 		for (var j=0; j<size; j++) {
 			world[i][j]=0;
@@ -190,9 +175,8 @@ function printWorld(name) {
 
         }
     }
-
-
-    roadsNameing();
+    assignNames();
+    roadsNaming();
 
 
 				
@@ -211,21 +195,12 @@ function printWorld(name) {
     
 }
 
-//tablica trzymajaca wspolrzedne i dlugosci ulic
-var streetCoords = createArray(4, points);              //indeksy 0,1 - begin, 2,3 - end
-
-//czyszczenie wspolrzednych ulic
-function clearStreets() {
-	streetCoords[0].length = 0;
-}
-
 // dlugosc i nazwy drog plus zamiana jedynek na dwojki
-function roadsNameing() {
+function roadsNaming() {
 		
 	document.getElementById("roads").innerHTML = "";
 	// liczenie dlugosci drog w poziomie
-    var street = 1;
-	
+    var street = 0;
 	for (var i=0; i<size; i++) {
 		
 		var count = 0;
@@ -246,13 +221,13 @@ function roadsNameing() {
 			}
 			
 		}
-	    
+
 	    positionTaxiInArrayX = streetCoords[1][1];
 	    positionTaxiInArrayY = streetCoords[0][1];
 		
 		if (count!=0) {
 			count++;
-            document.getElementById("roads").innerHTML += "Ulica nr " + street + ": początek: " + streetCoords[0][street] + "," + streetCoords[1][street] + " koniec: " + streetCoords[2][street] +"," + streetCoords[3][street] + ", dlugosc: " + count + "<br>";
+            document.getElementById("roads").innerHTML += streetCoords.names[street] + ": początek: " + streetCoords[0][street] + "," + streetCoords[1][street] + " koniec: " + streetCoords[2][street] +"," + streetCoords[3][street] + ", dlugosc: " + count + "<br>";
             world[streetCoords[0][street]][streetCoords[1][street]] = 2;
             world[streetCoords[2][street]][streetCoords[3][street]] = 2;
             street++;
@@ -281,12 +256,16 @@ function roadsNameing() {
 		
 		if (count!=0) {
 			count++;
-            document.getElementById("roads").innerHTML += "Ulica nr " + street + ": początek: " + streetCoords[0][street] + "," + streetCoords[1][street] + " koniec: " + streetCoords[2][street] +"," + streetCoords[3][street] + ", dlugosc: " + count + "<br>";
+            document.getElementById("roads").innerHTML += streetCoords.names[street] + ": początek: " + streetCoords[0][street] + "," + streetCoords[1][street] + " koniec: " + streetCoords[2][street] +"," + streetCoords[3][street] + ", dlugosc: " + count + "<br>";
             world[streetCoords[0][street]][streetCoords[1][street]] = 2;
             world[streetCoords[2][street]][streetCoords[3][street]] = 2;
+            streetCount = street+1;
+
             street++;
         }
 	}
+
+    console.log(streetCount);
 }
 
 

@@ -1,51 +1,157 @@
 var output='';
+var posArray = [];
+var sentences = [];
+var sentence = 0;
+posArray[sentence]=[];
+sentences[sentence] = [];
+var preposition = 0;
+posArray[sentence][preposition]=[];
+sentences[sentence][preposition]=[];
+var queue=[];
+var qIterator=0;
+queue[qIterator]=[];
+var senWord = 0;
 
 function getSynonyms(word){
     var s = document.createElement("script");
-    s.src = "http://thesaurus.altervista.org/service.php?word="+word+"&language=en_US&output=json&key=PttJAgOCuOB9yMhErbQf&callback=process"; // NOTE: replace test_only with your own KEY
-    document.getElementsByTagName("head")[0].appendChild(s);
+    s.src = "http://words.bighugelabs.com/api/2/0a2e3953d364b8dfd36393e746c7b463/"+word+"/json?callback=process"; // NOTE: replace test_only with your own KEY
+    //document.getElementsByTagName("head")[0].appendChild(s);
 
 }
 
-
 function process(result) {
-    for (key in result.response) {
+    console.log(result);
+    /*for (key in result.response) {
         list = result.response[key].list;
         output += list.synonyms+"|";
-    }
+    }*/
+
 }
 
 function textParsing(text) {
+
     var poss = nlp.pos(text);
     var transText = text.split(' ');
-    var posArray = [];
-    var sentences = [];
-    var sentence = 0;
-    posArray[sentence]=[];
-    sentences[sentence] = [];
     var word = 0;
-    var senWord =0;
-    //alert(text);
-    //console.log(poss);
-    //console.log(poss[0]['tokens'][5]['pos']['tag']);
+
     poss[0]['tokens'].forEach(function (entry) {
-        if(entry['pos']['tag'] == 'RB'){
+        if (entry['pos']['tag'] == 'RB') {
             sentence++;
-            senWord =0;
-            posArray[sentence]=[];
+            senWord = 0;
+            preposition = 0;
+            posArray[sentence] = [];
             sentences[sentence] = [];
-        }else{
-            posArray[sentence][senWord] = entry['pos']['tag'];
-            sentences[sentence][senWord] = entry['text'];
-            senWord++;
+            posArray[sentence][preposition]=[];
+            sentences[sentence][preposition]=[];
+
+        } else {
+            if(entry['pos']['tag'] == 'IN'){
+                senWord=0;
+                preposition++;
+                posArray[sentence][preposition]=[];
+                sentences[sentence][preposition]=[];
+                posArray[sentence][preposition][senWord] = entry['pos']['tag'];
+                sentences[sentence][preposition][senWord] = entry['text'];
+                senWord++;
+            }else{
+                posArray[sentence][preposition][senWord] = entry['pos']['tag'];
+                sentences[sentence][preposition][senWord] = entry['text'];
+                senWord++;
+            }
         }
         word++;
     });
+}
 
+function splits(){
+    var pp=0;
+    var ss=0;
+    var ww=0;
+    var IN = 0, INS = 0, INN=0;
+    var VBP= 0, VBPS=0;
+    var action='';
+    var throughdestination=[], directions=[];
+
+    posArray.forEach(function (sent) {
+        queue[qIterator]=[];
+        sent.forEach(function (prep) {
+            prep.forEach(function (word) {
+                if(word == 'VBP'){
+                    action=sentences[ss][pp][ww];
+                    VBP=1;
+                    VBPS++;
+                }else if(word == 'IN'){
+                    IN=1;
+                }
+                if(VBP==1){
+                    ww++;
+                    if(typeof(sentences[ss][pp][ww]) !=  'undefined'){
+                        directions.push(sentences[ss][pp][ww]);
+                        console.log(directions);
+                        VBP=0;
+                    }
+
+                }else if(IN == 1){
+                    if(typeof(sentences[ss][pp][ww]) !=  'undefined') {
+
+                        throughdestination.push(sentences[ss][pp][ww]);
+                    }
+                }
+                ww++;
+            });
+            pp++;
+            IN=0;
+            ww=0;
+            VBP=0;
+        });
+        VBPS=0;
+        INS=0;
+        ss++;
+        queue[qIterator]['action'] = action;
+        queue[qIterator]['directions'] = directions.toString();
+        queue[qIterator]['throughdestinations'] = throughdestination.toString();
+        directions.length = 0; throughdestination.length = 0;
+        var elem=0;
+        throughdestination.forEach(function (ele) {
+            throughdestination[elem].length=0;
+            elem++;
+        });
+
+        qIterator++;
+
+    });
+    console.log(queue);
+    //emptyQueue();
+}
+function emptyQueue(){
+    queue.length=0;
+    var elem=0;
+    queue.forEach(function (que) {
+        que.forEach(function (q){
+            q[elem].length = 0;
+            elem++;
+
+        });
+    });
+    elem=0;
+    sentences.forEach(function (que) {
+        que.forEach(function (q){
+            q[elem].length = 0;
+            elem++;
+
+        });
+    });
+    elem=0;
+    posArray.forEach(function (que) {
+        que.forEach(function (q){
+            q[elem].length = 0;
+            elem++;
+        });
+    });
+}
+function matchKeywords(){
     var action='', destination='', through='', direction='';
-    var queue=[];
-    var qIterator=0;
-    queue[qIterator]=[];
+
     var j =0;
     for (var i = 0; i <= sentence; i++ ){
         posArray[i].forEach(function (part) {
@@ -57,12 +163,9 @@ function textParsing(text) {
                         action = 'go';
                     }
                 }else{
-                    alert(sentences[i][j]);
                     getSynonyms(sentences[i][j]);
-                    alert(sentences[i][j]);
                         if(output.indexOf('go') >= 0){
                             action = 'go';
-                            alert('weszlo');
                         }else if(output.indexOf('stop') >= 0){
                             action = 'stop';
                         }else{
