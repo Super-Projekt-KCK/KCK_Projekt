@@ -96,7 +96,7 @@ function writeStreetNames(context) {
 }
 
 function drawTaxi(context, mapX, mapY) {
-	drawRotated(taxi, context, checkDirection(), mapX, mapY);
+	drawRotated(taxi, context, checkTaxiDirection(), mapX, mapY);
 }
 
 function drawTaxiOnStart(canvas) {
@@ -109,7 +109,7 @@ function drawTaxiOnStart(canvas) {
 //---------------funkcje sprawdzające-------------------------//
 
 
-function checkDirection() {				//sprawdza kierunek w ktorym jedzie taksa
+function checkTaxiDirection() {				//sprawdza kierunek w ktorym jedzie taksa
 	var checkY = positionTaxiInArrayY - pastPositionTaxiInArrayY;
 	var checkX = positionTaxiInArrayX - pastPositionTaxiInArrayX;
 
