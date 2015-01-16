@@ -12,3 +12,6 @@ Integer
 Wall
 Iron
 Wood
+Lake
+Oak
+Fullton
