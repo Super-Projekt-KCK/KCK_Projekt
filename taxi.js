@@ -51,6 +51,6 @@ function doGameLoop() {
     }
     else {
         clearInterval(gameLoop);
-
+	nextMove();
     }
 }
