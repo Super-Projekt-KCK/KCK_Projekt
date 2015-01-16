@@ -43,6 +43,6 @@ function doGameLoop() {
     }
     else {
         clearInterval(gameLoop);
-	action_2();
+	nextMove();
     }
 }
