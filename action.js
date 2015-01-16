@@ -1,69 +1,111 @@
 var gueue = new Array;
+var inProgress = 0;
 
-function action_2() {
+function nextMove() {
     var check=gueue.shift();
-    if (check) {
-	console.log("wchodze");
+    if (check=="go") {
+	inProgress=1;
+	
+	try {
+	    showPath(Number(gueue.shift()), Number(gueue.shift()));
+	    canvasAnimation();
+	} catch (e) {
+
+	    if (e=="coords") {
+		document.getElementById("taxiMan").value = "There is no that coordinates";		
+	    }
+	    inProgress=0;
+	} 
+	
+    } else if (check=="left" || check=="right" || check=="forward" || check=="back") {
+	inProgress=1;
 	checkDirection(check);
+    } else {
+	document.getElementById("taxiMan").value = "I'am waiting for orders...";	
+	inProgress=0;
     }
     
 }
 
+function taxiManStart() {
+
+    document.getElementById("taxiMan").value = "I'am waiting for orders...";
+ 
+}
 
 function action() {
 
     
     var input = document.getElementById("kolejka");
-    
+
     var commands = String(input.value);
- 
-    var command = "";
+
+    document.getElementById("kolejka").value = '';
     
-    for (var i=0; i<commands.length; i++) {
-	command += commands[i];
+    console.log(commands);
+    if (commands!="") {
+	var command = "";
 
-	if (commands[i]==" ") {
-	    command = "";
-	} else if (command=="go") {
+	for (var i=0; i<commands.length; i++) {
+	    command += commands[i];
 
-
-	    var tempX="";
-	    var tempY="";
-	    var j = i;
-	    while (commands[j+2]!=" ") {
+	    if (commands[i]==" ") {
+		command = "";
+	    } else if (command=="go") {
+		gueue.push("go");
+		commands+=" ";
+		var tempX="";
+		var tempY="";
+		var j = i;
+		var temp = 0;
+		
 		tempX+=commands[j+2];
-		j++;
+		
+		if (commands[j+3]!=" ") {
+		    tempX+=commands[j+3];
+		    temp++;
+		}
+		
+		tempY+=commands[j+4+temp];
+		
+		if (commands[j+5+temp]!=" ") {
+		    tempY+=commands[j+5+temp];
+		}
+		
+		/*while (commands[j+2]!=" ") {
+		    tempX+=commands[j+2];
+		    j++;
+		}
+		
+		while (j+3<commands.length) {
+		    tempY+=commands[j+3];
+		    j++;
+		}*/
+
+		gueue.push(tempX);
+		gueue.push(tempY);
+
+	    } else if (command=="left") {
+		gueue.push("left");
+		command = "";
+	    } else if (command=="right") {
+		gueue.push("right");
+		command = "";
+	    } else if (command=="forward") {
+		gueue.push("forward");
+		command = "";
+	    } else if (command=="back") {
+		gueue.push("back");
+		command = "";
 	    }
-	    console.log(j, commands.length, commands[j+3]);
-	    while (j+3<commands.length) {
-		tempY+=commands[j+3];
-		j++;
-	    }
-	    showPath(Number(tempX), Number(tempY));
-	    canvasAnimation();
-	} else if (command=="left") {
-	    gueue.push("left");
-//	    checkDirection(command);
-	    command = "";
-	} else if (command=="right") {
-	    gueue.push("right");
-//	    checkDirection(command);
-	    command = "";
-	} else if (command=="forward") {
-	    gueue.push("forward");
-//	    checkDirection(command);
-	    command = "";
-	} else if (command=="back") {
-	    gueue.push("back");
-//	    checkDirection(command);
-	    command = "";
+	    
+	}
+	if (inProgress==0) {
+	    nextMove();
 	}
     }
-    
 
 }
-
-
 
 
 function checkDirection(direction) {
