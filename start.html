@@ -84,8 +84,49 @@ function test(){
             queue.forEach(function (entry) {
                 if(entry['action']){
                     document.getElementById('kolejka').value+=entry['action']+' ';
-                    document.getElementById('kolejka').value+=entry['directions']+' ';
-                    document.getElementById('kolejka').value+=entry['throughdestinations']+'\n';
+					if(entry['directions'] != ''){
+						document.getElementById('kolejka').value+=entry['directions']+' ';
+					}
+					if(entry['throughdestinations'] != ''){
+					var tab=entry['throughdestinations'];
+					tab=tab.split(',');
+					if(tab[0]=='to'){
+						tab=tab.toString().replace(/,/g,' ');
+						tab=tab.replace(/through/g,';through');
+						tab=tab.split(';');
+					}else if(tab[0]=='through'){
+						tab=tab.toString().replace(/,/g,' ');
+						tab=tab.toString().replace(/to/g,';to');
+						tab=tab.split(';');
+					} 
+					var to, through;
+					var and=false;
+					tab.forEach(function (entry) {
+						if(entry.indexOf('to') != -1){
+						  to=entry.split(' '); 
+							to.splice(0, 1);
+							to.forEach(function (en) {
+								and = to.indexOf('and');
+								if(and != false){
+									to.splice(and, 1);
+								}
+								and=false;
+							});
+						}else if(entry.indexOf('through') != -1){
+							through=entry.split(' ');
+							through.splice(0, 1);
+							through.forEach(function (en) {
+								and = through.indexOf('and');
+								if(and != false){
+									through.splice(and, 1);
+								}
+								and=false;
+							});
+						}
+					});
+					document.getElementById('kolejka').value+= ' do '+to+' ';
+                    document.getElementById('kolejka').value+= ' przez '+through+'\n';
+					}
                 }
             });
 
