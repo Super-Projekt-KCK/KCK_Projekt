@@ -232,3 +232,13 @@ function matchKeywords(){
 return queue;
 }
 
+function speak(comment) {
+    var u = new SpeechSynthesisUtterance();
+    u.text = comment;
+    u.lang = 'en-GB';
+    u.rate = 1.2;
+    u.onend = function (event) {
+    }
+    speechSynthesis.speak(u);
+    }
+

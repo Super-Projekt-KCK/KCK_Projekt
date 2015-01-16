@@ -12,7 +12,8 @@ function nextMove() {
 	} catch (e) {
 
 	    if (e=="coords") {
-		document.getElementById("taxiMan").value = "There is no that coordinates";		
+            speak('There are no such coordinates.');
+		//document.getElementById("taxiMan").value = "There is no that coordinates";
 	    }
 	    inProgress=0;
 	} 
@@ -21,15 +22,16 @@ function nextMove() {
 	inProgress=1;
 	checkDirection(check);
     } else {
-	document.getElementById("taxiMan").value = "I'am waiting for orders...";	
+     speak("I'm waiting for orders.");
+	//document.getElementById("taxiMan").value = "I'am waiting for orders...";
 	inProgress=0;
     }
     
 }
 
 function taxiManStart() {
-
-    document.getElementById("taxiMan").value = "I'am waiting for orders...";
+    speak("I'm waiting for orders.");
+    //document.getElementById("taxiMan").value = "I'am waiting for orders...";
  
 }
 

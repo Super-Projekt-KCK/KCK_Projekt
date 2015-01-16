@@ -117,6 +117,7 @@ function test(){
 								and = through.indexOf('and');
 								if(and != false){
 									through.splice(and, 1);
+                                    alert(and);
 								}
 								and=false;
 							});
@@ -204,17 +205,7 @@ function test(){
     updateCountry();
     select_dialect.selectedIndex = 6;
 </script>
-<script type="text/javascript">
-    function speak(comment) {
-        var u = new SpeechSynthesisUtterance();
-        u.text = comment;
-        u.lang = 'en-GB';
-        u.rate = 1.2;
-        u.onend = function (event) {
-        }
-        speechSynthesis.speak(u);
-    }
-</script>
+
 <br><button onclick="speak(/Can't move in this direction/)">Przykładowy komunikat głosowy</button>
 
 </html>
