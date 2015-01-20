@@ -33,8 +33,6 @@ function doGameLoop() {
     if (elem != undefined) {
         var last = elem.join();
         var dot = last.indexOf(",");
-        mapX = last.substring(0,dot);
-        mapY = last.substring(dot+1);
         oldShipX = shipX;
         oldShipY = shipY;
         pastPositionTaxiInArrayX = shipX/50;

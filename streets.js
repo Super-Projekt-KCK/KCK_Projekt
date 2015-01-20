@@ -4,6 +4,7 @@ streetCoords.names = new Array();
 
 var names = new Array();
 var streetCount = 0;
+
 //czyszczenie wspolrzednych ulic
 function clearStreets() {
     streetCoords[0].length = 0;
@@ -28,13 +29,12 @@ function readTextFile()
     //rawFile.close();
 }
 
-function assignStreet(i) {
+function assignStreet(i) {          //przypisuje nazwę ulicy do odpowiednich współrzędnych na grafie
     var index;
     do {
         index = Math.floor(Math.random() * names.length);
 
     } while (names[index] == undefined);
-    //console.log("(streets.js)nazwa: " + temp[index]);
     streetCoords.names[i] = names[index];
     console.log("streetNames[" + i + "]: " + streetCoords.names[i]);
     names[index] = undefined;

@@ -4,43 +4,33 @@
     <meta charset="UTF-8">
     <title>Intelligent taxi</title>
     <link rel="Stylesheet" type="text/css" href="style.css" />
-    <script src="graf.js">
-    </script>
-    <script src="analyser.js">
-    </script>
-    <script src="graphics.js">
-    </script>
-    <script src="astar.js">
-    </script>
-    <script type="text/javascript" src="pathfinding-browser.min.js">
-    </script>
-    <script type="text/javascript" src="taxi.js">
-    </script>
-    <script type="text/javascript" src="move_by_direction.js">
-    </script>
 
-    <script type="text/javascript" src="action.js">
-    </script>
-    <script type="text/javascript" src="streets.js">
-
-    </script>
+    <script src="graf.js"></script>
+    <script src="analyser.js"></script>
+    <script src="graphics.js"></script>
+    <script src="astar.js"></script>
+    <script type="text/javascript" src="pathfinding-browser.min.js"></script>
+    <script type="text/javascript" src="taxi.js"></script>
+    <script type="text/javascript" src="move_by_direction.js"></script>
+    <script type="text/javascript" src="action.js"></script>
+    <script type="text/javascript" src="streets.js"></script>
+    <script type="text/javascript" src="passenger.js"></script>
 </head>
 
 <body>
   
-  <div id="world">
-    <canvas id="town"width="1000px" height="1000px;"></canvas>
-    <canvas id="graph" width="200px" height="200px" style="display: none;"></canvas>
-    <button type="button" onclick ="initWorld();">Generate graph</button>
+    <div id="world">
+        <canvas id="town"width="1000px" height="1000px;"></canvas>
+        <canvas id="graph" width="200px" height="200px" style="display: none;"></canvas>
+        <button type="button" onclick ="initWorld();">Generate graph</button>
+        <button type="button" onclick ="testPerson();">Postaw ludka</button>
+        <p id="array"></p>
+        <p id="coords"></p>
+        <div id="map" style=""></div>
+        <div id="roads"></div><br />
+        <div id="check"></div><br />
 
-    <p id="array"></p>
-    <p id="coords"></p>
-    <div id="map" style="display: none;"></div>
-    <div id="roads"></div><br />
-
-    <div id="check"></div><br />
-
-</div>
+    </div>
 
 <div id="status">
 </div>

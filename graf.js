@@ -22,8 +22,21 @@ var pastPositionTaxiInArrayX;
 var pastPositionTaxiInArrayY;
 
 
-//macierz sąsiedztwa dla grafu z x wierzchołkami
 
+
+
+/*
+    -------------------CO NA MAPIE-----------------------------
+
+    0 - pustka
+    1 - droga prosta
+    2 - krzyżówki
+    3 - ?
+    4 - ?
+    5 - pasażer
+ */
+
+//macierz sąsiedztwa dla grafu z x wierzchołkami
 function fillArray() {
     var edges = 0;
     for (var i = 0; i < map.length; i++) {
