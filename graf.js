@@ -175,7 +175,7 @@ function printWorld(name) {
 
         }
     }
-    assignNames();
+    //assignNames();
     roadsNaming();
 
 
@@ -227,6 +227,7 @@ function roadsNaming() {
 		
 		if (count!=0) {
 			count++;
+            assignStreet(street);
             document.getElementById("roads").innerHTML += streetCoords.names[street] + ": początek: " + streetCoords[0][street] + "," + streetCoords[1][street] + " koniec: " + streetCoords[2][street] +"," + streetCoords[3][street] + ", dlugosc: " + count + "<br>";
             world[streetCoords[0][street]][streetCoords[1][street]] = 2;
             world[streetCoords[2][street]][streetCoords[3][street]] = 2;
@@ -256,6 +257,7 @@ function roadsNaming() {
 		
 		if (count!=0) {
 			count++;
+            assignStreet(street);
             document.getElementById("roads").innerHTML += streetCoords.names[street] + ": początek: " + streetCoords[0][street] + "," + streetCoords[1][street] + " koniec: " + streetCoords[2][street] +"," + streetCoords[3][street] + ", dlugosc: " + count + "<br>";
             world[streetCoords[0][street]][streetCoords[1][street]] = 2;
             world[streetCoords[2][street]][streetCoords[3][street]] = 2;

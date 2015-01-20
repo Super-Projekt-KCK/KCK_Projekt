@@ -15,6 +15,7 @@ var oldShipY = 0; // old ship position Y
 function canvasAnimation() {
     ship.src = taxiPath;
     canvas = document.getElementById("town");
+    speak("Okay.");
     if (canvas.getContext) {
         ctx = canvas.getContext("2d");
     }

@@ -22,9 +22,10 @@ var taxiPath = 'images/taxi.png';
 //--------------funkcje rysujace---------------------//
 
 function initWorld() {
-    readTextFile();
+    //readTextFile();
 	clearStreets();
     readTextFile();
+    console.log(names);
 	makeGraph();
 	drawGraph('graph');
     //console.log("init");
@@ -33,6 +34,7 @@ function initWorld() {
     //readTextFile();
     imgData = undefined;
     oldImgData = undefined;
+    speak("Elvis is back in town");
 	//drawTaxiOnStart('town');
 }
 
@@ -83,6 +85,7 @@ function drawRotated(image, context, deg, i,j) {            //rysuje obrócony o
 function writeStreetNames(context) {
     context.fillStyle = "#000000";
     context.font = "18px Arial";
+
     console.log("graqphics.js: " + streetCoords.names);
 
                    //odwrotne indeksy w tabeli. probowalem to naprawic ale sie poddaje
@@ -114,12 +117,12 @@ function checkTaxiDirection() {				//sprawdza kierunek w ktorym jedzie taksa
 	var checkX = positionTaxiInArrayX - pastPositionTaxiInArrayX;
 
 
-    console.log("Pozycja X: " + positionTaxiInArrayX);
+    /*console.log("Pozycja X: " + positionTaxiInArrayX);
     console.log("Stara Pozycja X: " +pastPositionTaxiInArrayX);
     console.log("Pozycja Y: " + positionTaxiInArrayY);
     console.log("Stara Pozycja Y: " +pastPositionTaxiInArrayY);
 	console.log("checkX: "+checkX);
-	console.log("checkY: "+checkY);
+	console.log("checkY: "+checkY);*/
 
     switch (checkY) {
         case 1:

@@ -19,10 +19,8 @@ function readTextFile()
         {
             if(rawFile.status === 200 || rawFile.status == 0)
             {
+                console.log("Plik otwarty");
                 names = rawFile.responseText.split('\n');
-                console.log(names);
-                //assignNames(names);
-                //alert(allText);
             }
         }
     }
@@ -30,16 +28,10 @@ function readTextFile()
     //rawFile.close();
 }
 
-function assignNames() {
-    for (var i = 0; i < streetCount; i++) {
-        assignStreet(i);
-    }
-}
-
 function assignStreet(i) {
     var index;
     do {
-        index = Math.floor(Math.random() * streetCount);
+        index = Math.floor(Math.random() * names.length);
 
     } while (names[index] == undefined);
     //console.log("(streets.js)nazwa: " + temp[index]);
