@@ -7,7 +7,7 @@ var shipX = 0; // current ship position X
 var shipY = 0; // current ship position Y
 var oldShipX = 0; // old ship position Y
 var oldShipY = 0; // old ship position Y
-
+var tank = 20;
 
 // This function is called on page load.
 
@@ -25,24 +25,29 @@ function doGameLoop() {
     var elem;
     var mapX, mapY;
     elem = globalPath.pop();
-    if (elem != undefined) {
-        var last = elem.join();
-        var dot = last.indexOf(",");
-        mapX = last.substring(0,dot);
-        mapY = last.substring(dot+1);
-        oldShipX = shipX;
-        oldShipY = shipY;
-        oldBack = back;
-        shipX = last.substring(0, dot)* 50;
-        shipY = last.substring(dot+1) * 50;
-		mapX = shipX/50;
-		mapY = shipY/50;
-        //back = ctx.getImageData(shipX, shipY, 50, 50);
-        //ctx.putImageData(oldBack, oldShipX, oldShipY);
-        drawTaxi(ctx, shipX, shipY, mapX, mapY);
+    if (tank!=0) {
+	if (elem != undefined) {
+            var last = elem.join();
+            var dot = last.indexOf(",");
+            mapX = last.substring(0,dot);
+            mapY = last.substring(dot+1);
+            oldShipX = shipX;
+            oldShipY = shipY;
+            oldBack = back;
+            shipX = last.substring(0, dot)* 50;
+            shipY = last.substring(dot+1) * 50;
+	    mapX = shipX/50;
+	    mapY = shipY/50;
+            //back = ctx.getImageData(shipX, shipY, 50, 50);
+            //ctx.putImageData(oldBack, oldShipX, oldShipY);
+            drawTaxi(ctx, shipX, shipY, mapX, mapY);
+	    tank--;
+	} else {
+            clearInterval(gameLoop);
+	    nextMove();
+	}
+    } else {
+	document.getElementById("taxiMan").value = "My petrol tank is empty - end of course...";	
     }
-    else {
-        clearInterval(gameLoop);
-	nextMove();
-    }
+
 }

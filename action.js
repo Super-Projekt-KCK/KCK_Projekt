@@ -12,7 +12,7 @@ function nextMove() {
 	} catch (e) {
 
 	    if (e=="coords") {
-		document.getElementById("taxiMan").value = "There is no that coordinates";		
+		documxent.getElementById("taxiMan").value = "There is no that coordinates";		
 	    }
 	    inProgress=0;
 	} 
@@ -21,8 +21,13 @@ function nextMove() {
 	inProgress=1;
 	checkDirection(check);
     } else {
-	document.getElementById("taxiMan").value = "I'am waiting for orders...";	
+	document.getElementById("taxiMan").value = "I'am waiting for orders... tank - " + tank;	
 	inProgress=0;
+	console.log(world[positionTaxiInArrayY][positionTaxiInArrayX]);
+	if (world[positionTaxiInArrayX][positionTaxiInArrayY]==3) {
+	    tank=20;
+	    document.getElementById("taxiMan").value = "Tank up... tank - " + tank;	
+	}
     }
     
 }
@@ -30,7 +35,7 @@ function nextMove() {
 function taxiManStart() {
 
     document.getElementById("taxiMan").value = "I'am waiting for orders...";
- 
+    
 }
 
 function action() {
