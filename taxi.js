@@ -53,3 +53,20 @@ function doGameLoop() {
 	nextMove();
     }
 }
+
+function searchForPeople() {
+    if (passengers.length > 0) {
+        for (var i = 0; i < size; i++) {            //leci bez sensu po całej tablicy, trzeba to jakoś zmienić
+            for (var j = 0; j < size; j++) {
+                if (world[j][i] == 5) {
+                    speak("I found a passenger on " + getStreetByCoords(i,j) + " street. ");
+                    console.log("I found a passenger on " + getStreetByCoords(i,j) + " street. " + i + ", " + j);
+                }
+            }
+        }
+    }
+    else {
+        speak("There are no passengers left.");
+    }
+    console.log('-----------------------');
+}

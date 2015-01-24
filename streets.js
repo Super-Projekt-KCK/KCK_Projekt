@@ -39,3 +39,15 @@ function assignStreet(i) {          //przypisuje nazwę ulicy do odpowiednich ws
     console.log("streetNames[" + i + "]: " + streetCoords.names[i]);
     names[index] = undefined;
 }
+
+function getStreetByCoords(y, x) {
+    var temp = "nope";
+    for (var i = 0; i < streetCoords[0].length; i++) {
+        if (streetCoords[1][i] == x && streetCoords[3][i] == x)
+            temp = streetCoords.names[i];
+        else
+            if (streetCoords[0][i] == y && streetCoords[2][i] == y)
+                temp = streetCoords.names[i];
+    }
+    return temp;
+}

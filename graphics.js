@@ -23,6 +23,7 @@ var taxiPath = 'images/taxi.png';
 
 function initWorld() {
     //readTextFile();
+    clearPeople();
 	clearStreets();
     readTextFile();
     console.log(names);

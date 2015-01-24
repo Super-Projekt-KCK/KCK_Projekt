@@ -15,8 +15,8 @@ var Passenger = function () {                            //klasa pasażera (full
 
 Passenger.prototype.setRandomPosition = function() {               //stawia ludka tylko na ulicy
     do {
-        this.position[0] = Math.floor(Math.random() * size);
-        this.position[1] = Math.floor(Math.random() * size);
+        this.position[0] = Math.floor(Math.random() * (size - 1));
+        this.position[1] = Math.floor(Math.random() * (size - 1));
     } while (world[this.position[1]][this.position[0]] != 1);               //znowu odwrócone współrzędne :C
 }
 
@@ -32,7 +32,7 @@ Passenger.prototype.getPosition = function() {
 Passenger.prototype.setRandomDestination = function() {
     this.destinationStreet = streetCoords.names[Math.floor(Math.random() * streetCoords.names.length)];
     //trzeba dopisać warunek żeby nie chciał jechać tam gdzie stoi
-    speak ("My destination is " + this.destinationStreet + " street.");
+    //speak ("My destination is " + this.destinationStreet + " street.");
 }
 
 //-------------------------rysowanie i wymazywanie---------------------------------//
@@ -81,6 +81,8 @@ function testPerson() {
 function clearPeople() {
     for(var i = 0; i < passengers.length; i++) {
         passengers[i].erase(passengers[i].position);
+
     }
+    passengers.length = 0;
     pIndex = 0;
 }
