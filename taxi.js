@@ -61,14 +61,30 @@ function doGameLoop() {
     }
 }
 
-function searchForPeople() {
+
+//-------------------------------pasażerowie--------------------------------------------------//
+
+function checkPeople(j,i) {             //szuka ludka na konkretnych koordynatach
+    if (world[j][i] == 5) {
+        var temp = getStreetByCoords(i,j);
+        if (temp == "" ) {
+            speak("Passenger is not on the street.");
+            return false;
+        }
+        else {
+            speak("I found a passenger on " + temp + " street. ");
+            console.log("I found a passenger on " + temp + " street. " + i + ", " + j);
+            return true;
+        }
+    }
+}
+
+
+function searchForPeople() {                //szuka ludków po całej mapie
     if (passengers.length > 0) {
         for (var i = 0; i < size; i++) {            //leci bez sensu po całej tablicy, trzeba to jakoś zmienić
             for (var j = 0; j < size; j++) {
-                if (world[j][i] == 5) {
-                    speak("I found a passenger on " + getStreetByCoords(i,j) + " street. ");
-                    console.log("I found a passenger on " + getStreetByCoords(i,j) + " street. " + i + ", " + j);
-                }
+                checkPeople(j, i);
             }
         }
     }
@@ -76,4 +92,67 @@ function searchForPeople() {
         speak("There are no passengers left.");
     }
     console.log('-----------------------');
+}
+
+function takePassenger(person, context) {
+    /*
+        sekwencja:
+        przyjedź po ludka
+        zidentyfikuj ludka
+        zmaż odpowiedniego ludka
+        narysuj taksę (bo się zmazała z ludkiem)
+        zamień tło w taksie (imgData = passenger[i].background)
+    */
+    //person.erase();
+    imgData = person.getBackground();
+    drawTaxi(context, positionTaxiInArrayX, positionTaxiInArrayY);
+}
+
+function dropPassenger(person, context) {
+    /*
+        sekwencja:
+        podjedź na miejsce (nie ta funkcja)
+        zamień tło ludka na tło taksy (żeby po zmazaniu była tylko droga)
+        narysuj ludka (ew. kratkę niżej, albo coś)
+        narysuj taksę (żeby była nad pasażerem)
+        usuń referencję ludka z tablicy
+        czekaj na następny rozkaz, ludek w sumie sam się zmaże (oby)
+    */
+
+    //if pozycja taksy == pozycja pampera to draw
+
+    //*if (person.position[0] == positionTaxiInArrayX && person.position[1] == positionTaxiInArrayY) {
+        //person.setBackground(imgData);
+        person.setPosition(person.getDestination().reverse());          //nie wiem czemu reverse :(
+        person.setBackground(context.getImageData(person.destinationArray[0]*50,person.destinationArray[1]*50,50,50));
+        imgData = person.getBackground();
+        //konflikt z person.draw - tło które zapamięta wcześniej jest nadpisywane przez draw
+        //person.draw();
+        //drawTaxi(context, positionTaxiInArrayX, positionTaxiInArrayY);
+        passengers[person.arrayId] = undefined;
+        passengers[person.arrayId] = passengers[passengers.length-1];
+        pIndex--;
+        speak("Passenger dropped.");
+    //*/}
+}
+
+
+function drivePassenger() {
+    var person;
+    var dest = Array();
+    var canvas = document.getElementById("town");
+    var context = canvas.getContext("2d");
+    person = identify(positionTaxiInArrayX, positionTaxiInArrayY);
+    if (person != undefined) {
+        dest = person.getDestination();
+        console.log("Destination: " + dest);
+        takePassenger(person, context);
+        showPath(dest[0], dest[1]);
+        canvasAnimation();
+        dropPassenger(person, context);
+    }
+    else {
+        speak("There aren't any passengers here. ");
+    }
+
 }

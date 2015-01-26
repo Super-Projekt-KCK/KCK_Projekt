@@ -22,21 +22,15 @@ var taxiPath = 'images/taxi.png';
 //--------------funkcje rysujace---------------------//
 
 function initWorld() {
-    //readTextFile();
     clearPeople();
 	clearStreets();
     readTextFile();
-    console.log(names);
 	makeGraph();
 	drawGraph('graph');
-    //console.log("init");
-    //readTextFile();
 	drawWorld('town');
-    //readTextFile();
     imgData = undefined;
     oldImgData = undefined;
     speak("Elvis is back in town");
-	//drawTaxiOnStart('town');
 }
 
 function drawWorld(canvas) {
@@ -87,12 +81,9 @@ function writeStreetNames(context) {
     context.fillStyle = "#000000";
     context.font = "18px Arial";
 
-    console.log("graqphics.js: " + streetCoords.names);
-
-                   //odwrotne indeksy w tabeli. probowalem to naprawic ale sie poddaje
+    //odwrotne indeksy w tabeli. probowalem to naprawic ale sie poddaje
     for (var i = 0; i < streetCoords[0].length; i++) {
         var text = streetCoords.names[i] + " St.";
-        console.log("zapisuje: " + streetCoords.names[i]);
         var x = ((streetCoords[1][i] + streetCoords[3][i]) / 2)*50;
         var y = ((streetCoords[0][i] + streetCoords[2][i]) / 2)*50 + 18 ;
         context.fillText(text, x, y);
@@ -125,14 +116,6 @@ function checkTaxiDirection() {				//sprawdza kierunek w ktorym jedzie taksa
 	var checkY = positionTaxiInArrayY - pastPositionTaxiInArrayY;
 	var checkX = positionTaxiInArrayX - pastPositionTaxiInArrayX;
 
-
-    /*console.log("Pozycja X: " + positionTaxiInArrayX);
-    console.log("Stara Pozycja X: " +pastPositionTaxiInArrayX);
-    console.log("Pozycja Y: " + positionTaxiInArrayY);
-    console.log("Stara Pozycja Y: " +pastPositionTaxiInArrayY);
-	console.log("checkX: "+checkX);
-	console.log("checkY: "+checkY);*/
-
     switch (checkY) {
         case 1:
             return 180;
@@ -154,21 +137,17 @@ function checkTaxiDirection() {				//sprawdza kierunek w ktorym jedzie taksa
 function isVertical(i,j) {              //sprawdza czy droga jest pionowa
     if (j == 0) {
         if (world[i][j+1] == 0) {
-			//console.log(i, j, "true");
             return true;
 			}
         else {
-		//console.log(i, j, "false");
             return false;
 		}
     }
     else {
         if ((world[i][j-1] == 0) && (world[i][j+1] == 0) )  {
-            //console.log(i,j, "true");
 			return true;
         }
         else {
-			//console.log(i, j, "false");
             return false;
 			}
     }
@@ -290,7 +269,6 @@ function preloader() {
         cross2.src = crossPath2;
         taxi.src = taxiPath;
         end.src = endPath;
-        //readTextFile();
     }
 }
 function addLoadEvent(func) {

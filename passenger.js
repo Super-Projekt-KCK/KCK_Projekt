@@ -8,10 +8,11 @@ var Passenger = function () {                            //klasa pasażera (full
     this.img.src = this.imgPath;
     this.setRandomPosition();
     this.setRandomDestination();
+    this.arrayId = pIndex;
 }
 
 
-//-----------------------właściwości i pozycje------------------------------------//
+//-----------------------gettery i settery------------------------------------//
 
 Passenger.prototype.setRandomPosition = function() {               //stawia ludka tylko na ulicy
     do {
@@ -20,9 +21,9 @@ Passenger.prototype.setRandomPosition = function() {               //stawia ludk
     } while (world[this.position[1]][this.position[0]] != 1);               //znowu odwrócone współrzędne :C
 }
 
-Passenger.prototype.setPosition = function(x, y) {
-    this.position[0] = x;
-    this.position[1] = y;
+Passenger.prototype.setPosition = function(array) {
+    this.position[0] = array[0];
+    this.position[1] = array[1];
 }
 
 Passenger.prototype.getPosition = function() {
@@ -30,9 +31,24 @@ Passenger.prototype.getPosition = function() {
 }
 
 Passenger.prototype.setRandomDestination = function() {
-    this.destinationStreet = streetCoords.names[Math.floor(Math.random() * streetCoords.names.length)];
+    var rand = Math.floor(Math.random() * streetCoords.names.length);
+    this.destinationStreet = streetCoords.names[rand];
+    this.destinationArray = getMiddle(rand);
     //trzeba dopisać warunek żeby nie chciał jechać tam gdzie stoi
     //speak ("My destination is " + this.destinationStreet + " street.");
+    console.log("My destination is " + this.destinationStreet + " street.");
+}
+
+Passenger.prototype.getDestination = function() {
+    return this.destinationArray;
+}
+
+Passenger.prototype.setBackground = function(bg) {
+    this.background = bg;
+}
+
+Passenger.prototype.getBackground = function() {
+    return this.background;
 }
 
 //-------------------------rysowanie i wymazywanie---------------------------------//
@@ -80,9 +96,20 @@ function testPerson() {
 
 function clearPeople() {
     for(var i = 0; i < passengers.length; i++) {
-        passengers[i].erase(passengers[i].position);
+        if (passengers[i] != undefined)
+            passengers[i].erase(passengers[i].position);
 
     }
     passengers.length = 0;
     pIndex = 0;
+}
+
+function identify (i,j) {
+    var pos;
+    for (var x = 0; x < passengers.length; x++) {
+        pos = passengers[x].getPosition();
+        if (pos[0] == i && pos[1] == j)
+            return passengers[x];
+    }
+    return undefined;
 }

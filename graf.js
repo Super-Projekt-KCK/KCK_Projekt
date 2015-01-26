@@ -8,8 +8,8 @@ function createArray(x, y) {
 }
 
 
-var points = 10;                        //liczba wierzchołków grafu
-var maxEdges = 30;          //max liczba krawędzi
+var points = 10;                                //liczba wierzchołków grafu
+var maxEdges = 30;                              //max liczba krawędzi
 var map = createArray(points,points);
 
 var edges = createArray(maxEdges,3);
@@ -73,19 +73,16 @@ function checkDegree(i) {                           //sprawdza stopień wierzcho
     }
 }
 
-var coords = createArray(2, map.length);        //współrzędne wierzchołków grafu na canvas
-var width = 200;            //szerokość i wysokość canvas
+var coords = createArray(2, map.length);                    //współrzędne wierzchołków grafu na canvas
+var width = 200;                                            //szerokość i wysokość canvas
 var height = 200;
 
 function makeGraph() {
     fillArray();
     document.getElementById("coords").innerHTML = "";
-    for (var i = 0; i < map.length; i++) {            //losowanie współrzędnych grafu
-
-            coords[0][i] = Math.floor(Math.random() * width / 20) * 20;
-            coords[1][i] = Math.floor(Math.random() * height / 20) * 20;
-            //document.getElementById("coords").innerHTML += "v" + i + ": " + coords[0][i] + "," + coords[1][i] + "<br>";
-
+    for (var i = 0; i < map.length; i++) {                  //losowanie współrzędnych grafu
+        coords[0][i] = Math.floor(Math.random() * width / 20) * 20;
+        coords[1][i] = Math.floor(Math.random() * height / 20) * 20;
     }
 
 }
@@ -94,7 +91,6 @@ function makeGraph() {
 function drawGraph (canvas) {
     var c = document.getElementById(canvas);
     var context = c.getContext("2d");
-
     context.clearRect(0,0,width,height);
     context.fillStyle = "#000000";
     drawPoints(context);
@@ -188,9 +184,7 @@ function printWorld(name) {
 
         }
     }
-    //assignNames();
     roadsNaming();
-
 
 				
 	//wyswietlenie grafu i pogrubienie jedynek
@@ -279,8 +273,6 @@ function roadsNaming() {
             street++;
         }
 	}
-
-    console.log(streetCount);
 }
 
 

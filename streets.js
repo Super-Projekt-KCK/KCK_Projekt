@@ -20,7 +20,6 @@ function readTextFile()
         {
             if(rawFile.status === 200 || rawFile.status == 0)
             {
-                console.log("Plik otwarty");
                 names = rawFile.responseText.split('\n');
             }
         }
@@ -36,12 +35,12 @@ function assignStreet(i) {          //przypisuje nazwę ulicy do odpowiednich ws
 
     } while (names[index] == undefined);
     streetCoords.names[i] = names[index];
-    console.log("streetNames[" + i + "]: " + streetCoords.names[i]);
+    //console.log("streetNames[" + i + "]: " + streetCoords.names[i]);
     names[index] = undefined;
 }
 
 function getStreetByCoords(y, x) {
-    var temp = "nope";
+    var temp = "";
     for (var i = 0; i < streetCoords[0].length; i++) {
         if (streetCoords[1][i] == x && streetCoords[3][i] == x)
             temp = streetCoords.names[i];
@@ -50,4 +49,11 @@ function getStreetByCoords(y, x) {
                 temp = streetCoords.names[i];
     }
     return temp;
+}
+
+function getMiddle(i) {         //pobiera środek ulicy
+    var cords = Array();
+    cords[0] = (streetCoords[0][i] + streetCoords[2][i])/2;
+    cords[1] = (streetCoords[1][i] + streetCoords[3][i])/2;
+    return cords;
 }
