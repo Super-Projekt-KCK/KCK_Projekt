@@ -7,10 +7,15 @@ var shipX = 0; // current ship position X
 var shipY = 0; // current ship position Y
 var oldShipX = 0; // old ship position Y
 var oldShipY = 0; // old ship position Y
+// zrobić zmienną która będzie przechowywała aktualny poziom paliwa
+//var fuel = 100; // poziom paliwa w %
 
 
 // This function is called on page load.
 
+/*function fuelreduce (howmuch) {
+    fuel -= howmuch;
+}*/
 
 function canvasAnimation() {
     ship.src = taxiPath;
@@ -30,7 +35,7 @@ function doGameLoop() {
     var elem;
     var mapX, mapY;
     elem = globalPath.pop();
-    if (elem != undefined) {
+    if (elem != undefined /*&& fuel > 0*/) {
         var last = elem.join();
         var dot = last.indexOf(",");
         oldShipX = shipX;
@@ -46,7 +51,9 @@ function doGameLoop() {
         positionTaxiInArrayY = shipY/50;
         imgData = ctx.getImageData(shipX, shipY, 50, 50);
         ctx.putImageData(oldImgData, oldShipX, oldShipY);
+        //fuelreduce(5);
         drawTaxi(ctx, mapX, mapY);
+        drawFuelBar();
     }
     else {
         clearInterval(gameLoop);

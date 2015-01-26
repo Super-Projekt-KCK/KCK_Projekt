@@ -108,6 +108,14 @@ function drawTaxiOnStart(canvas) {
     var context = c.getContext("2d");
 	drawRotated(taxi, context, 90, streetCoords[1][1], streetCoords[0][1]);
 }
+//WSKAŹNIK PALIWA
+/*function drawFuelBar ()
+{
+    var c=document.getElementById("myCanvas");
+    var ctx=c.getContext("2d");
+    ctx.rect(5,5,fuel,20);
+    ctx.stroke();
+}*/
 
 
 //---------------funkcje sprawdzające-------------------------//
