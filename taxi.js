@@ -53,7 +53,7 @@ function doGameLoop() {
         ctx.putImageData(oldImgData, oldShipX, oldShipY);
         //fuelreduce(5);
         drawTaxi(ctx, mapX, mapY);
-        drawFuelBar();
+        //drawFuelBar();
     }
     else {
         clearInterval(gameLoop);
@@ -79,9 +79,11 @@ function checkPeople(j,i) {             //szuka ludka na konkretnych koordynatac
     }
 }
 
-
+//czasem źle działa bo a* zamienia mapę na jedynki
 function searchForPeople() {                //szuka ludków po całej mapie
     if (passengers.length > 0) {
+        console.log(pIndex);
+        console.log(passengers);
         for (var i = 0; i < size; i++) {            //leci bez sensu po całej tablicy, trzeba to jakoś zmienić
             for (var j = 0; j < size; j++) {
                 checkPeople(j, i);
@@ -95,15 +97,6 @@ function searchForPeople() {                //szuka ludków po całej mapie
 }
 
 function takePassenger(person, context) {
-    /*
-        sekwencja:
-        przyjedź po ludka
-        zidentyfikuj ludka
-        zmaż odpowiedniego ludka
-        narysuj taksę (bo się zmazała z ludkiem)
-        zamień tło w taksie (imgData = passenger[i].background)
-    */
-    //person.erase();
     imgData = person.getBackground();
     drawTaxi(context, positionTaxiInArrayX, positionTaxiInArrayY);
 }
@@ -127,11 +120,23 @@ function dropPassenger(person, context) {
         person.setBackground(context.getImageData(person.destinationArray[0]*50,person.destinationArray[1]*50,50,50));
         imgData = person.getBackground();
         //konflikt z person.draw - tło które zapamięta wcześniej jest nadpisywane przez draw
-        //person.draw();
+
+        var tempArray;
+        tempArray = person.getPosition();
+        if (isVertical(tempArray[0],tempArray[1]))
+            tempArray[1] += 1;
+        else
+            tempArray[0] += 1;
+        person.setPosition(tempArray);
+        person.draw();
         //drawTaxi(context, positionTaxiInArrayX, positionTaxiInArrayY);
-        passengers[person.arrayId] = undefined;
+        passengers[person.arrayId] = undefined;                             //usuwa ludka z tablicy i przesuwa indeks
+        passengers[passengers.length-1].arrayId = person.arrayId;
         passengers[person.arrayId] = passengers[passengers.length-1];
+        passengers.length--;
         pIndex--;
+        //setTimeout(person.erase(person.getPosition()), 3000);
+
         speak("Passenger dropped.");
     //*/}
 }
