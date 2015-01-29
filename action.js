@@ -23,8 +23,7 @@ function nextMove() {
     } else {
 	document.getElementById("taxiMan").value = "I'am waiting for orders... tank - " + tank;	
 	inProgress=0;
-	console.log(world[positionTaxiInArrayY][positionTaxiInArrayX]);
-	if (world[positionTaxiInArrayX][positionTaxiInArrayY]==3) {
+	if (world[positionTaxiInArrayY][positionTaxiInArrayX]==3) {
 	    tank=20;
 	    document.getElementById("taxiMan").value = "Tank up... tank - " + tank;	
 	}
