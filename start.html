@@ -26,7 +26,8 @@
         <button type="button" onclick ="testPerson();">Postaw ludka</button>
         <button type="button" onclick ="clearPeople();">Wymaż ludków</button>
         <button type="button" onclick ="drivePassenger();">Przewieź ludka (beta)</button>
-        <button type="button" onclick ="searchForPeople();">Szukaj ludzi</button><br><br>
+        <button type="button" onclick ="searchForPeople();">Szukaj ludzi</button>
+        <button type="button" onclick ="searchOnStreet();">Szukaj na bieżącej ulicy</button><br><br>
         <b>1. Wygeneruj mapę<br>
         2. Włącz konsolę JS<br>
         3. Postaw ludka<br>
@@ -39,10 +40,12 @@
             getmiddle(i) - pobiera współrzędne środka ulicy na indeksie i<br>
             getStreetByCoords(x,y) - pobiera nazwę ulicy na podstawie współrzędnych<br>
             drivePassenger() - zawozi pasażera na miejsce docelowe - tylko wtedy gdy taksówka jest na tym samym miejscu co ludek<br>
-            testPerson() - umieszcza ludka w losowym miejscu mapy
+            testPerson() - umieszcza ludka w losowym miejscu mapy<br>
+            searchForPeople() - szuka ludzi globalnie<br>
+            searchOnStreet() - szuka ludzi na bieżącej ulicy i jedzie do pierwszego znalezionego
         <p id="array"></p>
         <p id="coords"></p>
-        <div id="map"></div>
+        <div id="map" style="display: none;"></div>
         <div id="roads"></div><br />
         <div id="check"></div><br />
 

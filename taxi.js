@@ -13,7 +13,7 @@ var oldShipY = 0; // old ship position Y
 
 // This function is called on page load.
 
-/*function fuelreduce (howmuch) {
+/*function fuelReduce (howmuch) {
     fuel -= howmuch;
 }*/
 
@@ -97,6 +97,24 @@ function searchForPeople() {                //szuka ludków po całej mapie
     console.log('-----------------------');
 }
 
+function searchOnStreet() {
+    var temp = getStreetByCoords(positionTaxiInArrayY, positionTaxiInArrayX);
+    console.log(temp);
+    for (var i = 0; i < passengers.length; i++) {
+        if (passengers[i] != undefined) {
+            var cords = passengers[i].getPosition();
+            var street = getStreetByCoords(cords[1], cords[0]);
+            console.log(street);
+            if (street == temp) {
+                console.log("found");
+                showPath(cords[1],cords[0]);
+                canvasAnimation();
+                break;
+            }
+        }
+    }
+}
+
 function takePassenger(person, context) {
     imgData = person.getBackground();
     person.erase(person.getPosition(), getWorldMap());
@@ -104,51 +122,30 @@ function takePassenger(person, context) {
 }
 
 function dropPassenger(person, context) {
-    /*
-        sekwencja:
-        podjedź na miejsce (nie ta funkcja)
-        zamień tło ludka na tło taksy (żeby po zmazaniu była tylko droga)
-        narysuj ludka (ew. kratkę niżej, albo coś)
-        narysuj taksę (żeby była nad pasażerem)
-        usuń referencję ludka z tablicy
-        czekaj na następny rozkaz, ludek w sumie sam się zmaże (oby)
-    */
+    person.setPosition(person.getDestination().reverse());          //nie wiem czemu reverse :(
+    person.setBackground(context.getImageData(person.destinationArray[0]*50,person.destinationArray[1]*50,50,50));
+    imgData = person.getBackground();
 
-    //if pozycja taksy == pozycja pampera to draw
-
-    //*if (person.position[0] == positionTaxiInArrayX && person.position[1] == positionTaxiInArrayY) {
-        //person.setBackground(imgData);
-        person.setPosition(person.getDestination().reverse());          //nie wiem czemu reverse :(
-        person.setBackground(context.getImageData(person.destinationArray[0]*50,person.destinationArray[1]*50,50,50));
-        imgData = person.getBackground();
-        //konflikt z person.draw - tło które zapamięta wcześniej jest nadpisywane przez draw
-
-        var tempArray;
-        tempArray = person.getPosition();
-        if(world[tempArray[1]][tempArray[0]] == 1) {
-            if (isVertical(tempArray[0], tempArray[1]))
-                tempArray[1] += 1;
-            else
-                tempArray[0] += 1;
-        }
-        else {
-            tempArray[0] += 1;
+    var tempArray;
+    tempArray = person.getPosition();
+    if(world[tempArray[1]][tempArray[0]] == 1) {
+        if (isVertical(tempArray[0], tempArray[1]))
             tempArray[1] += 1;
-        }
-        person.setPosition(tempArray);
-        person.draw();
-        //person.erase(person.getPosition, getWorldMap());
-        //drawTaxi(context, positionTaxiInArrayX, positionTaxiInArrayY);
-        passengers[person.arrayId] = undefined;                             //usuwa ludka z tablicy i przesuwa indeks
-        passengers[passengers.length-1].arrayId = person.arrayId;
-        passengers[person.arrayId] = passengers[passengers.length-1];
-        passengers.length--;
-        pIndex--;
-
-        //setTimeout(person.erase(person.getPosition()), 3000);
-
-        speak("Passenger dropped.");
-    //*/}
+        else
+            tempArray[0] += 1;
+    }
+    else {
+        tempArray[0] += 1;
+        tempArray[1] += 1;
+    }
+    person.setPosition(tempArray);
+    person.draw();
+    passengers[person.arrayId] = undefined;                             //usuwa ludka z tablicy i przesuwa indeks
+    passengers[passengers.length-1].arrayId = person.arrayId;
+    passengers[person.arrayId] = passengers[passengers.length-1];
+    passengers.length--;
+    pIndex--;
+    speak("Passenger dropped.");
 }
 
 
