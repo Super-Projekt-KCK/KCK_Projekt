@@ -131,62 +131,64 @@ function drawEdges(context) {
 // rysowanie swiata
 
 
-function printWorld(name) {	
-	// zerowanie tablicy
-	for (var i=0; i<size; i++) {
-		for (var j=0; j<size; j++) {
-			world[i][j]=0;
-		}
-	}
-	
-	//nanoszenie wierzcholkow grafu (jako jedynek)
-	
-	for (i=0; i<points; i++) {
-		world[coords[1][i]/10][coords[0][i]/10]=1;
-	}	
-	
-	var count = 1;
-	
-	//tworzenie prostopadlych polaczen miedzy wierzcholkami
-	
+function printWorld(name) {
+    // zerowanie tablicy
+    for (var i = 0; i < size; i++) {
+        for (var j = 0; j < size; j++) {
+            world[i][j] = 0;
+        }
+    }
+
+    //nanoszenie wierzcholkow grafu (jako jedynek)
+
+    for (i = 0; i < points; i++) {
+        world[coords[1][i] / 10][coords[0][i] / 10] = 1;
+    }
+
+    var count = 1;
+
+    //tworzenie prostopadlych polaczen miedzy wierzcholkami
+
     for (var i = 0; i < map.length; i++) {
-        for (var j = i+1; j < map[i].length; j++) {
+        for (var j = i + 1; j < map[i].length; j++) {
             if (map[i][j] == 1) {
 
-				var coords0t1 = coords[0][i];
-				var coords1t1 = coords[1][i];
-				var coords0t2 = coords[0][j];
-				var coords1t2 = coords[1][j];
-  				if (coords0t1 > coords0t2) {
-					while((coords0t1)!=(coords0t2)) {
-						world[coords1t2/10][(coords0t2+10)/10]=1;
-						coords0t2+=10;					
-					}
-				} else {
-					while((coords0t1)!=(coords0t2)) {
-						world[coords1t2/10][(coords0t2-10)/10]=1;
-						coords0t2-=10;					
-					}		
-				}  
-				
-  				if (coords1t1 > coords1t2) {
-					while((coords1t1)!=(coords1t2)) {
-						world[(coords1t2+10)/10][(coords0t2)/10]=1;
-						coords1t2+=10;					
-					}
-				} else {
-					while((coords1t1)!=(coords1t2)) {
-						world[(coords1t2-10)/10][(coords0t2)/10]=1;
-						coords1t2-=10;					
-					}		
-				}
+                var coords0t1 = coords[0][i];
+                var coords1t1 = coords[1][i];
+                var coords0t2 = coords[0][j];
+                var coords1t2 = coords[1][j];
+                if (coords0t1 > coords0t2) {
+                    while ((coords0t1) != (coords0t2)) {
+                        world[coords1t2 / 10][(coords0t2 + 10) / 10] = 1;
+                        coords0t2 += 10;
+                    }
+                } else {
+                    while ((coords0t1) != (coords0t2)) {
+                        world[coords1t2 / 10][(coords0t2 - 10) / 10] = 1;
+                        coords0t2 -= 10;
+                    }
+                }
+
+                if (coords1t1 > coords1t2) {
+                    while ((coords1t1) != (coords1t2)) {
+                        world[(coords1t2 + 10) / 10][(coords0t2) / 10] = 1;
+                        coords1t2 += 10;
+                    }
+                } else {
+                    while ((coords1t1) != (coords1t2)) {
+                        world[(coords1t2 - 10) / 10][(coords0t2) / 10] = 1;
+                        coords1t2 -= 10;
+                    }
+                }
             }
 
         }
     }
     roadsNaming();
+    refreshMap(name);
+}
 
-				
+function refreshMap(name) {
 	//wyswietlenie grafu i pogrubienie jedynek
  
     document.getElementById(name).innerHTML = "";

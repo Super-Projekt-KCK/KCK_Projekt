@@ -55,7 +55,8 @@ Passenger.prototype.getBackground = function() {
 
 Passenger.prototype.draw = function() {
     //umieszczenie pamperka na mapie świata
-    world[this.position[0]][this.position[1]] = 5;
+    if (world[this.position[1]][this.position[0]] == 1)     //jeśli spawn na drodze, to zamień na 5 a jak nie to tylko narysuj
+        world[this.position[1]][this.position[0]] = 5;
 
     var canvas = document.getElementById("town");
     var context = canvas.getContext("2d");
@@ -67,12 +68,12 @@ Passenger.prototype.draw = function() {
     context.drawImage(this.img, this.position[0] * 50, this.position[1] * 50);
 }
 
-Passenger.prototype.erase = function(array) {                                  //gdzie wymazać pasażera
+Passenger.prototype.erase = function(array, world) {                                  //gdzie wymazać pasażera
     var canvas = document.getElementById("town");
     var context = canvas.getContext("2d");
 
     //wymazanie z tablicy
-    world[array[0]][array[1]] = 1;
+    world[array[1]][array[0]] = 1;
 
     //wymazanie z canvas
     context.putImageData(this.background, array[0]*50, array[1]*50);
@@ -97,7 +98,7 @@ function testPerson() {
 function clearPeople() {
     for(var i = 0; i < passengers.length; i++) {
         if (passengers[i] != undefined)
-            passengers[i].erase(passengers[i].position);
+            passengers[i].erase(passengers[i].getPosition(), getWorldMap());
 
     }
     passengers.length = 0;

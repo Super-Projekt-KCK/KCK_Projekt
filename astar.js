@@ -4,29 +4,40 @@ var globalPath;
 function showPath(targetY, targetX) {
 	// zamiana 0 na 1 i odwrotnie (w algorymie a* przeszkody traktowane jako 1 a droga jako 0 (odwrotnie niz w naszej tablicy)
     var matrix = getWorldMap();
+    var saveNumbers = new Array();
+    var matrix = getWorldMap();
     for (var i=0; i<matrix.length; i++) {
-		for (var j=0; j<matrix.length; j++) {
-			if (matrix[i][j]==0) {
-				matrix[i][j]=1;
-			} else {
-				matrix[i][j]=0;
-			}
-		}
-	}
+        for (var j=0; j<matrix.length; j++) {
+            if (matrix[i][j]!=1 && matrix[i][j]!=0) {
+                saveNumbers.push(i);
+                saveNumbers.push(j);
+                saveNumbers.push(matrix[i][j]);
+            }
+            if (matrix[i][j]==0) {
+                matrix[i][j]=1;
+            } else {
+                matrix[i][j]=0;
+            }
+        }
+    }
 
-    
-    // tworzenie tablicy zero jedynkowej i wyszukanie sciezki algorytmem a*
+
+
+// tworzenie tablicy zero jedynkowej i wyszukanie sciezki algorytmem a*
     var grid = new PF.Grid(20, 20, matrix);
-
-	for (var i=0; i<matrix.length; i++) {
-		for (var j=0; j<matrix.length; j++) {
-			if (matrix[i][j]==1) {
-				matrix[i][j]=0;
-			} else {
-				matrix[i][j]=1;
-			}
-		}
-	}
+    var where = 0;
+    for (var i=0; i<matrix.length; i++) {
+        for (var j=0; j<matrix.length; j++) {
+            if (i==saveNumbers[where] && j==saveNumbers[where+1]) {
+                matrix[i][j]=saveNumbers[where+2];
+                where+=3;
+            } else if (matrix[i][j]==1) {
+                matrix[i][j]=0;
+            } else if (matrix[i][j]==0) {
+                matrix[i][j]=1;
+            }
+        }
+    }
 
     var finder = new PF.AStarFinder();
 

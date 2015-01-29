@@ -64,8 +64,8 @@ function doGameLoop() {
 
 //-------------------------------pasażerowie--------------------------------------------------//
 
-function checkPeople(j,i) {             //szuka ludka na konkretnych koordynatach
-    if (world[j][i] == 5) {
+function checkPeople(i,j) {             //szuka ludka na konkretnych koordynatach
+    if (world[i][j] == 5) {
         var temp = getStreetByCoords(i,j);
         if (temp == "" ) {
             speak("Passenger is not on the street.");
@@ -81,6 +81,7 @@ function checkPeople(j,i) {             //szuka ludka na konkretnych koordynatac
 
 //czasem źle działa bo a* zamienia mapę na jedynki
 function searchForPeople() {                //szuka ludków po całej mapie
+    refreshMap("map");
     if (passengers.length > 0) {
         console.log(pIndex);
         console.log(passengers);
@@ -98,6 +99,7 @@ function searchForPeople() {                //szuka ludków po całej mapie
 
 function takePassenger(person, context) {
     imgData = person.getBackground();
+    person.erase(person.getPosition(), getWorldMap());
     drawTaxi(context, positionTaxiInArrayX, positionTaxiInArrayY);
 }
 
@@ -123,18 +125,26 @@ function dropPassenger(person, context) {
 
         var tempArray;
         tempArray = person.getPosition();
-        if (isVertical(tempArray[0],tempArray[1]))
-            tempArray[1] += 1;
-        else
+        if(world[tempArray[1]][tempArray[0]] == 1) {
+            if (isVertical(tempArray[0], tempArray[1]))
+                tempArray[1] += 1;
+            else
+                tempArray[0] += 1;
+        }
+        else {
             tempArray[0] += 1;
+            tempArray[1] += 1;
+        }
         person.setPosition(tempArray);
         person.draw();
+        //person.erase(person.getPosition, getWorldMap());
         //drawTaxi(context, positionTaxiInArrayX, positionTaxiInArrayY);
         passengers[person.arrayId] = undefined;                             //usuwa ludka z tablicy i przesuwa indeks
         passengers[passengers.length-1].arrayId = person.arrayId;
         passengers[person.arrayId] = passengers[passengers.length-1];
         passengers.length--;
         pIndex--;
+
         //setTimeout(person.erase(person.getPosition()), 3000);
 
         speak("Passenger dropped.");
