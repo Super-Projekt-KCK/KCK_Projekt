@@ -146,6 +146,8 @@ function test(){
                         if(inst != '') {
                             streetCoords.names.forEach(function (stname) {
                                 var middle = 0;
+                                stname=stname.charAt(0).toUpperCase() + stname.slice(1);
+                                inst=inst.charAt(0).toUpperCase() + inst.slice(1);
                                 stname=stname.substring(0, stname.length-1);
                                 if (inst == stname) {
 
@@ -171,6 +173,8 @@ function test(){
                                 if(inst != '') {
                                     streetCoords.names.forEach(function (stname) {
                                         var middle = 0;
+                                        stname=stname.charAt(0).toUpperCase() + stname.slice(1);
+                                        inst=inst.charAt(0).toUpperCase() + inst.slice(1);
                                         stname=stname.substring(0, stname.length-1);
                                         if (inst == stname) {
                                             if (streetCoords[0][inc] == streetCoords[2][inc]) {
@@ -203,6 +207,8 @@ function test(){
             document.getElementById('kolejka').value='nie wykona polecenia';
         }
 }
+    emptyQueue();
+    console.log(sentences);
 }
 	
 	
@@ -225,18 +231,122 @@ function test(){
                 document.getElementById('kolejka').value='';
                 queue.forEach(function (entry) {
                     if(entry['action']){
-                        document.getElementById('kolejka').value+=entry['action']+' ';
-                        document.getElementById('kolejka').value+=entry['direction']+' ';
-                        document.getElementById('kolejka').value+=entry['destination']+' ';
-                        document.getElementById('kolejka').value+=entry['through']+' ';
-                        document.getElementById('kolejka').value+=entry['through']+'\n';
+                        //document.getElementById('kolejka').value+=entry['action']+' ';
+                        if(entry['directions'] != ''){
+                            document.getElementById('kolejka').value+=entry['directions']+' ';
+                        }
+                        if(entry['throughdestinations'] != ''){
+                            var tab=entry['throughdestinations'];
+                            tab=tab.split(',');
+                            if(tab[0]=='to'){
+                                tab=tab.toString().replace(/,/g,' ');
+                                tab=tab.replace(/through/g,';through');
+                                tab=tab.split(';');
+                            }else if(tab[0]=='through'){
+                                tab=tab.toString().replace(/,/g,' ');
+                                tab=tab.toString().replace(/to/g,';to');
+                                tab=tab.split(';');
+                            }
+
+                            var to, through;
+                            var toQ=[], throughQ=[];
+
+                            tab.forEach(function (entry) {
+                                if(entry.indexOf('to') != -1){
+                                    to=entry.split(' ');
+                                    to.splice(0, 1);
+                                    var i=0;
+                                    to.forEach(function (occ) {
+                                        if(occ=='and'){
+                                            to.splice(i, 1);
+                                        }
+                                        i++;
+                                    });
+                                    toQ.push(to);
+                                }else if(entry.indexOf('through') != -1){
+                                    through=entry.split(' ');
+                                    through.splice(0, 1);
+                                    var i=0;
+                                    through.forEach(function (occ) {
+                                        if(occ=='and'){
+                                            through.splice(i, 1);
+                                        }
+                                        i++;
+                                    });
+                                    throughQ.push(through);
+
+                                }
+                            });
+
+                            var command='';
+                            var inc=0;
+                            throughQ.forEach(function(th){
+                                th=th.toString();
+                                th=th.split(',');
+                                th.forEach(function(inst) {
+                                    if(inst != '') {
+                                        streetCoords.names.forEach(function (stname) {
+                                            var middle = 0;
+                                            stname=stname.charAt(0).toUpperCase() + stname.slice(1);
+                                            inst=inst.charAt(0).toUpperCase() + inst.slice(1);
+                                            stname=stname.substring(0, stname.length-1);
+                                            if (inst == stname) {
+
+                                                if (streetCoords[0][inc] == streetCoords[2][inc]) {
+                                                    middle = (Math.abs(streetCoords[1][inc] - streetCoords[3][inc])/2)+streetCoords[1][inc];
+                                                    command += 'go ' + streetCoords[0][inc] + ' ' + middle + ' ';
+                                                } else if (streetCoords[1][inc] == streetCoords[3][inc]) {
+                                                    middle = (Math.abs(streetCoords[0][inc] - streetCoords[2][inc])/2)+streetCoords[0][inc];
+                                                    command += 'go ' + middle + ' ' + streetCoords[1][inc] + ' ';
+                                                }
+                                            }
+                                            inc++;
+                                            middle=0;
+                                        });
+                                    }
+                                    inc=0;
+                                });
+                            });
+                            toQ.forEach(function(to){
+                                to=to.toString();
+                                to=to.split(',');
+                                to.forEach(function(inst) {
+                                    if(inst != '') {
+                                        streetCoords.names.forEach(function (stname) {
+                                            var middle = 0;
+                                            stname=stname.charAt(0).toUpperCase() + stname.slice(1);
+                                            inst=inst.charAt(0).toUpperCase() + inst.slice(1);
+                                            stname=stname.substring(0, stname.length-1);
+                                            if (inst == stname) {
+                                                if (streetCoords[0][inc] == streetCoords[2][inc]) {
+                                                    middle = (Math.abs(streetCoords[1][inc] - streetCoords[3][inc])/2)+streetCoords[1][inc];
+                                                    command += 'go ' + streetCoords[0][inc] + ' ' + middle + ' ';
+
+                                                } else if (streetCoords[1][inc] == streetCoords[3][inc]) {
+                                                    middle = (Math.abs(streetCoords[0][inc] - streetCoords[2][inc])/2)+streetCoords[0][inc];
+                                                    command += 'go ' + middle + ' ' + streetCoords[1][inc] + ' ';
+
+                                                }
+                                            }
+                                            inc++;
+                                            middle=0;
+                                        });
+                                    }
+                                    inc=0;
+                                });
+                            });
+
+                            document.getElementById('kolejka').value+=command;
+
+                            //document.getElementById('kolejka').value+= ' do '+toQ+' ';
+                            //document.getElementById('kolejka').value+= ' przez '+throughQ+'\n';
+                        }
                     }
                 });
-
             }else{
                 document.getElementById('kolejka').value='nie wykona polecenia';
             }
-
+            emptyQueue();
             microphoneButton();
         }
     };

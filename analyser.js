@@ -11,7 +11,9 @@ var queue=[];
 var qIterator=0;
 queue[qIterator]=[];
 var senWord = 0;
+//var isPaused=false;
 
+/*
 function getSynonyms(word){
     var s = document.createElement("script");
     s.src = "http://words.bighugelabs.com/api/2/0a2e3953d364b8dfd36393e746c7b463/"+word+"/json?callback=process"; // NOTE: replace test_only with your own KEY
@@ -20,13 +22,13 @@ function getSynonyms(word){
 }
 
 function process(result) {
-    console.log(result);
-    /*for (key in result.response) {
+    output='';
+    for (key in result.response) {
         list = result.response[key].list;
-        output += list.synonyms+"|";
-    }*/
-
-}
+        output += list.synonyms + "|";
+    }
+    isPaused=false;
+}*/
 
 function textParsing(text) {
 
@@ -54,6 +56,11 @@ function textParsing(text) {
                 sentences[sentence][preposition][senWord] = entry['text'];
                 senWord++;
             }else{
+                if(entry['pos']['tag'] == 'JJ' && posArray[sentence][preposition][senWord-1] != 'VBP'){
+                    posArray[sentence][preposition][senWord] = 'VBP';
+                    sentences[sentence][preposition][senWord] = 'go';
+                    senWord++;
+                }
                 posArray[sentence][preposition][senWord] = entry['pos']['tag'];
                 sentences[sentence][preposition][senWord] = entry['text'];
                 senWord++;
@@ -61,11 +68,12 @@ function textParsing(text) {
         }
         word++;
     });
+    splits();
 }
 
 function splits(){
-    var pp=0;
     var ss=0;
+    var pp=0;
     var ww=0;
     var IN = 0, INS = 0, INN=0;
     var VBP= 0, VBPS=0;
@@ -83,6 +91,7 @@ function splits(){
                 }else if(word == 'IN'){
                     IN=1;
                 }
+
                 if(VBP==1){
                     ww++;
                     if(typeof(sentences[ss][pp][ww]) !=  'undefined'){
@@ -107,6 +116,7 @@ function splits(){
         VBPS=0;
         INS=0;
         ss++;
+
         queue[qIterator]['action'] = action;
         queue[qIterator]['directions'] = directions.toString();
         queue[qIterator]['throughdestinations'] = throughdestination.toString();
@@ -120,35 +130,49 @@ function splits(){
         qIterator++;
 
     });
-    console.log(queue);
-    //emptyQueue();
+    //console.log(queue);
+    //matchKeywords();
 }
 function emptyQueue(){
-    queue.length=0;
-    var elem=0;
-    queue.forEach(function (que) {
-        que.forEach(function (q){
-            q[elem].length = 0;
-            elem++;
 
-        });
-    });
-    elem=0;
-    sentences.forEach(function (que) {
-        que.forEach(function (q){
-            q[elem].length = 0;
-            elem++;
 
-        });
-    });
-    elem=0;
-    posArray.forEach(function (que) {
-        que.forEach(function (q){
-            q[elem].length = 0;
-            elem++;
-        });
-    });
+    for( var i = 0; i < queue.length; i++ ){
+        for(var j=0; j < queue[i];j++) {
+            queue[i][j]= null;
+        }
+        queue[i]= null;
+    }
+    queue= null;
+
+    for( var i = 0; i < sentences.length; i++ ){
+        for(var j=0; j < sentences[i];j++) {
+            sentences[i][j]= null;
+        }
+        sentences[i]= null;
+    }
+    sentences= null;
+    for( var i = 0; i < posArray.length; i++ ){
+        for(var j=0; j < posArray[i];j++) {
+            posArray[i][j]= null;
+        }
+        posArray[i]= null;
+    }
+    posArray= null;
+
+    posArray = [];
+    sentences = [];
+    sentence = 0;
+    posArray[sentence]=[];
+    sentences[sentence] = [];
+    preposition = 0;
+    posArray[sentence][preposition]=[];
+    sentences[sentence][preposition]=[];
+    queue=[];
+    qIterator=0;
+    queue[qIterator]=[];
+    senWord = 0;
 }
+/*
 function matchKeywords(){
     var action='', destination='', through='', direction='';
 
@@ -164,6 +188,10 @@ function matchKeywords(){
                     }
                 }else{
                     getSynonyms(sentences[i][j]);
+                    isPaused=true;
+                    if (isPaused) {
+                        setTimeout(function(){waitForIt()},100);
+                    } else {
                         if(output.indexOf('go') >= 0){
                             action = 'go';
                         }else if(output.indexOf('stop') >= 0){
@@ -171,6 +199,7 @@ function matchKeywords(){
                         }else{
                             action = 'error';
                         }
+                    }
                     //sprawdzanie w slowniku czy czasownik jest synonimem 'go' lub 'stop'
                 }
                 varb=1;
@@ -219,11 +248,14 @@ function matchKeywords(){
             j++;
         });
         queue[qIterator]['action'] = action;
-        queue[qIterator]['direction'] = direction;
-        queue[qIterator]['destination'] = destination;
-        queue[qIterator]['through'] = through;
-        direction = ''; destination = ''; through = '';
-
+        queue[qIterator]['directions'] = directions.toString();
+        queue[qIterator]['throughdestinations'] = throughdestination.toString();
+        directions.length = 0; throughdestination.length = 0;
+        var elem=0;
+        throughdestination.forEach(function (ele) {
+            throughdestination[elem].length=0;
+            elem++;
+        });
         qIterator++;
         queue[qIterator]=[];
         j=0;
@@ -231,7 +263,7 @@ function matchKeywords(){
 
 return queue;
 }
-
+ */
 function speak(comment) {
     var u = new SpeechSynthesisUtterance();
     u.text = comment;
