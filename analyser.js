@@ -57,14 +57,13 @@ function textParsing(text) {
 
                 posArray[sentence][preposition][senWord] = entry['pos']['tag'];
                 sentences[sentence][preposition][senWord] = entry['text'];
-                console.log(sentence+' '+preposition+' '+senWord);
+
                 senWord++;
 
             }
         }
         word++;
     });
-    //console.log(sentences);
 }
 
 function splits(){
@@ -89,10 +88,9 @@ function splits(){
                     IN=1;
                 }
 
-                if(word== 'JJ' && VBP==0){
+                if(word== 'JJ'){
                     ready=true
                 }
-
                 if(ready==true){
 
                     if(typeof(sentences[ss][pp][ww]) !=  'undefined'){
@@ -106,12 +104,10 @@ function splits(){
                         throughdestination.push(sentences[ss][pp][ww]);
                     }
                 }
-                if(VBP==1){
-                    ready=true;
-                }
+
                 ww++;
             });
-            //pp++;
+            pp++;
             IN=0;
             ww=0;
             VBP=0;
