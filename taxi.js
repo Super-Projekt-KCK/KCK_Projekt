@@ -7,6 +7,9 @@ var shipX = 0; // current ship position X
 var shipY = 0; // current ship position Y
 var oldShipX = 0; // old ship position Y
 var oldShipY = 0; // old ship position Y
+
+var free = true;
+var passenger;
 // zrobić zmienną która będzie przechowywała aktualny poziom paliwa
 //var fuel = 100; // poziom paliwa w %
 
@@ -107,49 +110,73 @@ function searchOnStreet() {
             console.log(street);
             if (street == temp) {
                 console.log("found");
+                speak("I found a passenger and I am going there.");
                 showPath(cords[1],cords[0]);
                 canvasAnimation();
                 break;
             }
         }
     }
+    speak("I didn't find anybody on this street.");
 }
 
-function takePassenger(person, context) {
+function takePassenger(person) {
+    var canvas = document.getElementById("town");
+    var context = canvas.getContext("2d");
+    free = false;
+    passenger = person;
     imgData = person.getBackground();
     person.erase(person.getPosition(), getWorldMap());
+    speak("The passenger wants to go to " + person.destinationStreet + " street.");
     drawTaxi(context, positionTaxiInArrayX, positionTaxiInArrayY);
 }
 
-function dropPassenger(person, context) {
-    person.setPosition(person.getDestination().reverse());          //nie wiem czemu reverse :(
-    person.setBackground(context.getImageData(person.destinationArray[0]*50,person.destinationArray[1]*50,50,50));
-    imgData = person.getBackground();
+function dropPassenger() {
+    var canvas = document.getElementById("town");
+    var context = canvas.getContext("2d");
+    if (checkDestination(passenger)) {
+        free = true;
+        passenger.setPosition(passenger.getDestination().reverse());          //nie wiem czemu reverse :(
+        passenger.setBackground(context.getImageData(passenger.destinationArray[0] * 50, passenger.destinationArray[1] * 50, 50, 50));
+        imgData = passenger.getBackground();
 
-    var tempArray;
-    tempArray = person.getPosition();
-    if(world[tempArray[1]][tempArray[0]] == 1) {
-        if (isVertical(tempArray[0], tempArray[1]))
-            tempArray[1] += 1;
-        else
+        var tempArray;
+        tempArray = passenger.getPosition();
+        if (world[tempArray[1]][tempArray[0]] == 1) {
+            if (isVertical(tempArray[0], tempArray[1]))
+                tempArray[1] += 1;
+            else
+                tempArray[0] += 1;
+        }
+        else {
             tempArray[0] += 1;
+            tempArray[1] += 1;
+        }
+        passenger.setPosition(tempArray);
+        passenger.draw();
+        //passengers[person.arrayId] = undefined;                             //usuwa ludka z tablicy i przesuwa indeks
+        passengers[passengers.length - 1].arrayId = passenger.arrayId;
+        passengers[passenger.arrayId] = passengers[passenger.length - 1];
+        passengers.length--;
+        pIndex--;
+        speak("Passenger dropped.");
+        passenger = undefined;
     }
     else {
-        tempArray[0] += 1;
-        tempArray[1] += 1;
+        speak("This is not the destination street.");
     }
-    person.setPosition(tempArray);
-    person.draw();
-    passengers[person.arrayId] = undefined;                             //usuwa ludka z tablicy i przesuwa indeks
-    passengers[passengers.length-1].arrayId = person.arrayId;
-    passengers[person.arrayId] = passengers[passengers.length-1];
-    passengers.length--;
-    pIndex--;
-    speak("Passenger dropped.");
+}
+
+function checkDestination(person) {
+    var temp = getStreetByCoords(positionTaxiInArrayY,positionTaxiInArrayX);
+    if (temp == person.destinationStreet)
+        return true;
+    else
+        return false;
 }
 
 
-function drivePassenger() {
+/*function drivePassenger() {
     var person;
     var dest = Array();
     var canvas = document.getElementById("town");
@@ -167,4 +194,4 @@ function drivePassenger() {
         speak("There aren't any passengers here. ");
     }
 
-}
+}*/

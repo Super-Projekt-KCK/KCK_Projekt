@@ -108,9 +108,12 @@ function clearPeople() {
 function identify (i,j) {
     var pos;
     for (var x = 0; x < passengers.length; x++) {
-        pos = passengers[x].getPosition();
-        if (pos[0] == i && pos[1] == j)
-            return passengers[x];
-    }
+        //*if (passengers[x] != undefined) {
+            pos = passengers[x].getPosition();
+            if (pos[0] == i && pos[1] == j) {
+                return passengers[x];
+            }
+        }
+    //*/}
     return undefined;
 }
