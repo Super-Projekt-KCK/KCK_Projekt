@@ -11,8 +11,9 @@ var queue=[];
 var qIterator=0;
 queue[qIterator]=[];
 var senWord = 0;
-
+var Pause=false;
 function getSynonyms(word){
+    Pause=false;
     var s = document.createElement("script");
     s.src = "http://words.bighugelabs.com/api/2/0a2e3953d364b8dfd36393e746c7b463/"+word+"/json?callback=process"; // NOTE: replace test_only with your own KEY
     //document.getElementsByTagName("head")[0].appendChild(s);
@@ -20,11 +21,12 @@ function getSynonyms(word){
 }
 
 function process(result) {
+
     console.log(result);
-    /*for (key in result.response) {
+    for (key in result.response) {
         list = result.response[key].list;
         output += list.synonyms+"|";
-    }*/
+    }
 
 }
 
@@ -104,6 +106,17 @@ function splits(){
                 }else if(IN == 1){
                     if(typeof(sentences[ss][pp][ww]) !=  'undefined') {
                         throughdestination.push(sentences[ss][pp][ww]);
+                    }
+                }
+                if(word=='NN' || word=='NNA'){
+                    if(sentences[ss][pp][ww]== 'passenger' || sentences[ss][pp][ww]== 'client') {
+                        if(free==false){
+                            dropPassenger();
+                        }
+                        else if(free==true){
+                            searchOnStreet();
+                            takePassenger(identify(positionTaxiInArrayX, positionTaxiInArrayY));
+                        }
                     }
                 }
                 ww++;
