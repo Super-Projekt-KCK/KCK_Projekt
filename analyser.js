@@ -91,7 +91,7 @@ function splits(){
                     IN=1;
                 }
 
-                if(word== 'JJ'){
+                if(word== 'JJ' && (sentences[ss][pp][ww] == 'left' || sentences[ss][pp][ww] == 'right' || sentences[ss][pp][ww]=='back' || sentences[ss][pp][ww]=='forward')){
                     ready=true
                 }
 
@@ -108,7 +108,7 @@ function splits(){
                         throughdestination.push(sentences[ss][pp][ww]);
                     }
                 }
-                if(word=='NN' || word=='NNA'){
+                if(word=='NN' || word=='NNA' || word=='JJ'){
                     if(sentences[ss][pp][ww]== 'passenger' || sentences[ss][pp][ww]== 'client') {
                         if(free==false){
                             dropPassenger();
