@@ -123,47 +123,63 @@ function searchOnStreet() {
 function takePassenger(person) {
     var canvas = document.getElementById("town");
     var context = canvas.getContext("2d");
-    free = false;
-    passenger = person;
-    imgData = person.getBackground();
-    person.erase(person.getPosition(), getWorldMap());
-    speak("The passenger wants to go to " + person.destinationStreet + " street.");
-    drawTaxi(context, positionTaxiInArrayX, positionTaxiInArrayY);
+    if (person != undefined) {
+        if (free) {
+            free = false;
+            passenger = person;
+            imgData = person.getBackground();
+            person.erase(person.getPosition(), getWorldMap());
+            speak("The passenger wants to go to " + person.destinationStreet + " street.");
+            drawTaxi(context, positionTaxiInArrayX, positionTaxiInArrayY);
+        }
+        else {
+            speak ("I am busy now.");
+        }
+    }
+    else {
+        speak("There aren't any passengers I can take.");
+    }
 }
 
 function dropPassenger() {
     var canvas = document.getElementById("town");
     var context = canvas.getContext("2d");
-    if (checkDestination(passenger)) {
-        free = true;
-        passenger.setPosition(passenger.getDestination().reverse());          //nie wiem czemu reverse :(
-        passenger.setBackground(context.getImageData(passenger.destinationArray[0] * 50, passenger.destinationArray[1] * 50, 50, 50));
-        imgData = passenger.getBackground();
+    if (passenger != undefined) {
+        if (checkDestination(passenger)) {
+            free = true;
+            passenger.setPosition(passenger.getDestination().reverse());          //nie wiem czemu reverse :(
+            passenger.setBackground(context.getImageData(passenger.destinationArray[0] * 50, passenger.destinationArray[1] * 50, 50, 50));
+            //imgData = passenger.getBackground();
 
-        var tempArray;
-        tempArray = passenger.getPosition();
-        if (world[tempArray[1]][tempArray[0]] == 1) {
-            if (isVertical(tempArray[0], tempArray[1]))
-                tempArray[1] += 1;
-            else
+            var tempArray;
+            tempArray = passenger.getPosition();
+            if (world[tempArray[1]][tempArray[0]] == 1) {
+                if (isVertical(tempArray[0], tempArray[1]))
+                    tempArray[1] += 1;
+                else
+                    tempArray[0] += 1;
+            }
+            else {
                 tempArray[0] += 1;
+                tempArray[1] += 1;
+            }
+            passenger.setPosition(tempArray);
+            passenger.draw();
+            //passengers[person.arrayId] = undefined;                             //usuwa ludka z tablicy i przesuwa indeks
+            passengers[passengers.length - 1].arrayId = passenger.arrayId;
+            passengers[passenger.arrayId] = passengers[passenger.length - 1];
+            passengers.length--;
+            pIndex--;
+            speak("Passenger dropped.");
+            passenger = undefined;
         }
+
         else {
-            tempArray[0] += 1;
-            tempArray[1] += 1;
+            speak("This is not the destination street.");
         }
-        passenger.setPosition(tempArray);
-        passenger.draw();
-        //passengers[person.arrayId] = undefined;                             //usuwa ludka z tablicy i przesuwa indeks
-        passengers[passengers.length - 1].arrayId = passenger.arrayId;
-        passengers[passenger.arrayId] = passengers[passenger.length - 1];
-        passengers.length--;
-        pIndex--;
-        speak("Passenger dropped.");
-        passenger = undefined;
     }
     else {
-        speak("This is not the destination street.");
+        speak("I haven't any passengers inside.");
     }
 }
 
