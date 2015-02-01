@@ -127,10 +127,10 @@ function takePassenger(person) {
         if (free) {
             free = false;
             passenger = person;
-            imgData = person.getBackground();
+            //imgData = person.getBackground();
             person.erase(person.getPosition(), getWorldMap());
             speak("The passenger wants to go to " + person.destinationStreet + " street.");
-            drawTaxi(context, positionTaxiInArrayX, positionTaxiInArrayY);
+            //drawTaxi(context, positionTaxiInArrayX, positionTaxiInArrayY);
         }
         else {
             speak ("I am busy now.");

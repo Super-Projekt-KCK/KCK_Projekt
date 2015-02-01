@@ -22,61 +22,40 @@
     <div id="world">
         <canvas id="town"width="1000px" height="1000px;"></canvas>
         <canvas id="graph" width="200px" height="200px" style="display: none;"></canvas>
-        <button type="button" onclick ="initWorld();">Generate graph</button>
-        <button type="button" onclick ="testPerson();">Postaw ludka</button>
-        <button type="button" onclick ="clearPeople();">Wymaż ludków</button>
-        <button type="button" onclick ="drivePassenger();">Przewieź ludka (beta)</button>
-        <button type="button" onclick ="searchForPeople();">Szukaj ludzi</button>
-        <button type="button" onclick ="searchOnStreet();">Szukaj na ulicy</button>
-        <button type="button" onclick ="takePassenger(identify(positionTaxiInArrayX, positionTaxiInArrayY))">Take</button>
-        <button type="button" onclick ="dropPassenger();">Drop</button>
+        <button type="button" style="width:200px; height: 100px;"onclick ="initWorld();"><b>Generate world!</b></button>
+        <button type="button" style="width:200px; height: 100px;"onclick="setInterval(action, 5000), taxiManStart()"><b>Start!</b></button>
+        <button type="button" style="width:200px; height: 100px;"onclick ="testPerson();"><b>Set a passenger</b></button>
+        <button type="button" style="width:200px; height: 100px;"onclick ="clearPeople();"><b>Delete all passengers</b></button>
+        <button onclick="microphoneButton()" style="border: 0; background-color:transparent"><img id="status_img" src="mic.gif" alt="Start"></button>
         <br><br>
-        <b>1. Wygeneruj mapę<br>
-        2. Włącz konsolę JS<br>
-        3. Postaw ludka<br>
-        4. Szukaj ludzi<br>
-        5. Patrz i słuchaj jak dzieje się magia<br><br>
-        1. Podjedź taksą pod ludka<br>
-        2. Przewieź ludka<br>
-        3. Magia v2<br><br></b>
-        Funkcje, które mogą Wam się przydać:<br>
-            getmiddle(i) - pobiera współrzędne środka ulicy na indeksie i<br>
-            getStreetByCoords(x,y) - pobiera nazwę ulicy na podstawie współrzędnych<br>
-            drivePassenger() - zawozi pasażera na miejsce docelowe - tylko wtedy gdy taksówka jest na tym samym miejscu co ludek<br>
-            testPerson() - umieszcza ludka w losowym miejscu mapy<br>
-            searchForPeople() - szuka ludzi globalnie<br>
-            searchOnStreet() - szuka ludzi na bieżącej ulicy i jedzie do pierwszego znalezionego
+        <input type="text" id="tescik">
+        <button onClick="test()">Make an order!</button><br>
+        <br>If command begins with "Agent" the order will be completed.<br>
         <p id="array"></p>
         <p id="coords"></p>
         <div id="map" style="display: none;"></div>
         <div id="roads"></div><br />
         <div id="check"></div><br />
+        <div id="div_language">
+            <select id="select_language" onchange="updateCountry()"></select>
+            <select id="select_dialect"></select>
+        </div>
 
     </div>
 
 <div id="status">
 </div>
 
-<div id="results">
+<div id="results" style="display: none;">
     <span id="final_span" style="color:black"></span>
     <span id="interim_span" style="color:gray"></span>
 </div>
-<br>Jeśli komenda zaczyna się od 'Agent' polecenie zostaje wykonane<br>
-Narazie działa tylko dla kierunków wraz z synonimami np. Agent move left then right then go back<br>
+
 <textarea id="kolejka"></textarea>
 <textarea id="taxiMan"></textarea>
-<button type="button" onclick="setInterval(action, 5000), taxiManStart()">start</button>
-<button onclick="microphoneButton()" style="border: 0; background-color:transparent">
-    <img id="status_img" src="mic.gif" alt="Start"></button>
-<div id="div_language">
-    <select id="select_language" onchange="updateCountry()"></select>
-    <select id="select_dialect"></select>
-</div>
-  <br>Działa z algorytmem A*. Po wpisaniu np. "agent go to Townhall through Bank and Silent"<br> i wciśnięciu 'start', jeśli ulice te są obecne to przez nie przejedzie.<br>
-  <b>Uwaga!</b> bo nie czyści sie jeszcze kolejki, więc trzeba przeładowywać za każdym razem.<br>
 
-  <input type="text" id="tescik">
-<button onClick="test()">Wypróbuj</button>
+
+
 <script src="nlp.min.js"> </script>
 </body>
 
