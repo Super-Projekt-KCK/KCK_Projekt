@@ -91,7 +91,10 @@ function splits(){
                     IN=1;
                 }
 
-                if(word== 'JJ' && (sentences[ss][pp][ww] == 'left' || sentences[ss][pp][ww] == 'right' || sentences[ss][pp][ww]=='back' || sentences[ss][pp][ww]=='forward')){
+                if(word== 'JJ' && (sentences[ss][pp][ww] == 'left' || sentences[ss][pp][ww] == 'right' || sentences[ss][pp][ww]=='back' || sentences[ss][pp][ww]=='straight')){
+                    if(sentences[ss][pp][ww]=='straight'){
+                        sentences[ss][pp][ww]='forward';
+                    }
                     ready=true
                 }
 

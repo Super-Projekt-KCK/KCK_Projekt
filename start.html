@@ -90,6 +90,8 @@ function test(){
         if(res[0] == 'Agent' || res[0] == 'agent'){
             delete res[0];
             res=String(res).replace(/,/g,' ');
+            res=res.replace(/by/g,'through');
+            res=res.replace(/forward/g,'straight');
             console.log(res);
             textParsing(res);
             splits();
@@ -233,6 +235,8 @@ function test(){
                 delete res[0];
                 res=String(res).replace(/,/g,' ');
                 console.log(res);
+                res=res.replace(/by/g,'through');
+                res=res.replace(/forward/g,'straight');
                 textParsing(res);
                 splits();
                 document.getElementById('kolejka').value='';
