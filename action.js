@@ -23,8 +23,12 @@ function nextMove() {
 	checkDirection(check);
     } else {
      speak("I'm waiting for orders.");
-	//document.getElementById("taxiMan").value = "I'am waiting for orders...";
+	document.getElementById("taxiMan").value = "tank - " + tank;
 	inProgress=0;
+        if (world[positionTaxiInArrayY][positionTaxiInArrayX]==3) {
+            tank = 200;
+            document.getElementById("taxiMan").value = "tank up...";
+        }
     }
     
 }
@@ -117,7 +121,7 @@ function checkDirection(direction) {
 		    
 		    var tempX=Number(positionTaxiInArrayX);
 		    var tempY=Number(positionTaxiInArrayY);
-		    while (world[tempY][tempX-1]!=1) {
+		    while (world[tempY][tempX-1]<1) {
 			tempY=tempY-1;
 		    }
 		    showPath(Number(tempY), Number(tempX-1));
@@ -127,7 +131,7 @@ function checkDirection(direction) {
 
 		    var tempX=Number(positionTaxiInArrayX);
 		    var tempY=Number(positionTaxiInArrayY);
-		    while (world[tempY][tempX+1]!=1) {
+		    while (world[tempY][tempX+1]<1) {
 			tempY=tempY-1;
 		    }
 		    showPath(Number(tempY), Number(tempX+1));
@@ -138,15 +142,15 @@ function checkDirection(direction) {
 		    var tempX=Number(positionTaxiInArrayX);
 		    var tempY=Number(positionTaxiInArrayY);
 		    if (tempX+1==20) {
-			while (world[tempY][tempX-1]!=1) {
+			while (world[tempY][tempX-1]<1) {
 			    tempY=tempY-1;
 			}			
 		    } else if (tempX-1==-1) {
-			while (world[tempY][tempX+1]!=1) {
+			while (world[tempY][tempX+1]<1) {
 			    tempY=tempY-1;
 			}
 		    } else {
-			while (world[tempY][tempX+1]!=1 || world[tempY][tempX-1]!=1) {
+			while (world[tempY][tempX+1]<1 || world[tempY][tempX-1]<1) {
 			    tempY=tempY-1;
 			}
 		    }
@@ -159,15 +163,15 @@ function checkDirection(direction) {
 		    var tempX=Number(positionTaxiInArrayX);
 		    var tempY=Number(positionTaxiInArrayY);
 		    if (tempX+1==20) {
-			while (world[tempY][tempX-1]!=1) {
+			while (world[tempY][tempX-1]<1) {
 			    tempY=tempY+1;
 			}			
 		    } else if (tempX-1==-1) {
-			while (world[tempY][tempX+1]!=1) {
+			while (world[tempY][tempX+1]<1) {
 			    tempY=tempY+1;
 			}
 		    } else {
-			while (world[tempY][tempX+1]!=1 || world[tempY][tempX-1]!=1) {
+			while (world[tempY][tempX+1]<1 || world[tempY][tempX-1]<1) {
 			    tempY=tempY+1;
 			}
 		    }
@@ -181,7 +185,7 @@ function checkDirection(direction) {
 
 		    var tempX=Number(positionTaxiInArrayX);
 		    var tempY=Number(positionTaxiInArrayY);
-		    while (world[tempY][tempX+1]!=1) {
+		    while (world[tempY][tempX+1]<1) {
 			tempY=tempY+1;
 		    }
 		    showPath(Number(tempY), Number(tempX+1));
@@ -191,7 +195,7 @@ function checkDirection(direction) {
 		 
 		    var tempX=Number(positionTaxiInArrayX);
 		    var tempY=Number(positionTaxiInArrayY);
-		    while (world[tempY][tempX-1]!=1) {
+		    while (world[tempY][tempX-1]<1) {
 			tempY=tempY+1;
 		    }
 		    showPath(Number(tempY), Number(tempX-1));
@@ -202,15 +206,15 @@ function checkDirection(direction) {
 		    var tempX=Number(positionTaxiInArrayX);
 		    var tempY=Number(positionTaxiInArrayY);
 		    if (tempX+1==20) {
-			while (world[tempY][tempX-1]!=1) {
+			while (world[tempY][tempX-1]<1) {
 			    tempY=tempY+1;
 			}			
 		    } else if (tempX-1==-1) {
-			while (world[tempY][tempX+1]!=1) {
+			while (world[tempY][tempX+1]<1) {
 			    tempY=tempY+1;
 			}
 		    } else {
-			while (world[tempY][tempX+1]!=1 || world[tempY][tempX-1]!=1) {
+			while (world[tempY][tempX+1]<1 || world[tempY][tempX-1]<1) {
 			    tempY=tempY+1;
 			}
 		    }
@@ -221,15 +225,15 @@ function checkDirection(direction) {
 		    var tempX=Number(positionTaxiInArrayX);
 		    var tempY=Number(positionTaxiInArrayY);
 		    if (tempX+1==20) {
-			while (world[tempY][tempX-1]!=1) {
+			while (world[tempY][tempX-1]<1) {
 			    tempY=tempY-1;
 			}			
 		    } else if (tempX-1==-1) {
-			while (world[tempY][tempX+1]!=1) {
+			while (world[tempY][tempX+1]<1) {
 			    tempY=tempY-1;
 			}
 		    } else {
-			while (world[tempY][tempX+1]!=1 || world[tempY][tempX-1]!=1) {
+			while (world[tempY][tempX+1]<1 || world[tempY][tempX-1]<1) {
 			    tempY=tempY-1;
 			}
 		    }
@@ -244,7 +248,7 @@ function checkDirection(direction) {
 
 		    var tempX=Number(positionTaxiInArrayX);
 		    var tempY=Number(positionTaxiInArrayY);
-		    while (world[tempY+1][tempX]!=1) {
+		    while (world[tempY+1][tempX]<1) {
 			tempX=tempX-1;
 		    }
 		    showPath(Number(tempY+1), Number(tempX));
@@ -254,7 +258,7 @@ function checkDirection(direction) {
 
 		    var tempX=Number(positionTaxiInArrayX);
 		    var tempY=Number(positionTaxiInArrayY);
-		    while (world[tempY-1][tempX]!=1) {
+		    while (world[tempY-1][tempX]<1) {
 			tempX=tempX-1;
 		    }
 		    showPath(Number(tempY-1), Number(tempX));
@@ -265,15 +269,15 @@ function checkDirection(direction) {
 		    var tempX=Number(positionTaxiInArrayX);
 		    var tempY=Number(positionTaxiInArrayY);
 		    if (tempY+1==20) {
-			while (world[tempY-1][tempX]!=1) {
+			while (world[tempY-1][tempX]<1) {
 			    tempX=tempX-1;
 			}			
 		    } else if (tempY-1==-1) {
-			while (world[tempY+1][tempX]!=1) {
+			while (world[tempY+1][tempX]<1) {
 			    tempX=tempX-1;
 			}
 		    } else {
-			while (world[tempY-1][tempX]!=1 || world[tempY+1][tempX]!=1) {
+			while (world[tempY-1][tempX]<1 || world[tempY+1][tempX]<1) {
 			    tempX=tempX-1;
 			}
 		    }
@@ -284,15 +288,15 @@ function checkDirection(direction) {
 		    var tempX=Number(positionTaxiInArrayX);
 		    var tempY=Number(positionTaxiInArrayY);
 		    if (tempY+1==20) {
-			while (world[tempY-1][tempX]!=1) {
+			while (world[tempY-1][tempX]<1) {
 			    tempX=tempX+1;
 			}			
 		    } else if (tempY-1==-1) {
-			while (world[tempY+1][tempX]!=1) {
+			while (world[tempY+1][tempX]<1) {
 			    tempX=tempX+1;
 			}
 		    } else {
-			while (world[tempY-1][tempX]!=1 || world[tempY+1][tempX]!=1) {
+			while (world[tempY-1][tempX]<1 || world[tempY+1][tempX]<1) {
 			    tempX=tempX+1;
 			}
 		    }
@@ -305,7 +309,7 @@ function checkDirection(direction) {
 		    var tempX=Number(positionTaxiInArrayX);
 		    var tempY=Number(positionTaxiInArrayY);
 		    
-		    while (world[tempY-1][tempX]!=1) {
+		    while (world[tempY-1][tempX]<1) {
 			tempX=tempX+1;
 		    }
 		    showPath(Number(tempY-1), Number(tempX));
@@ -314,7 +318,7 @@ function checkDirection(direction) {
 		} else if (direction=="right") {
 		    var tempX=Number(positionTaxiInArrayX);
 		    var tempY=Number(positionTaxiInArrayY);
-		    while (world[tempY+1][tempX]!=1) {
+		    while (world[tempY+1][tempX]<1) {
 			tempX=tempX+1;
 		    }
 		    showPath(Number(tempY+1), Number(tempX));
@@ -325,15 +329,15 @@ function checkDirection(direction) {
 		    var tempX=Number(positionTaxiInArrayX);
 		    var tempY=Number(positionTaxiInArrayY);
 		    if (tempY+1==20) {
-			while (world[tempY-1][tempX]!=1) {
+			while (world[tempY-1][tempX]<1) {
 			    tempX=tempX+1;
 			}			
 		    } else if (tempY-1==-1) {
-			while (world[tempY+1][tempX]!=1) {
+			while (world[tempY+1][tempX]<1) {
 			    tempX=tempX+1;
 			}
 		    } else {
-			while (world[tempY-1][tempX]!=1 || world[tempY+1][tempX]!=1) {
+			while (world[tempY-1][tempX]<1 || world[tempY+1][tempX]<1) {
 			    tempX=tempX+1;
 			}
 		    }
@@ -344,15 +348,15 @@ function checkDirection(direction) {
 		    var tempX=Number(positionTaxiInArrayX);
 		    var tempY=Number(positionTaxiInArrayY);
 		    if (tempY+1==20) {
-			while (world[tempY-1][tempX]!=1) {
+			while (world[tempY-1][tempX]<1) {
 			    tempX=tempX-1;
 			}			
 		    } else if (tempY-1==-1) {
-			while (world[tempY+1][tempX]!=1) {
+			while (world[tempY+1][tempX]<1) {
 			    tempX=tempX-1;
 			}
 		    } else {
-			while (world[tempY-1][tempX]!=1 || world[tempY+1][tempX]!=1) {
+			while (world[tempY-1][tempX]<1 || world[tempY+1][tempX]<1) {
 			    tempX=tempX-1;
 			}
 		    }

@@ -15,6 +15,9 @@ var crossPath2 = 'images/cross2.png';
 var end  = new Image();
 var endPath = 'images/end.png';
 
+var gas = new Image();
+var gasPath = 'images/gas.png';
+
 var taxi = new Image();
 var taxiPath = 'images/taxi.png';
 
@@ -44,6 +47,7 @@ function drawWorld(canvas) {
          for (var j = 0; j < world[i].length; j++) {
              drawRoads(context, j, i);
              drawCrossroads(context, j, i);
+             drawGasStations(context, j, i);
          }
     }
 
@@ -51,7 +55,7 @@ function drawWorld(canvas) {
 }
 
 function drawRoads(context, j, i) {             //rysuje proste (poziom i pion)
-            if (world[j][i] == 1) {
+            if (world[j][i] == 1 || world[j][i] == 3) {
                 if (!isVertical(j,i)) {
                     context.drawImage(road, i * 50, j * 50);
                 }
@@ -64,6 +68,12 @@ function drawRoads(context, j, i) {             //rysuje proste (poziom i pion)
 function drawCrossroads(context, j, i) {                //rysuje krzyżówki
     if (world[j][i] == 2) {
         checkNeighbors(context, j,i);
+    }
+}
+
+function drawGasStations(context, j, i) {
+    if (world[j][i] == 3) {
+        context.drawImage(gas, i*50, j*50);
     }
 }
 
@@ -100,9 +110,9 @@ function drawTaxiOnStart(canvas) {
 	drawRotated(taxi, context, 90, streetCoords[1][1], streetCoords[0][1]);
 }
 //WSKAŹNIK PALIWA
-/*function drawFuelBar ()
+/*function drawFuelBar (canvas)
 {
-    var c=document.getElementById("myCanvas");
+    var c=document.getElementById(canvas);
     var ctx=c.getContext("2d");
     ctx.rect(5,5,fuel,20);
     ctx.stroke();
@@ -269,6 +279,7 @@ function preloader() {
         cross2.src = crossPath2;
         taxi.src = taxiPath;
         end.src = endPath;
+        gas.src = gasPath;
     }
 }
 function addLoadEvent(func) {
