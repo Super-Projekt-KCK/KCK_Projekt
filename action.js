@@ -26,7 +26,7 @@ function nextMove() {
 	document.getElementById("taxiMan").value = "tank - " + tank;
 	inProgress=0;
         if (world[positionTaxiInArrayY][positionTaxiInArrayX]==3) {
-            tank = 200;
+            tank = maxTank;
             document.getElementById("taxiMan").value = "tank up...";
         }
     }

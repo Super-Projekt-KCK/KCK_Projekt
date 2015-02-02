@@ -30,6 +30,7 @@ function initWorld() {
     readTextFile();
 	makeGraph();
 	drawGraph('graph');
+    setGasStations();
 	drawWorld('town');
     imgData = undefined;
     oldImgData = undefined;
@@ -42,7 +43,7 @@ function drawWorld(canvas) {
     context.fillStyle = "#b3b3b3";
     context.clearRect(0, 0, 1000,1000);
     context.fillRect(0,0, 1000, 1000);
-
+    drawFuelBar(context);
      for (var i = 0; i < world.length; i++) {
          for (var j = 0; j < world[i].length; j++) {
              drawRoads(context, j, i);
@@ -77,6 +78,19 @@ function drawGasStations(context, j, i) {
     }
 }
 
+//WSKAŹNIK PALIWA
+function drawFuelBar (context)
+{
+    context.clearRect(975,235,20,-maxTank);
+    context.fillStyle = "#ff0000";
+    context.font = "18px Arial";
+    context.fillText("FUEL", 950, 25);
+    context.fillRect(975,235,20,-tank);
+
+
+
+}
+
 function drawRotated(image, context, deg, i,j) {            //rysuje obrócony obrazek
     context.save();
     context.translate(i*50,j*50);
@@ -109,14 +123,22 @@ function drawTaxiOnStart(canvas) {
     var context = c.getContext("2d");
 	drawRotated(taxi, context, 90, streetCoords[1][1], streetCoords[0][1]);
 }
-//WSKAŹNIK PALIWA
-/*function drawFuelBar (canvas)
-{
-    var c=document.getElementById(canvas);
-    var ctx=c.getContext("2d");
-    ctx.rect(5,5,fuel,20);
-    ctx.stroke();
-}*/
+
+function setGasStations() {
+    var c = document.getElementById("town");
+    var context = c.getContext("2d");
+    for (var i = 0; i < 3; i++) {        //liczba stacji
+        var temp, tempArray;
+        do {
+            temp = Math.floor(Math.random() * streetCoords.names.length);
+            tempArray = getMiddle(temp);
+        } while(world[tempArray[0]][tempArray[1]] == 2);
+
+        world[tempArray[0]][tempArray[1]] = 3;
+    }
+    refreshMap("map");
+}
+
 
 
 //---------------funkcje sprawdzające-------------------------//

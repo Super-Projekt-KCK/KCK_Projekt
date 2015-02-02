@@ -7,7 +7,8 @@ var shipX = 0; // current ship position X
 var shipY = 0; // current ship position Y
 var oldShipX = 0; // old ship position Y
 var oldShipY = 0; // old ship position Y
-var tank = 200;
+var maxTank = 200;
+var tank = maxTank;
 
 var free = true;
 var passenger;
@@ -41,6 +42,7 @@ function doGameLoop() {
     elem = globalPath.pop();
     if (tank!=0) {
         if (elem != undefined /*&& fuel > 0*/) {
+            drawFuelBar(ctx);
             var last = elem.join();
             var dot = last.indexOf(",");
             oldShipX = shipX;

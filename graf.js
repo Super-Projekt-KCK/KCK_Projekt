@@ -158,15 +158,9 @@ function printWorld(name) {
                 var coords0t2 = coords[0][j];
                 var coords1t2 = coords[1][j];
                 if (coords0t1 > coords0t2) {
-                    while((coords0t1)!=(coords0t2)) {
-                        var rand = Math.floor(Math.random() * 11);
-                        if (rand < 1) {
-                            world[coords1t2/10][(coords0t2+10)/10]=3;
-                            coords0t2+=10;
-                        } else {
-                            world[coords1t2/10][(coords0t2+10)/10]=1;
-                            coords0t2+=10;
-                        }
+                        while((coords0t1)!=(coords0t2)) {
+                            world[coords1t2 / 10][(coords0t2 + 10) / 10] = 1;
+                            coords0t2 += 10;
                     }
                 } else {
                     while ((coords0t1) != (coords0t2)) {
