@@ -1,4 +1,4 @@
------Kto co zrobił------
+ary -----Kto co zrobił------
 
 Maciej:
 - wprowadzanie głosowe komend
@@ -13,3 +13,6 @@ Mateusz:
 - zgranie taksówki z pasażerami
 
 Piotr:
+- macierz/graf do generowania świata
+- poruszanie (a*, kierunki)
+- kolejka
