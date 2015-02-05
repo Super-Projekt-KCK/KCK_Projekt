@@ -1,6 +1,9 @@
 -----Kto co zrobił------
 
 Maciej:
+- wprowadzanie głosowe komend
+- mechanizm rozpoznawania wyrażeń
+- wyprowadzanie komunikatów głosowych
 
 Mateusz:
 - losowe generowanie świata
