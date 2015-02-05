@@ -3,6 +3,10 @@
 Maciej:
 
 Mateusz:
--
+- losowe generowanie świata
+- rysowanie wszystkiego co było do narysowania
+- losowe nazywanie ulic
+- wszystko co związane z obsługą i identyfikacją pasażerów
+- zgranie taksówki z pasażerami
 
 Piotr:
